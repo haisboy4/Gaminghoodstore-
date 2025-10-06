@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Store</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 10px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  .card .info {
+    padding: 10px;
+    flex: 1;
+  }
+  .card h3 {
+    font-size: 16px;
+    margin: 0 0 5px;
+  }
+  .card p {
+    font-size: 13px;
+    color: gray;
+    margin: 0 0 10px;
+  }
+  .btn {
+    display: block;
+    background: #2196F3;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 0 0 10px 10px;
+  }
+</style>
+</head>
+<body>
+  <div id="grid" class="grid"></div>
+
+<script>
+const sheetUrl = "https://docs.google.com/spreadsheets/d/1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE/export?format=csv";
+
+fetch(sheetUrl)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.trim().split("\n").slice(1); // skip header
+    const grid = document.getElementById("grid");
+
+    rows.forEach(row => {
+      const [name, version, image, link] = row.split(",");
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${image}" alt="${name}">
+        <div class="info">
+          <h3>${name}</h3>
+          <p>Version: ${version}</p>
+        </div>
+        <a class="btn" href="${link}" target="_blank">Download</a>
+      `;
+      grid.appendChild(card);
+    });
+  })
+  .catch(err => {
+    document.body.innerHTML += `<p style="color:red;text-align:center;">Failed to load data 😔</p>`;
+  });
+</script>
+</body>
+</html>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("search")?.toLowerCase() || "";
+
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vQb1gqIR0JDU7HqXjElnU8lpxYqJlsEclfxK5XqtC2yyHbp9_wHgB6lNlAOlnHkDBG0x7QzVwhzTZ5H/pub?output=csv")
+    .then(response => response.text())
+    .then(csv => {
+      const rows = csv.split("\n").map(r => r.split(","));
+      const container = document.getElementById("game-container");
+      container.innerHTML = "";
+
+      rows.slice(1).forEach(row => {
+        const [title, description, image, link] = row.map(r => r.trim());
+        const lowerTitle = title.toLowerCase();
+
+        // 🔍 Only show if search matches title or description
+        if (searchQuery === "" || lowerTitle.includes(searchQuery) || description.toLowerCase().includes(searchQuery)) {
+          const card = document.createElement("div");
+          card.className = "game-card";
+          card.innerHTML = `
+            <img src="${image}" alt="${title}">
+            <h3>${title}</h3>
+            <p>${description}</p>
+            <a href="${link}" target="_blank">Download</a>
+          `;
+          container.appendChild(card);
+        }
+      });
+
+      if (container.innerHTML === "") {
+        container.innerHTML = "<p style='text-align:center;'>No games found for '<b>" + searchQuery + "</b>'</p>";
+      }
+    })
+    .catch(err => console.error("Error loading data:", err));
+});
+</script>
