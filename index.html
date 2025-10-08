@@ -12,26 +12,30 @@
     padding: 10px;
   }
 
-  /* 🔍 Sticky search bar */
+  /* 🔍 Sticky search bar (Glass style) */
   .search-bar {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 0;
-    
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   }
 
   .search-bar input {
     width: 70%;
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #2196F3;
+    border: none;
     border-radius: 25px 0 0 25px;
     outline: none;
+    background: rgba(255,255,255,0.7);
   }
 
   .search-bar button {
@@ -118,7 +122,7 @@
 </head>
 <body>
 
-  <!-- 🔍 Sticky Search bar -->
+  <!-- 🔍 Sticky Glass Search bar -->
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search for games...">
     <button id="searchBtn">🔍</button>
@@ -195,6 +199,15 @@ window.addEventListener("scroll", () => {
 backToTopBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+/* 🛰 Register Service Worker for offline access */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(reg => console.log("✅ Service Worker registered:", reg.scope))
+      .catch(err => console.error("❌ Service Worker registration failed:", err));
+  });
+}
 </script>
 </body>
 </html>
