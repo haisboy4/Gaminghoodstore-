@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src='//libtl.com/sdk.js' data-zone='10068971' data-sdk='show_10068971'></script>
+
+  
+<script src='//libtl.com/sdk.js' data-zone='10068971' data-sdk='show_10068971'></script>
+  <button onclick="showRewardedAd()">Watch Ad & Earn</button>
+
+<script>
+function showRewardedAd() {
+  // Rewarded Popup
+  show_10068971('pop').then(() => {
+    // user watched ad till the end
+    alert("Congrats! You've earned your reward 🎉");
+  }).catch(e => {
+    // error or user closed early
+    console.log("Ad error:", e);
+  });
+}
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game Store</title>
   
-// Rewarded Popup
 
-show_10068971('pop').then(() => {
-    // user watch ad till the end or close it in interstitial format
-    // your code to reward user for rewarded format
-}).catch(e => {
-    // user get error during playing ad
-    // do nothing or whatever you want
-})
 
         
 <style>
