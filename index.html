@@ -14,7 +14,7 @@
     padding: 10px;
   }
 
-  /* 🆕 Typing Heading */
+  /* 🆕 Loop Typing Heading */
   .heading {
     text-align: center;
     font-size: 26px;
@@ -24,17 +24,19 @@
     white-space: nowrap;
     overflow: hidden;
     border-right: 3px solid #2196F3;
-    width: 0;
-    animation: typing 3s steps(20, end) forwards, blink 0.7s infinite;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 230px; }
+  .cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
   }
 
   @keyframes blink {
-    50% { border-color: transparent; }
+    50% { opacity: 0; }
   }
 
   .search-bar {
@@ -191,7 +193,9 @@
 <body>
 
 <!-- 🆕 Heading -->
-<div class="heading">Gaming Hood Store</div>
+<div class="heading">
+  <span id="typingText"></span><span class="cursor">|</span>
+</div>
 
 <div class="search-bar">
   <input type="text" id="searchInput" placeholder="Search for games...">
@@ -210,6 +214,34 @@
 <button id="backToTop">⬆️</button>
 
 <script>
+const text = "Gaming Hood Store";
+let i = 0;
+let isDeleting = false;
+
+function typeLoop() {
+  const el = document.getElementById("typingText");
+
+  if (!isDeleting) {
+    el.textContent = text.substring(0, i++);
+    if (i > text.length) {
+      isDeleting = true;
+      setTimeout(typeLoop, 1200);
+      return;
+    }
+  } else {
+    el.textContent = text.substring(0, i--);
+    if (i < 0) {
+      isDeleting = false;
+    }
+  }
+
+  setTimeout(typeLoop, isDeleting ? 50 : 100);
+}
+
+typeLoop();
+
+/* ==== YOUR ORIGINAL SCRIPT (UNCHANGED) ==== */
+
 const sheetUrl = "https://docs.google.com/spreadsheets/d/1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE/export?format=csv";
 let allGames = [];
 let retries = 0;
