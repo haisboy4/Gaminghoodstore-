@@ -1,45 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script>(function(s){s.dataset.zone=&#39;10500624&#39;,s.src=&#39;https://al5sm.com/tag.min.js&#39;})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement(&#39;script&#39;)))</script>
-  
-<script src='//libtl.com/sdk.js' data-zone='10068971' data-sdk='show_10068971'></script>
-  
 
-<script>
-
-// In-App Interstitial
-
-show_10068971({
-  type: 'inApp',
-  inAppSettings: {
-    frequency: 2,
-    capping: 0.1,
-    interval: 30,
-    timeout: 5,
-    everyPage: false
-  }
-})
-
-/*
-This value is decoded as follows:
-- show automatically 2 ads
-  within 0.1 hours (6 minutes)
-  with a 30-second interval between them
-  and a 5-second delay before the first one is shown.
-  The last digit, 0, means that the session will be saved when you navigate between pages.
-  If you set the last digit as 1, then at any transition between pages,
-  the session will be reset, and the ads will start again.
-*/
-
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Store</title>
-  
+<title>Gaming hood Store</title>
 
-
-        
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -48,30 +14,25 @@ This value is decoded as follows:
     padding: 10px;
   }
 
-  /* 🔍 Sticky search bar (Glass style) */
+  /* 🔍 Search bar */
   .search-bar {
     position: sticky;
     top: 0;
     z-index: 10;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255,255,255,0.25);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     margin-bottom: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   }
 
   .search-bar input {
     width: 70%;
     padding: 10px;
-    font-size: 16px;
     border: none;
     border-radius: 25px 0 0 25px;
-    outline: none;
-    background: rgba(255,255,255,0.7);
   }
 
   .search-bar button {
@@ -81,14 +42,12 @@ This value is decoded as follows:
     padding: 10px 15px;
     border-radius: 0 25px 25px 0;
     cursor: pointer;
-    font-size: 18px;
   }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 15px;
-    margin-top: 10px;
   }
 
   .card {
@@ -106,144 +65,201 @@ This value is decoded as follows:
     object-fit: cover;
   }
 
-  .card .info {
-    padding: 10px;
-    flex: 1;
-  }
-
-  .card h3 {
-    font-size: 16px;
-    margin: 0 0 5px;
-  }
-
-  .card p {
-    font-size: 13px;
-    color: gray;
-    margin: 0 0 10px;
-  }
+  .info { padding: 10px; }
 
   .btn {
-    display: block;
     background: #2196F3;
     color: white;
     text-align: center;
     padding: 8px;
     text-decoration: none;
-    border-radius: 0 0 10px 10px;
   }
 
-  /* ✨ Glass-style Back to Top button */
+  /* ✨ Status UI */
+  .status-box {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+  }
+
+  .retry-btn {
+    background: #ff5252;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .loader {
+    border: 4px solid #eee;
+    border-top: 4px solid #2196F3;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin: auto;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+
   #backToTop {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.25);
-    color: #2196F3;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    padding: 12px 15px;
-    font-size: 22px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    backdrop-filter: blur(8px);
     display: none;
-    transition: all 0.3s ease;
-  }
-
-  #backToTop:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: scale(1.1);
+    padding: 10px;
+    border-radius: 50%;
+    background: #2196F3;
+    color: white;
+    border: none;
+    cursor: pointer;
   }
 </style>
 </head>
+
 <body>
 
-  <!-- 🔍 Sticky Glass Search bar -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search for games...">
-    <button id="searchBtn">🔍</button>
-  </div>
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search games...">
+  <button id="searchBtn">🔍</button>
+</div>
 
-  <div id="grid" class="grid"></div>
+<div id="status"></div>
+<div id="grid" class="grid"></div>
 
-  <!-- ✨ Glass Back to Top Button -->
-  <button id="backToTop" title="Back to top">⬆️</button>
+<button id="backToTop">⬆️</button>
 
 <script>
 const sheetUrl = "https://docs.google.com/spreadsheets/d/1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE/export?format=csv";
+
 let allGames = [];
+let retryCount = 0;
+const maxRetries = 3;
 
-fetch(sheetUrl)
-  .then(res => res.text())
-  .then(csv => {
-    const rows = csv.trim().split("\n").slice(1);
-    allGames = rows.map(row => {
-      const [name, Platform, image, link] = row.split(",");
-      return { name, Platform, image, link };
+/* 🔄 Fetch with retry system */
+function loadData() {
+  showLoading();
+
+  fetch(sheetUrl)
+    .then(res => {
+      if (!res.ok) throw new Error("Network error");
+      return res.text();
+    })
+    .then(csv => {
+      retryCount = 0;
+      parseData(csv);
+      showGrid();
+    })
+    .catch(err => {
+      retryCount++;
+
+      if (retryCount <= maxRetries) {
+        showStatus(`Retrying... (${retryCount}/${maxRetries})`);
+        setTimeout(loadData, 1500);
+      } else {
+        showError();
+      }
     });
-    displayGames(allGames);
-  })
-  .catch(() => {
-    document.body.innerHTML += `<p style="color:red;text-align:center;">Failed to load data 😔</p>`;
-  });
+}
 
+/* 📊 Parse CSV */
+function parseData(csv) {
+  const rows = csv.trim().split("\n").slice(1);
+  allGames = rows.map(row => {
+    const [name, Platform, image, link] = row.split(",");
+    return { name, Platform, image, link };
+  });
+  displayGames(allGames);
+}
+
+/* 🎮 Display */
 function displayGames(games) {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
+
   games.forEach(game => {
     const card = document.createElement("div");
     card.className = "card";
+
     card.innerHTML = `
-      <img src="${game.image}" alt="${game.name}">
+      <img src="${game.image}">
       <div class="info">
         <h3>${game.name}</h3>
-        <p>Platform: ${game.Platform}</p>
+        <p>${game.Platform}</p>
       </div>
       <a class="btn" href="${game.link}" target="_blank">Download</a>
     `;
+
     grid.appendChild(card);
   });
-
-  if (games.length === 0) {
-    grid.innerHTML = "<p style='text-align:center;'>No games found 😔</p>";
-  }
 }
 
-document.getElementById("searchBtn").addEventListener("click", searchGames);
-document.getElementById("searchInput").addEventListener("input", searchGames);
-
+/* 🔍 Search */
 function searchGames() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = allGames.filter(g => 
-    g.name.toLowerCase().includes(query) ||
-    g.Platform.toLowerCase().includes(query)
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = allGames.filter(g =>
+    g.name.toLowerCase().includes(q) ||
+    g.Platform.toLowerCase().includes(q)
   );
   displayGames(filtered);
 }
 
-/* ⬆️ Back to Top Button functionality */
-const backToTopBtn = document.getElementById("backToTop");
+document.getElementById("searchBtn").onclick = searchGames;
+document.getElementById("searchInput").oninput = searchGames;
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    backToTopBtn.style.display = "block";
-  } else {
-    backToTopBtn.style.display = "none";
-  }
-});
-
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* 🛰 Register Service Worker for offline access */
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js")
-      .then(reg => console.log("✅ Service Worker registered:", reg.scope))
-      .catch(err => console.error("❌ Service Worker registration failed:", err));
-  });
+/* 🎯 UI States */
+function showLoading() {
+  document.getElementById("status").innerHTML = `
+    <div class="status-box">
+      <div class="loader"></div>
+      <p>Loading games...</p>
+    </div>
+  `;
 }
+
+function showStatus(msg) {
+  document.getElementById("status").innerHTML = `
+    <div class="status-box">
+      <p>${msg}</p>
+    </div>
+  `;
+}
+
+function showError() {
+  document.getElementById("status").innerHTML = `
+    <div class="status-box">
+      <p>⚠️ Failed to load data</p>
+      <button class="retry-btn" onclick="retryLoad()">Retry</button>
+    </div>
+  `;
+}
+
+function showGrid() {
+  document.getElementById("status").innerHTML = "";
+}
+
+function retryLoad() {
+  retryCount = 0;
+  loadData();
+}
+
+/* ⬆️ Back to Top */
+window.onscroll = () => {
+  document.getElementById("backToTop").style.display =
+    window.scrollY > 300 ? "block" : "none";
+};
+
+document.getElementById("backToTop").onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+/* 🚀 Start */
+loadData();
 </script>
+
 </body>
 </html>
