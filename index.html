@@ -222,7 +222,7 @@ function typeLoop() {
     el.textContent = text.substring(0, i++);
     if (i > text.length) {
       isDeleting = true;
-      setTimeout(typeLoop, 1200);
+      setTimeout(typeLoop, 5000);
       return;
     }
   } else {
