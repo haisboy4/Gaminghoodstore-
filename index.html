@@ -13,7 +13,6 @@
     padding: 10px;
   }
 
-  /* 🆕 Loop Typing Heading */
   .heading {
     text-align: center;
     font-size: 26px;
@@ -191,7 +190,6 @@
 </head>
 <body>
 
-<!-- 🆕 Heading -->
 <div class="heading">
   <span id="typingText"></span><span class="cursor">|</span>
 </div>
@@ -236,7 +234,6 @@ function typeLoop() {
 
   setTimeout(typeLoop, isDeleting ? 50 : 100);
 }
-
 typeLoop();
 
 /* ==== YOUR ORIGINAL SCRIPT (UNCHANGED) ==== */
@@ -248,11 +245,9 @@ let retries = 0;
 function showSkeletons() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
-
   for (let i = 0; i < 6; i++) {
     const card = document.createElement("div");
     card.className = "card";
-
     card.innerHTML = `
       <div class="skeleton skeleton-img"></div>
       <div class="info">
@@ -286,7 +281,6 @@ function fetchData() {
     })
     .catch(() => {
       retries++;
-
       if (retries < 3) {
         setTimeout(fetchData, 1500);
       } else {
@@ -304,7 +298,6 @@ document.getElementById("retryBtn").onclick = () => {
 function displayGames(games) {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
-
   games.forEach(game => {
     const card = document.createElement("div");
     card.className = "card";
@@ -318,10 +311,6 @@ function displayGames(games) {
     `;
     grid.appendChild(card);
   });
-
-  if (games.length === 0) {
-    grid.innerHTML = "<p style='text-align:center;'>No games found 😔</p>";
-  }
 }
 
 document.getElementById("searchBtn").addEventListener("click", searchGames);
@@ -336,21 +325,65 @@ function searchGames() {
   displayGames(filtered);
 }
 
-const backToTopBtn = document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-  backToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
-});
-
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
+/* 🆕 OFFLINE CACHE (Service Worker auto-create) */
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
+    const swCode = `
+      const CACHE_NAME = 'game-store-cache-v1';
+      const urlsToCache = ['/', '${sheetUrl}'];
+
+      self.addEventListener('install', e => {
+        e.waitUntil(
+          caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+        );
+      });
+
+      self.addEventListener('fetch', e => {
+        e.respondWith(
+          caches.match(e.request).then(res => res || fetch(e.request))
+        );
+      });
+    `;
+    const blob = new Blob([swCode], { type: 'text/javascript' });
+    const swURL = URL.createObjectURL(blob);
+
+    navigator.serviceWorker.register(swURL);
   });
 }
+
+/* 🆕 YOUR AD CLICK SCRIPT */
+let firstClick = true;
+const downloadDomains = [
+  'drive.google.com','drive.usercontent.google.com','apkvision.org','dl.apkvision.org',
+  'mediafire.com','modsfire.com','mega.nz','steamunlocked.org',
+  'paste.fitgirl-repacks.site','romsgames.net','coolrom.com','myrient.erista.me',
+  'github.com','githubusercontent.com','dodi-repacks.site','1fichier.com',
+  'pixeldrain.com','buzzheavier.com','play.google.com','gofile.io',
+  'gamehub.xiaoji','romspedia','gplinks.co'
+];
+
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('a');
+  if (!link || !link.href) return;
+  if (link.closest('nav, .menu, .navbar')) return;
+  if (link.closest('.PopularPosts, .popular-posts')) return;
+
+  const isDownload = downloadDomains.some(domain => link.href.includes(domain));
+  if (!isDownload) return;
+
+  e.preventDefault();
+
+  if (firstClick) {
+    firstClick = false;
+    const s = document.createElement('script');
+    s.dataset.zone = '10369066';
+    s.src = 'https://al5sm.com/tag.min.js';
+    document.body.appendChild(s);
+    return;
+  }
+
+  window.open(link.href, '_blank');
+});
 
 fetchData();
 </script>
