@@ -523,38 +523,3 @@ fetchData();
 </script>
 
 </body>
-</html>  'mediafire.com','modsfire.com','mega.nz','steamunlocked.org',
-  'paste.fitgirl-repacks.site','romsgames.net','coolrom.com','myrient.erista.me',
-  'github.com','githubusercontent.com','dodi-repacks.site','1fichier.com',
-  'pixeldrain.com','buzzheavier.com','play.google.com','gofile.io',
-  'gamehub.xiaoji','romspedia','gplinks.co'
-];
-
-document.addEventListener('click', function (e) {
-  const link = e.target.closest('a');
-  if (!link || !link.href) return;
-  if (link.closest('nav, .menu, .navbar')) return;
-  if (link.closest('.PopularPosts, .popular-posts')) return;
-
-  const isDownload = downloadDomains.some(domain => link.href.includes(domain));
-  if (!isDownload) return;
-
-  e.preventDefault();
-
-  if (firstClick) {
-    firstClick = false;
-    const s = document.createElement('script');
-    s.dataset.zone = '10369066';
-    s.src = 'https://al5sm.com/tag.min.js';
-    document.body.appendChild(s);
-    return;
-  }
-
-  window.open(link.href, '_blank');
-});
-
-fetchData();
-</script>
-
-</body>
-</html>
