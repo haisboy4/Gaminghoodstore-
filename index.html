@@ -1,183 +1,376 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#170d25">
-  <meta name="description" content="Gaming Hood — games, emulators, compatibility and gaming resources.">
-  <title>Gaming Hood</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <header class="site-header">
-    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Gaming hood store</title>  <style>  
+  body {  
+    font-family: Arial, sans-serif;  
+    background: #f4f4f4;  
+    margin: 0;  
+    padding: 10px;  
+  }  
+  
+  .heading {  
+    text-align: center;  
+    font-size: 26px;  
+    font-weight: bold;  
+    margin: 10px 0 5px;  
+    color: #2196F3;  
+    white-space: nowrap;  
+    overflow: hidden;  
+    border-right: 3px solid #2196F3;  
+    width: fit-content;  
+    margin-left: auto;  
+    margin-right: auto;  
+  }  
+  
+  .cursor {  
+    display: inline-block;  
+    margin-left: 2px;  
+    animation: blink 0.7s infinite;  
+  }  
+  
+  @keyframes blink {  
+    50% { opacity: 0; }  
+  }  
+  
+  .search-bar {  
+    position: sticky;  
+    top: 0;  
+    z-index: 10;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    padding: 10px;  
+    background: rgba(255, 255, 255, 0.25);  
+    backdrop-filter: blur(10px);  
+    border-radius: 20px;  
+    margin-bottom: 10px;  
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);  
+  }  
+  
+  .search-bar input {  
+    width: 70%;  
+    padding: 10px;  
+    font-size: 16px;  
+    border: none;  
+    border-radius: 25px 0 0 25px;  
+    outline: none;  
+    background: rgba(255,255,255,0.7);  
+  }  
+  
+  .search-bar button {  
+    background: #2196F3;  
+    border: none;  
+    color: white;  
+    padding: 10px 15px;  
+    border-radius: 0 25px 25px 0;  
+    cursor: pointer;  
+    font-size: 18px;  
+  }  
+  
+  .grid {  
+    display: grid;  
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));  
+    gap: 15px;  
+    margin-top: 10px;  
+  }  
+  
+  .card {  
+    background: white;  
+    border-radius: 10px;  
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);  
+    overflow: hidden;  
+    display: flex;  
+    flex-direction: column;  
+  }  
+  
+  .card img {  
+    width: 100%;  
+    height: 140px;  
+    object-fit: cover;  
+  }  
+  
+  .card .info {  
+    padding: 10px;  
+    flex: 1;  
+  }  
+  
+  .card h3 {  
+    font-size: 16px;  
+    margin: 0 0 5px;  
+  }  
+  
+  .card p {  
+    font-size: 13px;  
+    color: gray;  
+    margin: 0 0 10px;  
+  }  
+  
+  .btn {  
+    display: block;  
+    background: #2196F3;  
+    color: white;  
+    text-align: center;  
+    padding: 8px;  
+    text-decoration: none;  
+    border-radius: 0 0 10px 10px;  
+  }  
+  
+  #backToTop {  
+    position: fixed;  
+    bottom: 20px;  
+    right: 20px;  
+    background: rgba(255, 255, 255, 0.25);  
+    color: #2196F3;  
+    border: 1px solid rgba(255, 255, 255, 0.4);  
+    border-radius: 50%;  
+    padding: 12px 15px;  
+    font-size: 22px;  
+    cursor: pointer;  
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);  
+    backdrop-filter: blur(8px);  
+    display: none;  
+  }  
+  
+  #loader {  
+    text-align: center;  
+    margin-top: 20px;  
+  }  
+  
+  .spinner {  
+    width: 30px;  
+    height: 30px;  
+    border: 4px solid #ddd;  
+    border-top: 4px solid #2196F3;  
+    border-radius: 50%;  
+    margin: auto;  
+    animation: spin 1s linear infinite;  
+  }  
+  
+  @keyframes spin {  
+    100% { transform: rotate(360deg); }  
+  }  
+  
+  #retryBtn {  
+    display: none;  
+    margin: 15px auto;  
+    padding: 10px 20px;  
+    background: #ff5252;  
+    color: white;  
+    border: none;  
+    border-radius: 8px;  
+    cursor: pointer;  
+  }  
+  
+  .skeleton {  
+    animation: shimmer 1.2s infinite;  
+    background: linear-gradient(90deg, #eee 25%, #ddd 50%, #eee 75%);  
+    background-size: 200% 100%;  
+  }  
+  
+  .skeleton-img {  
+    height: 140px;  
+  }  
+  
+  .skeleton-text {  
+    height: 12px;  
+    margin: 8px;  
+    border-radius: 4px;  
+  }  
+  
+  @keyframes shimmer {  
+    0% { background-position: -200% 0; }  
+    100% { background-position: 200% 0; }  
+  }  
+</style>  </head>  
+<body>  <div class="heading">  
+  <span id="typingText"></span><span class="cursor">|</span>  
+</div>  <div class="search-bar">  
+  <input type="text" id="searchInput" placeholder="Search for games...">  
+  <button id="searchBtn">🔍</button>  
+</div>  <div id="loader">  
+  <div class="spinner"></div>  
+  <p>Loading games...</p>  
+</div>  <button id="retryBtn">Retry</button>
 
-    <a class="brand" href="./" aria-label="Gaming Hood home">
-      <div class="brand-mark">GH</div>
-      <span>GAMING HOOD</span>
-    </a>
+<div id="grid" class="grid"></div>  <button id="backToTop">⬆️</button>
 
-    <div class="header-actions">
-      <button class="icon-btn" id="randomBtn" aria-label="Random game" title="Random game">⚄</button>
-      <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
-    </div>
-  </header>
-
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <aside class="drawer" id="drawer" aria-hidden="true">
-    <div class="drawer-top">
-      <strong>Gaming Hood</strong>
-      <button class="close-btn" id="closeDrawer" aria-label="Close menu">×</button>
-    </div>
-
-    <form class="drawer-search" id="drawerSearchForm">
-      <input id="drawerSearchInput" type="search" placeholder="Search games..." autocomplete="off">
-      <button type="submit">⌕</button>
-    </form>
-
-    <nav class="drawer-nav">
-      <a href="./">Home</a>
-
-      <button class="nav-drop" data-target="categoriesMenu">
-        Categories <span>⌄</span>
-      </button>
-      <div class="subnav" id="categoriesMenu">
-        <a href="category.html?platform=Android">Android</a>
-        <a href="category.html?platform=PC">PC</a>
-        <a href="category.html?platform=Winlator">Winlator</a>
-        <a href="category.html?platform=PSP">PSP</a>
-        <a href="category.html?platform=PS%20Vita">PS Vita</a>
-        <a href="category.html?platform=PS2">PS2</a>
-        <a href="category.html?platform=Wii">Wii</a>
-      </div>
-
-      <a href="#top-games">Top Games</a>
-      <a href="#recent-updates">Recent Updates</a>
-
-      <button class="nav-drop" data-target="gamesListMenu">
-        Games List <span>⌄</span>
-      </button>
-      <div class="subnav" id="gamesListMenu">
-        <a href="#games">All Games</a>
-        <a href="category.html?sort=az">A–Z</a>
-        <a href="category.html?sort=za">Z–A</a>
-      </div>
-
-      <a href="compatibility.html">Compatibility Checker</a>
-      <a href="#emulators">Emulators</a>
-
-      <button class="nav-drop" data-target="faqMenu">
-        FAQ <span>⌄</span>
-      </button>
-      <div class="subnav" id="faqMenu">
-        <a href="faq.html">Common Questions</a>
-        <a href="faq.html#installation">Installation</a>
-        <a href="faq.html#compatibility">Compatibility</a>
-      </div>
-
-      <a href="#request">Request a Game</a>
-      <a href="#about">About Gaming Hood</a>
-    </nav>
-  </aside>
-
-  <section class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow">YOUR GAMING HUB</p>
-      <h1>Find your next game.</h1>
-      <p class="hero-text">Games, emulators, compatibility information and useful guides — organized in one place.</p>
-      <div class="hero-search">
-        <input id="heroSearchInput" type="search" placeholder="Search games, platforms, emulators..." autocomplete="off">
-        <button id="heroSearchBtn">Search</button>
-      </div>
-    </div>
-  </section>
-
-  <main class="container">
-    <section class="section" id="recent-updates">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">LATEST</p>
-          <h2>Recently Added</h2>
-        </div>
-        <a href="category.html?sort=recent">View all</a>
-      </div>
-      <div class="game-grid" id="recentGrid"></div>
-    </section>
-
-    <section class="section" id="top-games">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">POPULAR</p>
-          <h2>Top Games</h2>
-        </div>
-        <a href="category.html?sort=top">View all</a>
-      </div>
-      <div class="game-grid" id="topGrid"></div>
-    </section>
-
-    <section class="section categories-section">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">EXPLORE</p>
-          <h2>Categories</h2>
-        </div>
-      </div>
-      <div class="category-grid">
-        <a href="category.html?platform=Android">Android</a>
-        <a href="category.html?platform=PC">PC</a>
-        <a href="category.html?platform=Winlator">Winlator</a>
-        <a href="category.html?platform=PSP">PSP</a>
-        <a href="category.html?platform=PS%20Vita">PS Vita</a>
-        <a href="category.html?platform=PS2">PS2</a>
-        <a href="category.html?platform=Wii">Wii</a>
-        <a href="category.html?platform=GameCube">GameCube</a>
-      </div>
-    </section>
-
-    <section class="section feature-strip">
-      <div>
-        <p class="section-kicker">CHECK BEFORE YOU DOWNLOAD</p>
-        <h2>Can your device run it?</h2>
-        <p>Use the Gaming Hood compatibility checker to compare a game's requirements with your Android device.</p>
-      </div>
-      <a class="primary-btn" href="compatibility.html">Check compatibility</a>
-    </section>
-
-    <section class="section" id="games">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">LIBRARY</p>
-          <h2>All Games</h2>
-        </div>
-        <span class="result-count" id="resultCount"></span>
-      </div>
-
-      <div class="inline-search">
-        <input id="librarySearchInput" type="search" placeholder="Filter the game library..." autocomplete="off">
-      </div>
-      <div class="game-grid" id="allGrid"></div>
-      <p class="empty-state" id="emptyState" hidden>No games matched your search.</p>
-    </section>
-  </main>
-
-  <footer class="site-footer" id="about">
-    <div>
-      <strong>Gaming Hood</strong>
-      <p>A gaming-focused website for games, emulators, compatibility and guides.</p>
-    </div>
-    <div class="footer-links">
-      <a href="compatibility.html">Compatibility</a>
-      <a href="faq.html">FAQ</a>
-      <a href="#request">Request a Game</a>
-    </div>
-    <p class="copyright">© <span id="year"></span> Gaming Hood</p>
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="js/app.js" defer></script>
-</body>
-</html>
+<script>  
+const text = "Gaming Hood Store";  
+let i = 0;  
+let isDeleting = false;  
+  
+function typeLoop() {  
+  const el = document.getElementById("typingText");  
+  
+  if (!isDeleting) {  
+    el.textContent = text.substring(0, i++);  
+    if (i > text.length) {  
+      isDeleting = true;  
+      setTimeout(typeLoop, 5000);  
+      return;  
+    }  
+  } else {  
+    el.textContent = text.substring(0, i--);  
+    if (i < 0) {  
+      isDeleting = false;  
+    }  
+  }  
+  
+  setTimeout(typeLoop, isDeleting ? 50 : 100);  
+}  
+typeLoop();  
+  
+/* ==== YOUR ORIGINAL SCRIPT (UNCHANGED) ==== */  
+  
+const sheetUrl = "https://docs.google.com/spreadsheets/d/1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE/export?format=csv";  
+let allGames = [];  
+let retries = 0;  
+  
+function showSkeletons() {  
+  const grid = document.getElementById("grid");  
+  grid.innerHTML = "";  
+  for (let i = 0; i < 6; i++) {  
+    const card = document.createElement("div");  
+    card.className = "card";  
+    card.innerHTML = `  
+      <div class="skeleton skeleton-img"></div>  
+      <div class="info">  
+        <div class="skeleton skeleton-text"></div>  
+        <div class="skeleton skeleton-text" style="width: 60%;"></div>  
+      </div>  
+    `;  
+    grid.appendChild(card);  
+  }  
+}  
+  
+function fetchData() {  
+  document.getElementById("loader").style.display = "block";  
+  document.getElementById("retryBtn").style.display = "none";  
+  
+  showSkeletons();  
+  
+  fetch(sheetUrl)  
+    .then(res => res.text())  
+    .then(csv => {  
+      document.getElementById("loader").style.display = "none";  
+      retries = 0;  
+  
+      const rows = csv.trim().split("\n").slice(1);  
+      allGames = rows.map(row => {  
+        const [name, Platform, image, link] = row.split(",");  
+        return { name, Platform, image, link };  
+      });  
+  
+      displayGames(allGames);  
+    })  
+    .catch(() => {  
+      retries++;  
+      if (retries < 3) {  
+        setTimeout(fetchData, 1500);  
+      } else {  
+        document.getElementById("loader").style.display = "none";  
+        document.getElementById("retryBtn").style.display = "block";  
+      }  
+    });  
+}  
+  
+document.getElementById("retryBtn").onclick = () => {  
+  retries = 0;  
+  fetchData();  
+};  
+  
+function displayGames(games) {  
+  const grid = document.getElementById("grid");  
+  grid.innerHTML = "";  
+  games.forEach(game => {  
+    const card = document.createElement("div");  
+    card.className = "card";  
+    card.innerHTML = `  
+      <img src="${game.image}" alt="${game.name}">  
+      <div class="info">  
+        <h3>${game.name}</h3>  
+        <p>Platform: ${game.Platform}</p>  
+      </div>  
+      <a class="btn" href="${game.link}" target="_blank">Download</a>  
+    `;  
+    grid.appendChild(card);  
+  });  
+}  
+  
+document.getElementById("searchBtn").addEventListener("click", searchGames);  
+document.getElementById("searchInput").addEventListener("input", searchGames);  
+  
+function searchGames() {  
+  const query = document.getElementById("searchInput").value.toLowerCase();  
+  const filtered = allGames.filter(g =>   
+    g.name.toLowerCase().includes(query) ||  
+    g.Platform.toLowerCase().includes(query)  
+  );  
+  displayGames(filtered);  
+}  
+  
+/* 🆕 OFFLINE CACHE (Service Worker auto-create) */  
+if ("serviceWorker" in navigator) {  
+  window.addEventListener("load", () => {  
+    const swCode = `  
+      const CACHE_NAME = 'game-store-cache-v1';  
+      const urlsToCache = ['/', '${sheetUrl}'];  
+  
+      self.addEventListener('install', e => {  
+        e.waitUntil(  
+          caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))  
+        );  
+      });  
+  
+      self.addEventListener('fetch', e => {  
+        e.respondWith(  
+          caches.match(e.request).then(res => res || fetch(e.request))  
+        );  
+      });  
+    `;  
+    const blob = new Blob([swCode], { type: 'text/javascript' });  
+    const swURL = URL.createObjectURL(blob);  
+  
+    navigator.serviceWorker.register(swURL);  
+  });  
+}  
+  
+/* 🆕 YOUR AD CLICK SCRIPT */  
+let firstClick = true;  
+const downloadDomains = [  
+  'drive.google.com','drive.usercontent.google.com','apkvision.org','dl.apkvision.org',  
+  'mediafire.com','modsfire.com','mega.nz','steamunlocked.org',  
+  'paste.fitgirl-repacks.site','romsgames.net','coolrom.com','myrient.erista.me',  
+  'github.com','githubusercontent.com','dodi-repacks.site','1fichier.com',  
+  'pixeldrain.com','buzzheavier.com','play.google.com','gofile.io',  
+  'gamehub.xiaoji','romspedia','gplinks.co'  
+];  
+  
+document.addEventListener('click', function (e) {  
+  const link = e.target.closest('a');  
+  if (!link || !link.href) return;  
+  if (link.closest('nav, .menu, .navbar')) return;  
+  if (link.closest('.PopularPosts, .popular-posts')) return;  
+  
+  const isDownload = downloadDomains.some(domain => link.href.includes(domain));  
+  if (!isDownload) return;  
+  
+  e.preventDefault();  
+  
+  if (firstClick) {  
+    firstClick = false;  
+    const s = document.createElement('script');  
+    s.dataset.zone = '10369066';  
+    s.src = 'https://al5sm.com/tag.min.js';  
+    document.body.appendChild(s);  
+    return;  
+  }  
+  
+  window.open(link.href, '_blank');  
+});  
+  
+fetchData();  
+</script>  </body>  
+</html>  
