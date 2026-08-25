@@ -1,0 +1,99 @@
+[
+  {
+    "id": "hollowbody",
+    "title": "Hollowbody",
+    "platform": "PC",
+    "emulator": "",
+    "image": "",
+    "size": "PC",
+    "build": "Build 21621978",
+    "description": "A survival horror game set in a decaying exclusion zone.",
+    "tags": [
+      "Horror",
+      "Adventure",
+      "Indie"
+    ],
+    "views": 22275,
+    "added": "2026-08-25"
+  },
+  {
+    "id": "ravens-story",
+    "title": "Raven's Story",
+    "platform": "PC",
+    "emulator": "",
+    "image": "",
+    "size": "PC",
+    "build": "Build 20906491",
+    "description": "An indie adventure featuring a mysterious raven and a strange world.",
+    "tags": [
+      "Adventure",
+      "Indie"
+    ],
+    "views": 18200,
+    "added": "2026-08-24"
+  },
+  {
+    "id": "undead-west",
+    "title": "Undead West",
+    "platform": "PC",
+    "emulator": "",
+    "image": "",
+    "size": "PC",
+    "build": "Build 24706823",
+    "description": "A stylized western adventure with undead enemies.",
+    "tags": [
+      "Action",
+      "Indie"
+    ],
+    "views": 15400,
+    "added": "2026-08-23"
+  },
+  {
+    "id": "9-keys",
+    "title": "9 Keys",
+    "platform": "PC",
+    "emulator": "",
+    "image": "",
+    "size": "PC",
+    "build": "Build 18961968",
+    "description": "An atmospheric adventure with exploration and mystery.",
+    "tags": [
+      "Adventure",
+      "Indie"
+    ],
+    "views": 12100,
+    "added": "2026-08-22"
+  },
+  {
+    "id": "call-of-duty-black-ops",
+    "title": "Call of Duty: Black Ops",
+    "platform": "PC",
+    "emulator": "Winlator",
+    "image": "",
+    "size": "8.2 GB",
+    "build": "",
+    "description": "Placeholder entry for the Gaming Hood compatibility system.",
+    "tags": [
+      "Shooter",
+      "Action",
+      "Winlator"
+    ],
+    "views": 9800,
+    "added": "2026-08-20"
+  },
+  {
+    "id": "sample-android-game",
+    "title": "Android Game Example",
+    "platform": "Android",
+    "emulator": "",
+    "image": "",
+    "size": "2.4 GB",
+    "build": "",
+    "description": "Example database record. Replace this with your actual game.",
+    "tags": [
+      "Android"
+    ],
+    "views": 7600,
+    "added": "2026-08-18"
+  }
+]
