@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -52,9 +53,11 @@ body {
 }
 
 @keyframes blink {
+
   50% {
     opacity: 0;
   }
+
 }
 
 
@@ -65,7 +68,7 @@ body {
 .search-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
 
   display: flex;
   justify-content: center;
@@ -74,9 +77,11 @@ body {
   padding: 10px;
 
   background: rgba(255, 255, 255, 0.25);
+
   backdrop-filter: blur(10px);
 
   border-radius: 20px;
+
   margin-bottom: 10px;
 
   box-shadow:
@@ -84,6 +89,7 @@ body {
 }
 
 .search-bar input {
+
   width: 70%;
 
   padding: 10px 14px;
@@ -100,6 +106,7 @@ body {
 }
 
 .search-bar button {
+
   background: #2196F3;
 
   border: none;
@@ -116,6 +123,7 @@ body {
 }
 
 .search-bar button:hover {
+
   background: #1976D2;
 }
 
@@ -125,6 +133,7 @@ body {
 ========================================================= */
 
 .grid {
+
   display: grid;
 
   grid-template-columns:
@@ -141,6 +150,7 @@ body {
 ========================================================= */
 
 .card {
+
   background: white;
 
   border-radius: 10px;
@@ -162,6 +172,7 @@ body {
 }
 
 .card:hover {
+
   transform: translateY(-2px);
 
   box-shadow:
@@ -169,6 +180,7 @@ body {
 }
 
 .card img {
+
   width: 100%;
 
   height: 140px;
@@ -181,12 +193,14 @@ body {
 }
 
 .card .info {
+
   padding: 10px;
 
   flex: 1;
 }
 
 .card h3 {
+
   font-size: 16px;
 
   margin: 0 0 8px;
@@ -197,6 +211,7 @@ body {
 }
 
 .card p {
+
   font-size: 13px;
 
   color: gray;
@@ -214,6 +229,7 @@ body {
 ========================================================= */
 
 .card-actions {
+
   display: flex;
 
   width: 100%;
@@ -225,6 +241,7 @@ body {
 ========================================================= */
 
 .card-actions .btn {
+
   flex: 1;
 
   display: flex;
@@ -256,6 +273,7 @@ body {
 }
 
 .card-actions .btn:hover {
+
   background: #1976D2;
 }
 
@@ -265,6 +283,7 @@ body {
 ========================================================= */
 
 .share-btn {
+
   flex: 0 0 52px;
 
   display: flex;
@@ -291,14 +310,17 @@ body {
 }
 
 .share-btn:hover {
+
   background: #1565C0;
 }
 
 .share-btn:active {
+
   transform: scale(0.94);
 }
 
 .share-icon {
+
   width: 22px;
 
   height: 22px;
@@ -370,13 +392,23 @@ body {
 @keyframes modalIn {
 
   from {
+
     opacity: 0;
-    transform: translateY(20px) scale(0.97);
+
+    transform:
+      translateY(20px)
+      scale(0.97);
+
   }
 
   to {
+
     opacity: 1;
-    transform: translateY(0) scale(1);
+
+    transform:
+      translateY(0)
+      scale(1);
+
   }
 
 }
@@ -674,7 +706,7 @@ body {
 
 
 /* =========================================================
-   NO FILES MESSAGE
+   NO FILES
 ========================================================= */
 
 .no-files {
@@ -701,7 +733,7 @@ body {
 
   right: 20px;
 
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.8);
 
   color: #2196F3;
 
@@ -760,7 +792,10 @@ body {
 @keyframes spin {
 
   100% {
-    transform: rotate(360deg);
+
+    transform:
+      rotate(360deg);
+
   }
 
 }
@@ -827,7 +862,8 @@ body {
       #eee 75%
     );
 
-  background-size: 200% 100%;
+  background-size:
+    200% 100%;
 }
 
 .skeleton-img {
@@ -847,11 +883,17 @@ body {
 @keyframes shimmer {
 
   0% {
-    background-position: -200% 0;
+
+    background-position:
+      -200% 0;
+
   }
 
   100% {
-    background-position: 200% 0;
+
+    background-position:
+      200% 0;
+
   }
 
 }
@@ -869,7 +911,8 @@ body {
 
   left: 50%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   background: #222;
 
@@ -891,13 +934,25 @@ body {
 
 
 /* =========================================================
+   BODY LOCK
+========================================================= */
+
+body.modal-open {
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 400px) {
 
   body {
+
     padding: 8px;
+
   }
 
   .grid {
@@ -906,31 +961,38 @@ body {
       repeat(2, minmax(0, 1fr));
 
     gap: 12px;
+
   }
 
   .card img {
 
     height: 140px;
+
   }
 
   .card h3 {
 
     font-size: 15px;
+
   }
 
   .card p {
 
     font-size: 12px;
+
   }
 
   .card-actions .btn {
 
     font-size: 15px;
+
   }
 
   .share-btn {
 
-    flex: 0 0 48px;
+    flex:
+      0 0 48px;
+
   }
 
   .share-icon {
@@ -938,11 +1000,13 @@ body {
     width: 20px;
 
     height: 20px;
+
   }
 
   .download-overlay {
 
     padding: 10px;
+
   }
 
   .download-modal {
@@ -950,6 +1014,7 @@ body {
     max-height: 88vh;
 
     border-radius: 16px;
+
   }
 
   .file-item {
@@ -957,6 +1022,7 @@ body {
     gap: 8px;
 
     padding: 10px;
+
   }
 
   .file-icon {
@@ -964,6 +1030,7 @@ body {
     width: 36px;
 
     height: 36px;
+
   }
 
   .file-download {
@@ -975,6 +1042,7 @@ body {
     width: 38px;
 
     height: 38px;
+
   }
 
   .file-download .download-icon {
@@ -982,18 +1050,9 @@ body {
     width: 18px;
 
     height: 18px;
+
   }
 
-}
-
-
-/* =========================================================
-   BODY LOCK WHEN MODAL IS OPEN
-========================================================= */
-
-body.modal-open {
-
-  overflow: hidden;
 }
 
 </style>
@@ -1033,8 +1092,11 @@ body.modal-open {
   <button
     id="searchBtn"
     type="button"
+    aria-label="Search"
   >
+
     🔍
+
   </button>
 
 </div>
@@ -1061,7 +1123,9 @@ body.modal-open {
   id="retryBtn"
   type="button"
 >
+
   Retry
+
 </button>
 
 
@@ -1084,7 +1148,9 @@ body.modal-open {
   type="button"
   aria-label="Back to top"
 >
+
   ↑
+
 </button>
 
 
@@ -1112,7 +1178,9 @@ body.modal-open {
           id="modalGameTitle"
           class="modal-title"
         >
+
           Files & Downloads
+
         </h2>
 
         <p
@@ -1168,15 +1236,14 @@ body.modal-open {
 
 <script>
 
-
 /* =========================================================
    TYPING HEADING
 ========================================================= */
 
-const text =
+const headingText =
   "Gaming Hood Store";
 
-let i = 0;
+let typeIndex = 0;
 
 let isDeleting = false;
 
@@ -1192,13 +1259,16 @@ function typeLoop() {
   if (!isDeleting) {
 
     el.textContent =
-      text.substring(
+      headingText.substring(
         0,
-        i++
+        typeIndex++
       );
 
 
-    if (i > text.length) {
+    if (
+      typeIndex >
+      headingText.length
+    ) {
 
       isDeleting = true;
 
@@ -1208,6 +1278,7 @@ function typeLoop() {
       );
 
       return;
+
     }
 
   }
@@ -1215,13 +1286,15 @@ function typeLoop() {
   else {
 
     el.textContent =
-      text.substring(
+      headingText.substring(
         0,
-        i--
+        typeIndex--
       );
 
 
-    if (i < 0) {
+    if (
+      typeIndex < 0
+    ) {
 
       isDeleting = false;
 
@@ -1254,7 +1327,12 @@ const spreadsheetId =
   "1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE";
 
 
-/* Main Games sheet */
+/*
+   MAIN GAMES SHEET
+
+   We keep the original export URL because
+   this is already working for your store.
+*/
 
 const sheetUrl =
   "https://docs.google.com/spreadsheets/d/" +
@@ -1262,12 +1340,18 @@ const sheetUrl =
   "/export?format=csv";
 
 
-/* Files sheet */
+/*
+   ADDITIONAL FILES SHEET
+
+   IMPORTANT:
+   Your sheet is named "files"
+   with a lowercase f.
+*/
 
 const filesSheetUrl =
   "https://docs.google.com/spreadsheets/d/" +
   spreadsheetId +
-  "/gviz/tq?tqx=out:csv&sheet=Files";
+  "/gviz/tq?tqx=out:csv&sheet=files";
 
 
 let allGames = [];
@@ -1371,7 +1455,6 @@ function parseCSV(csv) {
       if (
 
         char === "\r" &&
-
         next === "\n"
 
       ) {
@@ -1421,7 +1504,6 @@ function parseCSV(csv) {
   if (
 
     value !== "" ||
-
     row.length > 0
 
   ) {
@@ -1458,7 +1540,7 @@ function parseCSV(csv) {
 
 function escapeHTML(value) {
 
-  return String(value || "")
+  return String(value ?? "")
 
     .replace(
       /&/g,
@@ -1504,9 +1586,9 @@ function showSkeletons() {
 
 
   for (
-    let i = 0;
-    i < 6;
-    i++
+    let n = 0;
+    n < 6;
+    n++
   ) {
 
     const card =
@@ -1546,7 +1628,9 @@ function showSkeletons() {
     `;
 
 
-    grid.appendChild(card);
+    grid.appendChild(
+      card
+    );
 
   }
 
@@ -1554,405 +1638,256 @@ function showSkeletons() {
 
 
 /* =========================================================
-   FETCH MAIN GAMES + FILES
+   LOAD FILES SHEET
+   IMPORTANT:
+   This function is completely independent
+   from the main Games sheet.
 ========================================================= */
 
-function fetchData() {
+async function loadFilesSheet() {
 
-  document.getElementById(
-    "loader"
-  ).style.display =
-    "block";
+  try {
 
+    /*
+       Timeout after 8 seconds.
 
-  document.getElementById(
-    "retryBtn"
-  ).style.display =
-    "none";
+       Even if Google Sheets gets stuck,
+       the store continues normally.
+    */
 
-
-  showSkeletons();
+    const controller =
+      new AbortController();
 
 
-  /*
-     Fetch Games and Files separately.
-
-     If Files sheet fails, the main
-     Games sheet can still work.
-  */
-
-  Promise.all([
-
-    fetch(sheetUrl)
-      .then(res => {
-
-     d55uE/export?format=csv";
+    const timeout =
+      setTimeout(
+        () => {
+          controller.abort();
+        },
+        8000
+      );
 
 
-let allGames = [];
-
-let retries = 0;
-
-
-/* =========================================================
-   CSV PARSER
-   Handles commas inside quoted cells
-========================================================= */
-
-function parseCSV(csv) {
-
-  const rows = [];
-
-  let row = [];
-
-  let value = "";
-
-  let insideQuotes = false;
+    const response =
+      await fetch(
+        filesSheetUrl,
+        {
+          signal:
+            controller.signal
+        }
+      );
 
 
-  for (
-    let i = 0;
-    i < csv.length;
-    i++
-  ) {
-
-    const char =
-      csv[i];
-
-    const next =
-      csv[i + 1];
+    clearTimeout(
+      timeout
+    );
 
 
-    /* Double quote inside quoted value */
+    if (!response.ok) {
+
+      throw new Error(
+        "Files sheet HTTP error: " +
+        response.status
+      );
+
+    }
+
+
+    const csv =
+      await response.text();
+
+
+    const rows =
+      parseCSV(csv);
+
 
     if (
-
-      char === '"' &&
-
-      insideQuotes &&
-
-      next === '"'
-
+      rows.length === 0
     ) {
 
-      value += '"';
+      allFiles = [];
 
-      i++;
+      return;
 
     }
 
 
-    /* Start/end quotes */
+    /*
+       Remove header row.
+    */
 
-    else if (
-      char === '"'
-    ) {
-
-      insideQuotes =
-        !insideQuotes;
-
-    }
+    rows.shift();
 
 
-    /* Column separator */
+    allFiles =
+      rows
 
-    else if (
-
-      char === "," &&
-
-      !insideQuotes
-
-    ) {
-
-      row.push(
-        value.trim()
-      );
-
-      value = "";
-
-    }
-
-
-    /* New row */
-
-    else if (
-
-      (
-        char === "\n" ||
-        char === "\r"
-      ) &&
-
-      !insideQuotes
-
-    ) {
-
-      if (
-
-        char === "\r" &&
-
-        next === "\n"
-
-      ) {
-
-        i++;
-
-      }
-
-
-      row.push(
-        value.trim()
-      );
-
-      value = "";
-
-
-      /* Ignore completely empty rows */
-
-      if (
-
-        row.some(
-          cell =>
-            cell !== ""
+        .filter(
+          row =>
+            row.length >= 6
         )
 
-      ) {
+        .map(row => {
 
-        rows.push(row);
+          return {
 
-      }
+            game:
+              row[0] || "",
+
+            type:
+              row[1] || "File",
+
+            name:
+              row[2] || "Download",
+
+            size:
+              row[3] || "",
+
+            description:
+              row[4] || "",
+
+            link:
+              row[5] || ""
+
+          };
+
+        });
 
 
-      row = [];
-
-    }
-
-
-    /* Normal character */
-
-    else {
-
-      value += char;
-
-    }
+    console.log(
+      "Additional files loaded:",
+      allFiles
+    );
 
   }
 
+  catch (error) {
 
-  /* Add final row */
-
-  if (
-
-    value !== "" ||
-
-    row.length > 0
-
-  ) {
-
-    row.push(
-      value.trim()
+    console.warn(
+      "Files sheet unavailable. " +
+      "The normal game links will still work.",
+      error
     );
 
 
-    if (
+    /*
+       IMPORTANT:
 
-      row.some(
-        cell =>
-          cell !== ""
-      )
+       Never break the store because
+       the Files sheet failed.
+    */
 
-    ) {
-
-      rows.push(row);
-
-    }
+    allFiles = [];
 
   }
-
-
-  return rows;
 
 }
 
 
 /* =========================================================
-   HTML ESCAPE
+   FETCH MAIN GAMES
 ========================================================= */
 
-function escapeHTML(value) {
+async function fetchData() {
 
-  return String(value || "")
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   SHOW SKELETONS
-========================================================= */
-
-function showSkeletons() {
-
-  const grid =
+  const loader =
     document.getElementById(
-      "grid"
+      "loader"
+    );
+
+  const retryBtn =
+    document.getElementById(
+      "retryBtn"
     );
 
 
-  grid.innerHTML = "";
-
-
-  for (
-    let i = 0;
-    i < 6;
-    i++
-  ) {
-
-    const card =
-      document.createElement(
-        "div"
-      );
-
-
-    card.className =
-      "card";
-
-
-    card.innerHTML = `
-
-      <div
-        class="skeleton skeleton-img"
-      ></div>
-
-      <div class="info">
-
-        <div
-          class="skeleton skeleton-text"
-        ></div>
-
-        <div
-          class="skeleton skeleton-text"
-          style="width:60%;"
-        ></div>
-
-        <div
-          class="skeleton skeleton-text"
-          style="width:80%;"
-        ></div>
-
-      </div>
-
-    `;
-
-
-    grid.appendChild(card);
-
-  }
-
-}
-
-
-/* =========================================================
-   FETCH GOOGLE SHEET
-========================================================= */
-
-function fetchData() {
-
-  document.getElementById(
-    "loader"
-  ).style.display =
+  loader.style.display =
     "block";
 
 
-  document.getElementById(
-    "retryBtn"
-  ).style.display =
+  retryBtn.style.display =
     "none";
 
 
   showSkeletons();
 
 
-  fetch(sheetUrl)
+  try {
 
-    .then(res => {
+    /*
+       Timeout for the MAIN sheet too.
+    */
 
-      if (!res.ok) {
-
-        throw new Error(
-          "Failed to load CSV"
-        );
-
-      }
+    const controller =
+      new AbortController();
 
 
-      return res.text();
-
-    })
-
-
-    .then(csv => {
-
-      document.getElementById(
-        "loader"
-      ).style.display =
-        "none";
+    const timeout =
+      setTimeout(
+        () => {
+          controller.abort();
+        },
+        10000
+      );
 
 
-      retries = 0;
+    const response =
+      await fetch(
+        sheetUrl,
+        {
+          signal:
+            controller.signal
+        }
+      );
 
 
-      /* Parse CSV */
-
-      const rows =
-        parseCSV(csv);
-
-
-      /* Remove header */
-
-      if (
-        rows.length > 0
-      ) {
-
-        rows.shift();
-
-      }
+    clearTimeout(
+      timeout
+    );
 
 
-      /* =====================================================
-         COLUMN STRUCTURE
+    if (!response.ok) {
 
-         A = name
-         B = Platform
-         C = image
-         D = link
-         E = info
-      ===================================================== */
+      throw new Error(
+        "Games sheet HTTP error: " +
+        response.status
+      );
 
-      allGames = rows
+    }
+
+
+    const csv =
+      await response.text();
+
+
+    /* =====================================================
+       PARSE GAMES
+    ===================================================== */
+
+    const rows =
+      parseCSV(csv);
+
+
+    if (
+      rows.length === 0
+    ) {
+
+      throw new Error(
+        "Games sheet is empty"
+      );
+
+    }
+
+
+    /*
+       Remove header.
+    */
+
+    rows.shift();
+
+
+    allGames =
+      rows
 
         .filter(
           row =>
@@ -1983,68 +1918,105 @@ function fetchData() {
         });
 
 
-      console.log(
-        "Games loaded:",
-        allGames
+    console.log(
+      "Games loaded:",
+      allGames
+    );
+
+
+    retries = 0;
+
+
+    loader.style.display =
+      "none";
+
+
+    /*
+       DISPLAY GAMES IMMEDIATELY.
+    */
+
+    displayGames(
+      allGames
+    );
+
+
+    /*
+       Handle a shared URL.
+    */
+
+    openSharedGame();
+
+
+    /*
+       Load the Files sheet AFTER
+       the games are already visible.
+
+       It can no longer block the store.
+    */
+
+    loadFilesSheet();
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Games loading error:",
+      error
+    );
+
+
+    retries++;
+
+
+    if (
+      retries < 3
+    ) {
+
+      setTimeout(
+        fetchData,
+        1500
       );
 
+    }
 
-      displayGames(
-        allGames
-      );
+    else {
 
-
-      /* Check for a shared game */
-
-      openSharedGame();
-
-    })
+      loader.style.display =
+        "none";
 
 
-    .catch(error => {
-
-      console.error(
-        "CSV loading error:",
-        error
-      );
+      retryBtn.style.display =
+        "block";
 
 
-      retries++;
+      document.getElementById(
+        "grid"
+      ).innerHTML = `
 
+        <div class="no-results">
 
-      if (
-        retries < 3
-      ) {
+          Unable to load games.
 
-        setTimeout(
-          fetchData,
-          1500
-        );
+          <br><br>
 
-      }
+          Please check your internet
+          connection and try again.
 
-      else {
+        </div>
 
-        document.getElementById(
-          "loader"
-        ).style.display =
-          "none";
+      `;
 
+    }
 
-        document.getElementById(
-          "retryBtn"
-        ).style.display =
-          "block";
-
-      }
-
-    });
+  }
 
 }
 
 
 /* =========================================================
-   RETRY BUTTON
+   RETRY
 ========================================================= */
 
 document.getElementById(
@@ -2057,6 +2029,234 @@ document.getElementById(
   fetchData();
 
 };
+
+
+/* =========================================================
+   FILE ICON
+========================================================= */
+
+function getFileIcon(type) {
+
+  const t =
+    String(type || "")
+      .toLowerCase();
+
+
+  /* Game */
+
+  if (
+
+    t.includes("game") ||
+    t.includes("iso") ||
+    t.includes("rom")
+
+  ) {
+
+    return `
+
+      <svg viewBox="0 0 24 24">
+
+        <rect
+          x="3"
+          y="5"
+          width="18"
+          height="14"
+          rx="2"
+        ></rect>
+
+        <path
+          d="M8 9v6"
+        ></path>
+
+        <path
+          d="M5 12h6"
+        ></path>
+
+        <circle
+          cx="17"
+          cy="10"
+          r="1"
+        ></circle>
+
+        <circle
+          cx="17"
+          cy="14"
+          r="1"
+        ></circle>
+
+      </svg>
+
+    `;
+
+  }
+
+
+  /* Emulator */
+
+  if (
+    t.includes("emulator")
+  ) {
+
+    return `
+
+      <svg viewBox="0 0 24 24">
+
+        <rect
+          x="3"
+          y="7"
+          width="18"
+          height="10"
+          rx="3"
+        ></rect>
+
+        <path
+          d="M8 12h4"
+        ></path>
+
+        <path
+          d="M10 10v4"
+        ></path>
+
+        <circle
+          cx="16"
+          cy="11"
+          r="1"
+        ></circle>
+
+        <circle
+          cx="18"
+          cy="13"
+          r="1"
+        ></circle>
+
+      </svg>
+
+    `;
+
+  }
+
+
+  /* Driver */
+
+  if (
+    t.includes("driver")
+  ) {
+
+    return `
+
+      <svg viewBox="0 0 24 24">
+
+        <path
+          d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"
+        ></path>
+
+        <path
+          d="M19 15l1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2z"
+        ></path>
+
+      </svg>
+
+    `;
+
+  }
+
+
+  /* Patch */
+
+  if (
+
+    t.includes("patch") ||
+    t.includes("fix") ||
+    t.includes("update")
+
+  ) {
+
+    return `
+
+      <svg viewBox="0 0 24 24">
+
+        <path
+          d="M14 6l4 4"
+        ></path>
+
+        <path
+          d="M5 19l6-6"
+        ></path>
+
+        <path
+          d="M13 7l4-4 4 4-4 4"
+        ></path>
+
+        <path
+          d="M11 17l-4 4-4-4 4-4"
+        ></path>
+
+      </svg>
+
+    `;
+
+  }
+
+
+  /* Default */
+
+  return `
+
+    <svg viewBox="0 0 24 24">
+
+      <path
+        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+      ></path>
+
+      <path
+        d="M14 2v6h6"
+      ></path>
+
+      <path
+        d="M8 13h8"
+      ></path>
+
+      <path
+        d="M8 17h6"
+      ></path>
+
+    </svg>
+
+  `;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD ICON
+========================================================= */
+
+function getDownloadIcon() {
+
+  return `
+
+    <svg
+      class="download-icon"
+      viewBox="0 0 24 24"
+    >
+
+      <path
+        d="M12 3v12"
+      ></path>
+
+      <path
+        d="M7 10l5 5 5-5"
+      ></path>
+
+      <path
+        d="M5 21h14"
+      ></path>
+
+    </svg>
+
+  `;
+
+}
 
 
 /* =========================================================
@@ -2074,8 +2274,6 @@ function displayGames(games) {
   grid.innerHTML = "";
 
 
-  /* No games */
-
   if (
     !games.length
   ) {
@@ -2083,7 +2281,9 @@ function displayGames(games) {
     grid.innerHTML = `
 
       <div class="no-results">
+
         No games found.
+
       </div>
 
     `;
@@ -2105,7 +2305,17 @@ function displayGames(games) {
       "card";
 
 
-    /* Safely escape text */
+    /*
+       IMPORTANT:
+
+       We put the raw game name into
+       dataset instead of an escaped
+       HTML version.
+    */
+
+    card.dataset.game =
+      game.name;
+
 
     const name =
       escapeHTML(
@@ -2131,12 +2341,6 @@ function displayGames(games) {
       );
 
 
-    const link =
-      escapeHTML(
-        game.link
-      );
-
-
     card.innerHTML = `
 
       <img
@@ -2155,16 +2359,19 @@ function displayGames(games) {
 
 
         <p>
-          Platform: ${platform}
+          Platform:
+          ${platform}
         </p>
 
 
         <p>
+
           Info:
           ${
             info ||
             "No information available"
           }
+
         </p>
 
       </div>
@@ -2172,25 +2379,22 @@ function displayGames(games) {
 
       <div class="card-actions">
 
-        <a
-          class="btn"
-          href="${link}"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          class="btn open-download"
+          type="button"
         >
+
           Download
-        </a>
+
+        </button>
 
 
         <button
           class="share-btn"
           type="button"
-          data-game="${name}"
           aria-label="Share ${name}"
           title="Share ${name}"
         >
-
-          <!-- Real share icon -->
 
           <svg
             class="share-icon"
@@ -2249,6 +2453,443 @@ function displayGames(games) {
 
 
 /* =========================================================
+   OPEN DOWNLOAD POPUP
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e) {
+
+    const button =
+      e.target.closest(
+        ".open-download"
+      );
+
+
+    if (!button) {
+
+      return;
+
+    }
+
+
+    const card =
+      button.closest(
+        ".card"
+      );
+
+
+    if (!card) {
+
+      return;
+
+    }
+
+
+    const gameName =
+      card.dataset.game ||
+      "";
+
+
+    openDownloadPopup(
+      gameName
+    );
+
+  }
+);
+
+
+/* =========================================================
+   OPEN POPUP
+========================================================= */
+
+function openDownloadPopup(
+  gameName
+) {
+
+  const game =
+    allGames.find(
+      g =>
+        g.name
+          .toLowerCase()
+          .trim() ===
+
+        gameName
+          .toLowerCase()
+          .trim()
+    );
+
+
+  if (!game) {
+
+    return;
+
+  }
+
+
+  const overlay =
+    document.getElementById(
+      "downloadOverlay"
+    );
+
+
+  const title =
+    document.getElementById(
+      "modalGameTitle"
+    );
+
+
+  const subtitle =
+    document.getElementById(
+      "modalGameSubtitle"
+    );
+
+
+  const fileList =
+    document.getElementById(
+      "fileList"
+    );
+
+
+  title.textContent =
+    game.name;
+
+
+  subtitle.textContent =
+    game.Platform
+
+      ? "Platform: " +
+        game.Platform
+
+      : "Files & Downloads";
+
+
+  /*
+     Find all files for this game.
+
+     Matching is case-insensitive.
+  */
+
+  const matchingFiles =
+    allFiles.filter(
+      file =>
+
+        file.game
+          .toLowerCase()
+          .trim() ===
+
+        game.name
+          .toLowerCase()
+          .trim()
+    );
+
+
+  /*
+     If additional files exist,
+     use them.
+
+     Otherwise fallback to
+     the original game.link.
+  */
+
+  let files =
+    matchingFiles;
+
+
+  if (
+
+    !files.length &&
+    game.link
+
+  ) {
+
+    files = [
+
+      {
+
+        game:
+          game.name,
+
+        type:
+          "Game",
+
+        name:
+          game.name +
+          " - Game File",
+
+        size:
+          "",
+
+        description:
+          "Main game download",
+
+        link:
+          game.link
+
+      }
+
+    ];
+
+  }
+
+
+  fileList.innerHTML = "";
+
+
+  /*
+     No files available.
+  */
+
+  if (
+    !files.length
+  ) {
+
+    fileList.innerHTML = `
+
+      <div class="no-files">
+
+        No download files are
+        currently available.
+
+      </div>
+
+    `;
+
+  }
+
+
+  /*
+     Create each file.
+  */
+
+  files.forEach(
+    file => {
+
+      if (!file.link) {
+
+        return;
+
+      }
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "file-item";
+
+
+      const type =
+        escapeHTML(
+          file.type ||
+          "File"
+        );
+
+
+      const fileName =
+        escapeHTML(
+          file.name ||
+          "Download"
+        );
+
+
+      const size =
+        escapeHTML(
+          file.size
+        );
+
+
+      const description =
+        escapeHTML(
+          file.description
+        );
+
+
+      const link =
+        escapeHTML(
+          file.link
+        );
+
+
+      item.innerHTML = `
+
+        <div class="file-icon">
+
+          ${getFileIcon(
+            file.type
+          )}
+
+        </div>
+
+
+        <div class="file-details">
+
+          <div class="file-type">
+
+            ${type}
+
+          </div>
+
+
+          <div class="file-name">
+
+            ${fileName}
+
+          </div>
+
+
+          ${
+            size
+
+              ? `
+
+                <div class="file-size">
+
+                  ${size}
+
+                </div>
+
+              `
+
+              : ""
+
+          }
+
+
+          ${
+            description
+
+              ? `
+
+                <div class="file-description">
+
+                  ${description}
+
+                </div>
+
+              `
+
+              : ""
+
+          }
+
+        </div>
+
+
+        <a
+          class="file-download"
+          href="${link}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          ${getDownloadIcon()}
+
+          <span>
+
+            Download
+
+          </span>
+
+        </a>
+
+      `;
+
+
+      fileList.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  overlay.style.display =
+    "flex";
+
+
+  document.body.classList.add(
+    "modal-open"
+  );
+
+}
+
+
+/* =========================================================
+   CLOSE POPUP
+========================================================= */
+
+function closeDownloadPopup() {
+
+  document.getElementById(
+    "downloadOverlay"
+  ).style.display =
+    "none";
+
+
+  document.body.classList.remove(
+    "modal-open"
+  );
+
+}
+
+
+document.getElementById(
+  "closeModal"
+)
+.addEventListener(
+  "click",
+  closeDownloadPopup
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE POPUP
+========================================================= */
+
+document.getElementById(
+  "downloadOverlay"
+)
+.addEventListener(
+  "click",
+  function(e) {
+
+    if (
+      e.target === this
+    ) {
+
+      closeDownloadPopup();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(e) {
+
+    if (
+      e.key === "Escape"
+    ) {
+
+      closeDownloadPopup();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
    GAME SHARING
 ========================================================= */
 
@@ -2269,24 +2910,36 @@ document.addEventListener(
     }
 
 
+    const card =
+      shareButton.closest(
+        ".card"
+      );
+
+
+    if (!card) {
+
+      return;
+
+    }
+
+
     const gameName =
-      shareButton.dataset.game ||
+      card.dataset.game ||
       "Game";
 
 
     /*
-       Create a direct link
-       to this specific game.
+       Create clean share URL.
+
+       Example:
+
+       https://gaminghood.online/?game=WWE%202K25
     */
 
     const shareUrl =
-
       window.location.origin +
-
       window.location.pathname +
-
       "?game=" +
-
       encodeURIComponent(
         gameName
       );
@@ -2303,9 +2956,10 @@ document.addEventListener(
       " on Gaming Hood Store";
 
 
-    /* =====================================================
-       NATIVE SHARE
-    ===================================================== */
+    /*
+       Android / Chrome / modern browsers
+       use the native share menu.
+    */
 
     if (
       navigator.share
@@ -2331,8 +2985,7 @@ document.addEventListener(
       catch (error) {
 
         /*
-           User cancelled the
-           share menu.
+           User pressing Cancel is normal.
         */
 
         if (
@@ -2355,9 +3008,9 @@ document.addEventListener(
     }
 
 
-    /* =====================================================
-       CLIPBOARD FALLBACK
-    ===================================================== */
+    /*
+       Clipboard fallback.
+    */
 
     try {
 
@@ -2376,7 +3029,7 @@ document.addEventListener(
     catch (error) {
 
       /*
-         Older browser fallback.
+         Older-browser fallback.
       */
 
       const textarea =
@@ -2405,9 +3058,22 @@ document.addEventListener(
       textarea.select();
 
 
-      document.execCommand(
-        "copy"
-      );
+      try {
+
+        document.execCommand(
+          "copy"
+        );
+
+      }
+
+      catch (copyError) {
+
+        console.error(
+          "Copy failed:",
+          copyError
+        );
+
+      }
 
 
       textarea.remove();
@@ -2463,11 +3129,20 @@ function showShareMessage(
   );
 
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    messageBox.remove();
+      if (
+        messageBox.parentNode
+      ) {
 
-  }, 2000);
+        messageBox.remove();
+
+      }
+
+    },
+    2000
+  );
 
 }
 
@@ -2501,6 +3176,7 @@ function openSharedGame() {
         g.name
           .toLowerCase()
           .trim() ===
+
         sharedGame
           .toLowerCase()
           .trim()
@@ -2515,8 +3191,7 @@ function openSharedGame() {
 
 
   /*
-     Display only the
-     shared game.
+     Display only the shared game.
   */
 
   displayGames([
@@ -2525,18 +3200,24 @@ function openSharedGame() {
 
 
   /*
-     Scroll to the game.
+     Highlight it after rendering.
   */
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    const firstCard =
-      document.querySelector(
-        ".card"
-      );
+      const firstCard =
+        document.querySelector(
+          ".card"
+        );
 
 
-    if (firstCard) {
+      if (!firstCard) {
+
+        return;
+
+      }
+
 
       firstCard.scrollIntoView({
 
@@ -2549,24 +3230,23 @@ function openSharedGame() {
       });
 
 
-      /*
-         Highlight shared game.
-      */
-
       firstCard.style.boxShadow =
         "0 0 0 3px #2196F3";
 
 
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        firstCard.style.boxShadow =
-          "";
+          firstCard.style.boxShadow =
+            "";
 
-      }, 3000);
+        },
+        3000
+      );
 
-    }
-
-  }, 200);
+    },
+    250
+  );
 
 }
 
@@ -2681,7 +3361,8 @@ backToTop.addEventListener(
 
       top: 0,
 
-      behavior: "smooth"
+      behavior:
+        "smooth"
 
     });
 
@@ -2767,7 +3448,9 @@ document.addEventListener(
     }
 
 
-    /* Ignore navigation */
+    /*
+       Ignore site navigation.
+    */
 
     if (
       link.closest(
@@ -2780,7 +3463,9 @@ document.addEventListener(
     }
 
 
-    /* Ignore popular posts */
+    /*
+       Ignore popular posts.
+    */
 
     if (
       link.closest(
@@ -2793,7 +3478,9 @@ document.addEventListener(
     }
 
 
-    /* Check download domain */
+    /*
+       Check download domain.
+    */
 
     const isDownload =
       downloadDomains.some(
@@ -2811,12 +3498,17 @@ document.addEventListener(
     }
 
 
-    /* Stop normal navigation */
+    /*
+       Stop normal navigation.
+    */
 
     e.preventDefault();
 
 
-    /* First click loads ad */
+    /*
+       First download click:
+       load ad.
+    */
 
     if (firstClick) {
 
@@ -2847,7 +3539,10 @@ document.addEventListener(
     }
 
 
-    /* Second click opens download */
+    /*
+       Second click:
+       open download.
+    */
 
     window.open(
 
@@ -2870,4 +3565,5 @@ fetchData();
 </script>
 
 </body>
+
 </html>
