@@ -31,52 +31,84 @@ body {
 
 
 /* =========================================================
-   HEADING
+   HEADING / HOME BUTTON
 ========================================================= */
 
 .heading {
   text-align: center;
+
   font-size: 26px;
+
   font-weight: bold;
+
   margin: 10px auto 5px;
+
   color: #2196F3;
+
   white-space: nowrap;
+
   overflow: hidden;
-  border-right: 3px solid #2196F3;
+
   width: fit-content;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    transform 0.15s,
+    opacity 0.15s;
+}
+
+.heading:active {
+  transform: scale(0.96);
+
+  opacity: 0.75;
 }
 
 .cursor {
   display: inline-block;
+
   margin-left: 2px;
-  animation: blink 0.7s infinite;
+
+  animation:
+    blink 0.7s infinite;
 }
 
 @keyframes blink {
+
   50% {
     opacity: 0;
   }
+
 }
 
 
 /* =========================================================
-   SEARCH
+   SEARCH BAR
 ========================================================= */
 
 .search-bar {
+
   position: sticky;
+
   top: 0;
+
   z-index: 100;
 
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 
   padding: 10px;
 
-  background: rgba(255,255,255,0.25);
+  background:
+    rgba(255,255,255,0.25);
 
-  backdrop-filter: blur(10px);
+  backdrop-filter:
+    blur(10px);
 
   border-radius: 20px;
 
@@ -87,6 +119,7 @@ body {
 }
 
 .search-bar input {
+
   width: 70%;
 
   padding: 10px 14px;
@@ -95,14 +128,17 @@ body {
 
   border: none;
 
-  border-radius: 25px 0 0 25px;
+  border-radius:
+    25px 0 0 25px;
 
   outline: none;
 
-  background: rgba(255,255,255,0.7);
+  background:
+    rgba(255,255,255,0.7);
 }
 
 .search-bar button {
+
   background: #2196F3;
 
   border: none;
@@ -111,7 +147,8 @@ body {
 
   padding: 10px 15px;
 
-  border-radius: 0 25px 25px 0;
+  border-radius:
+    0 25px 25px 0;
 
   cursor: pointer;
 
@@ -119,6 +156,7 @@ body {
 }
 
 .search-bar button:hover {
+
   background: #1976D2;
 }
 
@@ -128,10 +166,14 @@ body {
 ========================================================= */
 
 .grid {
+
   display: grid;
 
   grid-template-columns:
-    repeat(auto-fill, minmax(160px, 1fr));
+    repeat(
+      auto-fill,
+      minmax(160px, 1fr)
+    );
 
   gap: 15px;
 
@@ -144,6 +186,7 @@ body {
 ========================================================= */
 
 .card {
+
   background: white;
 
   border-radius: 10px;
@@ -165,13 +208,16 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-2px);
+
+  transform:
+    translateY(-2px);
 
   box-shadow:
     0 5px 12px rgba(0,0,0,0.18);
 }
 
 .card img {
+
   width: 100%;
 
   height: 140px;
@@ -184,15 +230,18 @@ body {
 }
 
 .card .info {
+
   padding: 10px;
 
   flex: 1;
 }
 
 .card h3 {
+
   font-size: 16px;
 
-  margin: 0 0 8px;
+  margin:
+    0 0 8px;
 
   line-height: 1.25;
 
@@ -200,11 +249,13 @@ body {
 }
 
 .card p {
+
   font-size: 13px;
 
   color: gray;
 
-  margin: 0 0 10px;
+  margin:
+    0 0 10px;
 
   line-height: 1.4;
 
@@ -217,12 +268,14 @@ body {
 ========================================================= */
 
 .card-actions {
+
   display: flex;
 
   width: 100%;
 }
 
 .card-actions .btn {
+
   flex: 1;
 
   display: flex;
@@ -248,9 +301,13 @@ body {
   border: none;
 
   cursor: pointer;
+
+  transition:
+    background 0.2s;
 }
 
 .card-actions .btn:hover {
+
   background: #1976D2;
 }
 
@@ -260,7 +317,9 @@ body {
 ========================================================= */
 
 .share-btn {
-  flex: 0 0 52px;
+
+  flex:
+    0 0 52px;
 
   display: flex;
 
@@ -278,25 +337,31 @@ body {
 
   padding: 0;
 
-  border-radius: 0 0 10px 0;
+  border-radius:
+    0 0 10px 0;
 }
 
 .share-btn:hover {
+
   background: #1565C0;
 }
 
 .share-btn:active {
-  transform: scale(0.94);
+
+  transform:
+    scale(0.94);
 }
 
 .share-icon {
+
   width: 22px;
 
   height: 22px;
 
   fill: none;
 
-  stroke: currentColor;
+  stroke:
+    currentColor;
 
   stroke-width: 2;
 
@@ -307,10 +372,74 @@ body {
 
 
 /* =========================================================
+   BACK TO HOME
+========================================================= */
+
+#backHome {
+
+  display: none;
+
+  width: 100%;
+
+  max-width: 360px;
+
+  margin:
+    18px auto 8px;
+
+  padding:
+    11px 18px;
+
+  border:
+    1px solid #dceaf7;
+
+  border-radius: 25px;
+
+  background:
+    rgba(255,255,255,0.75);
+
+  backdrop-filter:
+    blur(8px);
+
+  color: #2196F3;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 12px
+    rgba(33,150,243,0.10);
+
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
+}
+
+#backHome:hover {
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 15px
+    rgba(33,150,243,0.15);
+}
+
+#backHome:active {
+
+  transform:
+    scale(0.97);
+}
+
+
+/* =========================================================
    DOWNLOAD OVERLAY
 ========================================================= */
 
 .download-overlay {
+
   position: fixed;
 
   inset: 0;
@@ -318,7 +447,8 @@ body {
   background:
     rgba(0,0,0,0.55);
 
-  backdrop-filter: blur(5px);
+  backdrop-filter:
+    blur(5px);
 
   display: none;
 
@@ -337,6 +467,7 @@ body {
 ========================================================= */
 
 .download-modal {
+
   width: 100%;
 
   max-width: 500px;
@@ -350,27 +481,33 @@ body {
   border-radius: 18px;
 
   box-shadow:
-    0 15px 50px rgba(0,0,0,0.3);
+    0 15px 50px
+    rgba(0,0,0,0.3);
 
-  animation: modalIn 0.2s ease-out;
+  animation:
+    modalIn 0.2s ease-out;
 }
 
 @keyframes modalIn {
 
   from {
+
     opacity: 0;
 
     transform:
       translateY(20px)
       scale(0.97);
+
   }
 
   to {
+
     opacity: 1;
 
     transform:
       translateY(0)
       scale(1);
+
   }
 
 }
@@ -381,6 +518,7 @@ body {
 ========================================================= */
 
 .modal-header {
+
   display: flex;
 
   align-items: center;
@@ -394,12 +532,14 @@ body {
 }
 
 .modal-title-area {
+
   min-width: 0;
 
   padding-right: 10px;
 }
 
 .modal-title {
+
   margin: 0;
 
   font-size: 21px;
@@ -410,7 +550,9 @@ body {
 }
 
 .modal-subtitle {
-  margin: 5px 0 0;
+
+  margin:
+    5px 0 0;
 
   color: #777;
 
@@ -418,6 +560,7 @@ body {
 }
 
 .close-modal {
+
   width: 38px;
 
   height: 38px;
@@ -442,10 +585,12 @@ body {
 }
 
 .close-modal:hover {
+
   background: #e5e5e5;
 }
 
 .close-icon {
+
   width: 20px;
 
   height: 20px;
@@ -465,7 +610,9 @@ body {
 ========================================================= */
 
 .modal-body {
-  padding: 14px 15px 18px;
+
+  padding:
+    14px 15px 18px;
 }
 
 
@@ -474,6 +621,7 @@ body {
 ========================================================= */
 
 .file-item {
+
   display: flex;
 
   align-items: center;
@@ -486,12 +634,14 @@ body {
 
   background: #f7f9fb;
 
-  border: 1px solid #e7ebef;
+  border:
+    1px solid #e7ebef;
 
   border-radius: 12px;
 }
 
 .file-item:last-child {
+
   margin-bottom: 0;
 }
 
@@ -501,6 +651,7 @@ body {
 ========================================================= */
 
 .file-icon {
+
   width: 42px;
 
   height: 42px;
@@ -521,6 +672,7 @@ body {
 }
 
 .file-icon svg {
+
   width: 22px;
 
   height: 22px;
@@ -542,12 +694,14 @@ body {
 ========================================================= */
 
 .file-details {
+
   flex: 1;
 
   min-width: 0;
 }
 
 .file-type {
+
   display: inline-block;
 
   font-size: 10px;
@@ -562,6 +716,7 @@ body {
 }
 
 .file-name {
+
   font-size: 15px;
 
   font-weight: bold;
@@ -574,6 +729,7 @@ body {
 }
 
 .file-size {
+
   font-size: 12px;
 
   color: #777;
@@ -582,6 +738,7 @@ body {
 }
 
 .file-description {
+
   font-size: 12px;
 
   color: #777;
@@ -593,10 +750,11 @@ body {
 
 
 /* =========================================================
-   DOWNLOAD BUTTON
+   FILE DOWNLOAD BUTTON
 ========================================================= */
 
 .file-download {
+
   flex-shrink: 0;
 
   display: flex;
@@ -613,7 +771,8 @@ body {
 
   color: white;
 
-  padding: 9px 11px;
+  padding:
+    9px 11px;
 
   border-radius: 8px;
 
@@ -627,10 +786,12 @@ body {
 }
 
 .file-download:hover {
+
   background: #1976D2;
 }
 
 .download-icon {
+
   width: 15px;
 
   height: 15px;
@@ -652,9 +813,11 @@ body {
 ========================================================= */
 
 .no-files {
+
   text-align: center;
 
-  padding: 25px 10px;
+  padding:
+    25px 10px;
 
   color: #777;
 
@@ -669,17 +832,21 @@ body {
 ========================================================= */
 
 #backToTop {
+
   position: fixed;
 
   bottom: 20px;
 
   right: 20px;
 
-  background: rgba(255,255,255,0.8);
+  background:
+    rgba(255,255,255,0.8);
 
   color: #2196F3;
 
-  border: 1px solid rgba(255,255,255,0.4);
+  border:
+    1px solid
+    rgba(255,255,255,0.4);
 
   border-radius: 50%;
 
@@ -692,9 +859,11 @@ body {
   cursor: pointer;
 
   box-shadow:
-    0 4px 15px rgba(0,0,0,0.2);
+    0 4px 15px
+    rgba(0,0,0,0.2);
 
-  backdrop-filter: blur(8px);
+  backdrop-filter:
+    blur(8px);
 
   display: none;
 
@@ -707,19 +876,23 @@ body {
 ========================================================= */
 
 #loader {
+
   text-align: center;
 
   margin-top: 20px;
 }
 
 .spinner {
+
   width: 30px;
 
   height: 30px;
 
-  border: 4px solid #ddd;
+  border:
+    4px solid #ddd;
 
-  border-top: 4px solid #2196F3;
+  border-top:
+    4px solid #2196F3;
 
   border-radius: 50%;
 
@@ -732,7 +905,10 @@ body {
 @keyframes spin {
 
   100% {
-    transform: rotate(360deg);
+
+    transform:
+      rotate(360deg);
+
   }
 
 }
@@ -743,11 +919,14 @@ body {
 ========================================================= */
 
 #retryBtn {
+
   display: none;
 
-  margin: 15px auto;
+  margin:
+    15px auto;
 
-  padding: 10px 20px;
+  padding:
+    10px 20px;
 
   background: #ff5252;
 
@@ -768,11 +947,14 @@ body {
 ========================================================= */
 
 .no-results {
-  grid-column: 1 / -1;
+
+  grid-column:
+    1 / -1;
 
   text-align: center;
 
-  padding: 30px 10px;
+  padding:
+    30px 10px;
 
   color: #777;
 
@@ -785,6 +967,7 @@ body {
 ========================================================= */
 
 .skeleton {
+
   animation:
     shimmer 1.2s infinite;
 
@@ -801,10 +984,12 @@ body {
 }
 
 .skeleton-img {
+
   height: 140px;
 }
 
 .skeleton-text {
+
   height: 12px;
 
   margin: 8px;
@@ -815,13 +1000,17 @@ body {
 @keyframes shimmer {
 
   0% {
+
     background-position:
       -200% 0;
+
   }
 
   100% {
+
     background-position:
       200% 0;
+
   }
 
 }
@@ -832,6 +1021,7 @@ body {
 ========================================================= */
 
 #shareMessage {
+
   position: fixed;
 
   bottom: 80px;
@@ -845,7 +1035,8 @@ body {
 
   color: white;
 
-  padding: 10px 18px;
+  padding:
+    10px 18px;
 
   border-radius: 20px;
 
@@ -854,7 +1045,8 @@ body {
   z-index: 9999;
 
   box-shadow:
-    0 4px 15px rgba(0,0,0,0.25);
+    0 4px 15px
+    rgba(0,0,0,0.25);
 
   white-space: nowrap;
 }
@@ -865,6 +1057,7 @@ body {
 ========================================================= */
 
 body.modal-open {
+
   overflow: hidden;
 }
 
@@ -876,65 +1069,108 @@ body.modal-open {
 @media (max-width: 400px) {
 
   body {
+
     padding: 8px;
+
+  }
+
+  .heading {
+
+    font-size: 24px;
+
   }
 
   .grid {
+
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
 
     gap: 12px;
+
   }
 
   .card img {
+
     height: 140px;
+
   }
 
   .card h3 {
+
     font-size: 15px;
+
   }
 
   .card p {
+
     font-size: 12px;
+
   }
 
   .card-actions .btn {
+
     font-size: 15px;
+
   }
 
   .share-btn {
-    flex: 0 0 48px;
+
+    flex:
+      0 0 48px;
+
   }
 
   .share-icon {
+
     width: 20px;
 
     height: 20px;
+
+  }
+
+  #backHome {
+
+    max-width: 330px;
+
+    margin-top: 16px;
+
   }
 
   .download-overlay {
+
     padding: 10px;
+
   }
 
   .download-modal {
+
     max-height: 88vh;
 
     border-radius: 16px;
+
   }
 
   .file-item {
+
     gap: 8px;
 
     padding: 10px;
+
   }
 
   .file-icon {
+
     width: 36px;
 
     height: 36px;
+
   }
 
   .file-download {
+
     padding: 8px;
 
     font-size: 0;
@@ -942,12 +1178,15 @@ body.modal-open {
     width: 38px;
 
     height: 38px;
+
   }
 
   .file-download .download-icon {
+
     width: 18px;
 
     height: 18px;
+
   }
 
 }
@@ -961,10 +1200,16 @@ body.modal-open {
 
 
 <!-- =========================================================
-     HEADING
+     CLICKABLE STORE HEADING
 ========================================================= -->
 
-<div class="heading">
+<div
+  class="heading"
+  id="homeHeading"
+  role="button"
+  tabindex="0"
+  aria-label="Go to Gaming Hood Store home"
+>
 
   <span id="typingText"></span>
 
@@ -991,7 +1236,9 @@ body.modal-open {
     type="button"
     aria-label="Search"
   >
+
     🔍
+
   </button>
 
 </div>
@@ -1018,7 +1265,9 @@ body.modal-open {
   id="retryBtn"
   type="button"
 >
+
   Retry
+
 </button>
 
 
@@ -1033,6 +1282,20 @@ body.modal-open {
 
 
 <!-- =========================================================
+     BACK TO HOME
+========================================================= -->
+
+<button
+  id="backHome"
+  type="button"
+>
+
+  ← Back to Home
+
+</button>
+
+
+<!-- =========================================================
      BACK TO TOP
 ========================================================= -->
 
@@ -1041,7 +1304,9 @@ body.modal-open {
   type="button"
   aria-label="Back to top"
 >
+
   ↑
+
 </button>
 
 
@@ -1069,7 +1334,9 @@ body.modal-open {
           id="modalGameTitle"
           class="modal-title"
         >
+
           Files & Downloads
+
         </h2>
 
         <p
@@ -1078,6 +1345,7 @@ body.modal-open {
         ></p>
 
       </div>
+
 
       <button
         id="closeModal"
@@ -1111,6 +1379,7 @@ body.modal-open {
 
     </div>
 
+
     <div
       id="fileList"
       class="modal-body"
@@ -1123,11 +1392,13 @@ body.modal-open {
 
 <script>
 
+
 /* =========================================================
    TYPING HEADING
 ========================================================= */
 
-const headingText = "Gaming Hood Store";
+const headingText =
+  "Gaming Hood Store";
 
 let typeIndex = 0;
 
@@ -1141,6 +1412,7 @@ function typeLoop() {
       "typingText"
     );
 
+
   if (!isDeleting) {
 
     el.textContent =
@@ -1149,6 +1421,7 @@ function typeLoop() {
         typeIndex++
       );
 
+
     if (
       typeIndex >
       headingText.length
@@ -1156,21 +1429,27 @@ function typeLoop() {
 
       isDeleting = true;
 
+
       setTimeout(
         typeLoop,
         5000
       );
 
+
       return;
+
     }
 
-  } else {
+  }
+
+  else {
 
     el.textContent =
       headingText.substring(
         0,
         typeIndex--
       );
+
 
     if (
       typeIndex < 0
@@ -1182,9 +1461,15 @@ function typeLoop() {
 
   }
 
+
   setTimeout(
+
     typeLoop,
-    isDeleting ? 50 : 100
+
+    isDeleting
+      ? 50
+      : 100
+
   );
 
 }
@@ -1201,19 +1486,21 @@ const spreadsheetId =
   "1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE";
 
 
-/* Main Games sheet */
-
 const sheetUrl =
+
   "https://docs.google.com/spreadsheets/d/" +
+
   spreadsheetId +
+
   "/export?format=csv";
 
 
-/* Files sheet */
-
 const filesSheetUrl =
+
   "https://docs.google.com/spreadsheets/d/" +
+
   spreadsheetId +
+
   "/gviz/tq?tqx=out:csv&sheet=files";
 
 
@@ -1245,15 +1532,21 @@ function parseCSV(csv) {
     i++
   ) {
 
-    const char = csv[i];
+    const char =
+      csv[i];
 
-    const next = csv[i + 1];
+    const next =
+      csv[i + 1];
 
 
     if (
+
       char === '"' &&
+
       insideQuotes &&
+
       next === '"'
+
     ) {
 
       value += '"';
@@ -1274,8 +1567,11 @@ function parseCSV(csv) {
 
 
     else if (
+
       char === "," &&
+
       !insideQuotes
+
     ) {
 
       row.push(
@@ -1288,21 +1584,27 @@ function parseCSV(csv) {
 
 
     else if (
+
       (
         char === "\n" ||
         char === "\r"
       ) &&
+
       !insideQuotes
+
     ) {
 
       if (
+
         char === "\r" &&
         next === "\n"
+
       ) {
 
         i++;
 
       }
+
 
       row.push(
         value.trim()
@@ -1312,15 +1614,18 @@ function parseCSV(csv) {
 
 
       if (
+
         row.some(
           cell =>
             cell !== ""
         )
+
       ) {
 
         rows.push(row);
 
       }
+
 
       row = [];
 
@@ -1337,8 +1642,10 @@ function parseCSV(csv) {
 
 
   if (
+
     value !== "" ||
     row.length > 0
+
   ) {
 
     row.push(
@@ -1347,10 +1654,12 @@ function parseCSV(csv) {
 
 
     if (
+
       row.some(
         cell =>
           cell !== ""
       )
+
     ) {
 
       rows.push(row);
@@ -1373,15 +1682,30 @@ function escapeHTML(value) {
 
   return String(value ?? "")
 
-    .replace(/&/g, "&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -1396,7 +1720,10 @@ function normalizeText(value) {
 
     .trim()
 
-    .replace(/\s+/g, " ")
+    .replace(
+      /\s+/g,
+      " "
+    )
 
     .toLowerCase();
 
@@ -1414,6 +1741,7 @@ function showSkeletons() {
       "grid"
     );
 
+
   grid.innerHTML = "";
 
 
@@ -1428,17 +1756,22 @@ function showSkeletons() {
         "div"
       );
 
+
     card.className =
       "card";
 
 
     card.innerHTML = `
 
-      <div class="skeleton skeleton-img"></div>
+      <div
+        class="skeleton skeleton-img"
+      ></div>
 
       <div class="info">
 
-        <div class="skeleton skeleton-text"></div>
+        <div
+          class="skeleton skeleton-text"
+        ></div>
 
         <div
           class="skeleton skeleton-text"
@@ -1455,7 +1788,9 @@ function showSkeletons() {
     `;
 
 
-    grid.appendChild(card);
+    grid.appendChild(
+      card
+    );
 
   }
 
@@ -1481,14 +1816,6 @@ async function loadFilesSheet() {
       );
 
 
-    /*
-       Cache-busting parameter.
-
-       This helps prevent an old
-       Google Sheets CSV from being
-       displayed from cache.
-    */
-
     const url =
       filesSheetUrl +
       "&cache=" +
@@ -1497,25 +1824,35 @@ async function loadFilesSheet() {
 
     const response =
       await fetch(
+
         url,
+
         {
+
           signal:
             controller.signal,
 
           cache:
             "no-store"
+
         }
+
       );
 
 
-    clearTimeout(timeout);
+    clearTimeout(
+      timeout
+    );
 
 
     if (!response.ok) {
 
       throw new Error(
+
         "Files sheet HTTP error: " +
+
         response.status
+
       );
 
     }
@@ -1555,63 +1892,79 @@ async function loadFilesSheet() {
     );
 
 
-    /*
-       Find columns by header name.
-
-       This is safer than assuming
-       fixed column numbers.
-    */
-
     const gameIndex =
       headers.findIndex(
         h =>
+
           h === "game" ||
+
           h === "game name" ||
+
           h === "gamename" ||
+
           h === "title"
+
       );
 
 
     const typeIndex =
       headers.findIndex(
         h =>
+
           h === "type" ||
+
           h === "file type"
+
       );
 
 
     const nameIndex =
       headers.findIndex(
         h =>
+
           h === "name" ||
+
           h === "file name" ||
+
           h === "filename"
+
       );
 
 
     const sizeIndex =
       headers.findIndex(
         h =>
+
           h === "size" ||
+
           h === "file size"
+
       );
 
 
     const descriptionIndex =
       headers.findIndex(
         h =>
+
           h === "description" ||
+
           h === "desc"
+
       );
 
 
     const linkIndex =
       headers.findIndex(
         h =>
+
           h === "link" ||
+
           h === "download" ||
+
           h === "download link" ||
+
           h === "url"
+
       );
 
 
@@ -1629,13 +1982,16 @@ async function loadFilesSheet() {
 
 
     /*
-       The game and link columns are
-       required.
+       Game and link headers
+       must exist.
     */
 
     if (
+
       gameIndex === -1 ||
+
       linkIndex === -1
+
     ) {
 
       console.error(
@@ -1656,50 +2012,154 @@ async function loadFilesSheet() {
     rows.shift();
 
 
-    allFiles =
-      rows
+    /* =====================================================
+       IMPORTANT
 
-        .filter(
-          row =>
-            row.some(
-              cell =>
-                String(cell).trim() !== ""
-            )
-        )
+       A blank GAME cell inherits
+       the game name from the row above.
 
-        .map(row => {
+       Example:
 
-          return {
+       WWE 2K25 | game     | Game File
+                | emulator | PPSSPP
+                | driver   | Vulkan
+                | patch    | Update
 
-            game:
-              row[gameIndex] || "",
+       All four belong to WWE 2K25.
+    ===================================================== */
 
-            type:
-              typeIndex >= 0
-                ? row[typeIndex] || "File"
-                : "File",
+    let lastGameName = "";
 
-            name:
-              nameIndex >= 0
-                ? row[nameIndex] || "Download"
-                : "Download",
 
-            size:
-              sizeIndex >= 0
-                ? row[sizeIndex] || ""
-                : "",
+    allFiles = [];
 
-            description:
-              descriptionIndex >= 0
-                ? row[descriptionIndex] || ""
-                : "",
 
-            link:
-              row[linkIndex] || ""
+    rows.forEach(
+      row => {
 
-          };
+        if (
+          !row ||
+          !row.length
+        ) {
 
-        });
+          return;
+
+        }
+
+
+        /*
+           If a game name exists,
+           remember it.
+        */
+
+        const currentGame =
+          gameIndex >= 0
+            ? String(
+                row[gameIndex] || ""
+              ).trim()
+            : "";
+
+
+        if (
+          currentGame !== ""
+        ) {
+
+          lastGameName =
+            currentGame;
+
+        }
+
+
+        /*
+           Ignore completely
+           empty rows.
+        */
+
+        const hasContent =
+          row.some(
+            cell =>
+              String(
+                cell ?? ""
+              ).trim() !== ""
+          );
+
+
+        if (!hasContent) {
+
+          return;
+
+        }
+
+
+        /*
+           Do not create a file
+           until a game name has
+           been established.
+        */
+
+        if (
+          !lastGameName
+        ) {
+
+          return;
+
+        }
+
+
+        const file = {
+
+          game:
+            lastGameName,
+
+          type:
+            typeIndex >= 0
+
+              ? row[typeIndex] ||
+                "File"
+
+              : "File",
+
+          name:
+            nameIndex >= 0
+
+              ? row[nameIndex] ||
+                "Download"
+
+              : "Download",
+
+          size:
+            sizeIndex >= 0
+
+              ? row[sizeIndex] ||
+                ""
+
+              : "",
+
+          description:
+            descriptionIndex >= 0
+
+              ? row[descriptionIndex] ||
+                ""
+
+              : "",
+
+          link:
+            linkIndex >= 0
+
+              ? row[linkIndex] ||
+                ""
+
+              : ""
+
+        };
+
+
+        allFiles.push(
+          file
+        );
+
+      }
+    );
 
 
     console.log(
@@ -1707,15 +2167,19 @@ async function loadFilesSheet() {
       allFiles
     );
 
-
   }
+
 
   catch (error) {
 
     console.warn(
+
       "Files sheet could not be loaded:",
+
       error
+
     );
+
 
     allFiles = [];
 
@@ -1734,6 +2198,7 @@ async function fetchData() {
     document.getElementById(
       "loader"
     );
+
 
   const retryBtn =
     document.getElementById(
@@ -1767,27 +2232,39 @@ async function fetchData() {
 
     const response =
       await fetch(
+
         sheetUrl +
+
         "&cache=" +
+
         Date.now(),
+
         {
+
           signal:
             controller.signal,
 
           cache:
             "no-store"
+
         }
+
       );
 
 
-    clearTimeout(timeout);
+    clearTimeout(
+      timeout
+    );
 
 
     if (!response.ok) {
 
       throw new Error(
+
         "Games sheet HTTP error: " +
+
         response.status
+
       );
 
     }
@@ -1810,10 +2287,6 @@ async function fetchData() {
     }
 
 
-    /*
-       Remove Games header.
-    */
-
     rows.shift();
 
 
@@ -1825,28 +2298,30 @@ async function fetchData() {
             row.length >= 4
         )
 
-        .map(row => {
+        .map(
+          row => {
 
-          return {
+            return {
 
-            name:
-              row[0] || "",
+              name:
+                row[0] || "",
 
-            Platform:
-              row[1] || "",
+              Platform:
+                row[1] || "",
 
-            image:
-              row[2] || "",
+              image:
+                row[2] || "",
 
-            link:
-              row[3] || "",
+              link:
+                row[3] || "",
 
-            info:
-              row[4] || ""
+              info:
+                row[4] || ""
 
-          };
+            };
 
-        });
+          }
+        );
 
 
     console.log(
@@ -1867,19 +2342,23 @@ async function fetchData() {
     );
 
 
+    /*
+       Check if this URL is
+       a shared game URL.
+    */
+
     openSharedGame();
 
 
     /*
-       Load Files separately.
-
-       The game store is already visible.
+       Load additional files
+       separately.
     */
 
     await loadFilesSheet();
 
-
   }
+
 
   catch (error) {
 
@@ -1902,6 +2381,7 @@ async function fetchData() {
       );
 
     }
+
 
     else {
 
@@ -1965,9 +2445,13 @@ function getFileIcon(type) {
 
 
   if (
+
     t.includes("game") ||
+
     t.includes("iso") ||
+
     t.includes("rom")
+
   ) {
 
     return `
@@ -2068,9 +2552,13 @@ function getFileIcon(type) {
 
 
   if (
+
     t.includes("patch") ||
+
     t.includes("fix") ||
+
     t.includes("update")
+
   ) {
 
     return `
@@ -2081,9 +2569,13 @@ function getFileIcon(type) {
 
         <path d="M5 19l6-6"></path>
 
-        <path d="M13 7l4-4 4 4-4 4"></path>
+        <path
+          d="M13 7l4-4 4 4-4 4"
+        ></path>
 
-        <path d="M11 17l-4 4-4-4 4-4"></path>
+        <path
+          d="M11 17l-4 4-4-4 4-4"
+        ></path>
 
       </svg>
 
@@ -2130,7 +2622,9 @@ function getDownloadIcon() {
 
       <path d="M12 3v12"></path>
 
-      <path d="M7 10l5 5 5-5"></path>
+      <path
+        d="M7 10l5 5 5-5"
+      ></path>
 
       <path d="M5 21h14"></path>
 
@@ -2163,7 +2657,9 @@ function displayGames(games) {
     grid.innerHTML = `
 
       <div class="no-results">
+
         No games found.
+
       </div>
 
     `;
@@ -2173,150 +2669,287 @@ function displayGames(games) {
   }
 
 
-  games.forEach(game => {
+  games.forEach(
+    game => {
 
-    const card =
-      document.createElement(
-        "div"
-      );
-
-
-    card.className =
-      "card";
+      const card =
+        document.createElement(
+          "div"
+        );
 
 
-    /*
-       Store the RAW game name.
-       Do NOT HTML-escape this value.
-    */
-
-    card.dataset.game =
-      game.name;
+      card.className =
+        "card";
 
 
-    const name =
-      escapeHTML(
-        game.name
-      );
+      card.dataset.game =
+        game.name;
 
 
-    const platform =
-      escapeHTML(
-        game.Platform
-      );
+      const name =
+        escapeHTML(
+          game.name
+        );
 
 
-    const info =
-      escapeHTML(
-        game.info
-      );
+      const platform =
+        escapeHTML(
+          game.Platform
+        );
 
 
-    const image =
-      escapeHTML(
-        game.image
-      );
+      const info =
+        escapeHTML(
+          game.info
+        );
 
 
-    card.innerHTML = `
+      const image =
+        escapeHTML(
+          game.image
+        );
 
-      <img
-        src="${image}"
-        alt="${name}"
-        loading="lazy"
-        onerror="this.style.display='none'"
-      >
 
-      <div class="info">
+      card.innerHTML = `
 
-        <h3>
-          ${name}
-        </h3>
-
-        <p>
-          Platform: ${platform}
-        </p>
-
-        <p>
-          password:
-          ${
-            info ||
-            "No password"
-          }
-        </p>
-
-      </div>
-
-      <div class="card-actions">
-
-        <button
-          class="btn open-download"
-          type="button"
-        >
-          Download
-        </button>
-
-        <button
-          class="share-btn"
-          type="button"
-          aria-label="Share ${name}"
-          title="Share ${name}"
+        <img
+          src="${image}"
+          alt="${name}"
+          loading="lazy"
+          onerror="
+            this.style.display='none'
+          "
         >
 
-          <svg
-            class="share-icon"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
+
+        <div class="info">
+
+          <h3>
+            ${name}
+          </h3>
+
+
+          <p>
+
+            Platform:
+            ${platform}
+
+          </p>
+
+
+          <p>
+
+            password:
+            ${
+              info ||
+              "No password"
+            }
+
+          </p>
+
+        </div>
+
+
+        <div class="card-actions">
+
+          <button
+            class="btn open-download"
+            type="button"
           >
 
-            <circle
-              cx="18"
-              cy="5"
-              r="3"
-            ></circle>
+            Download
 
-            <circle
-              cx="6"
-              cy="12"
-              r="3"
-            ></circle>
-
-            <circle
-              cx="18"
-              cy="19"
-              r="3"
-            ></circle>
-
-            <line
-              x1="8.59"
-              y1="13.51"
-              x2="15.42"
-              y2="17.49"
-            ></line>
-
-            <line
-              x1="15.41"
-              y1="6.51"
-              x2="8.59"
-              y2="10.49"
-            ></line>
-
-          </svg>
-
-        </button>
-
-      </div>
-
-    `;
+          </button>
 
 
-    grid.appendChild(
-      card
+          <button
+            class="share-btn"
+            type="button"
+            aria-label="Share ${name}"
+            title="Share ${name}"
+          >
+
+            <svg
+              class="share-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+
+              <circle
+                cx="18"
+                cy="5"
+                r="3"
+              ></circle>
+
+              <circle
+                cx="6"
+                cy="12"
+                r="3"
+              ></circle>
+
+              <circle
+                cx="18"
+                cy="19"
+                r="3"
+              ></circle>
+
+              <line
+                x1="8.59"
+                y1="13.51"
+                x2="15.42"
+                y2="17.49"
+              ></line>
+
+              <line
+                x1="15.41"
+                y1="6.51"
+                x2="8.59"
+                y2="10.49"
+              ></line>
+
+            </svg>
+
+          </button>
+
+        </div>
+
+      `;
+
+
+      grid.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HOME FUNCTION
+========================================================= */
+
+function goHome() {
+
+  /*
+     Clear search.
+  */
+
+  const searchInput =
+    document.getElementById(
+      "searchInput"
     );
+
+
+  searchInput.value =
+    "";
+
+
+  /*
+     Show every game.
+  */
+
+  displayGames(
+    allGames
+  );
+
+
+  /*
+     Hide Back to Home button.
+  */
+
+  document.getElementById(
+    "backHome"
+  ).style.display =
+    "none";
+
+
+  /*
+     Remove ?game= from URL
+     without reloading page.
+  */
+
+  const cleanUrl =
+    window.location.origin +
+    window.location.pathname;
+
+
+  window.history.replaceState(
+    {},
+    document.title,
+    cleanUrl
+  );
+
+
+  /*
+     Scroll smoothly to top.
+  */
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
 
   });
 
 }
+
+
+/* =========================================================
+   CLICK STORE NAME = HOME
+========================================================= */
+
+document.getElementById(
+  "homeHeading"
+)
+.addEventListener(
+  "click",
+  goHome
+);
+
+
+/*
+   Keyboard accessibility.
+*/
+
+document.getElementById(
+  "homeHeading"
+)
+.addEventListener(
+  "keydown",
+  function(e) {
+
+    if (
+
+      e.key === "Enter" ||
+
+      e.key === " "
+
+    ) {
+
+      e.preventDefault();
+
+      goHome();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   BACK HOME BUTTON
+========================================================= */
+
+document.getElementById(
+  "backHome"
+)
+.addEventListener(
+  "click",
+  goHome
+);
 
 
 /* =========================================================
@@ -2361,7 +2994,9 @@ document.addEventListener(
    OPEN DOWNLOAD POPUP
 ========================================================= */
 
-function openDownloadPopup(gameName) {
+function openDownloadPopup(
+  gameName
+) {
 
   const game =
     allGames.find(
@@ -2405,22 +3040,31 @@ function openDownloadPopup(gameName) {
 
 
   subtitle.textContent =
+
     game.Platform
+
       ? "Platform: " +
         game.Platform
+
       : "Files & Downloads";
 
 
   /*
-     Find every file belonging
+     Find ALL files belonging
      to this game.
   */
 
   const matchingFiles =
     allFiles.filter(
       file =>
-        normalizeText(file.game) ===
-        normalizeText(game.name)
+
+        normalizeText(
+          file.game
+        ) ===
+
+        normalizeText(
+          game.name
+        )
     );
 
 
@@ -2429,6 +3073,7 @@ function openDownloadPopup(gameName) {
     game.name
   );
 
+
   console.log(
     "Matching files:",
     matchingFiles
@@ -2436,31 +3081,39 @@ function openDownloadPopup(gameName) {
 
 
   /*
-     Use Files sheet when available.
+     Only use files that
+     actually have links.
   */
 
   let files =
     matchingFiles.filter(
       file =>
-        String(file.link || "").trim() !== ""
+        String(
+          file.link || ""
+        ).trim() !== ""
     );
 
 
   /*
      FALLBACK
 
-     If no Files sheet entry matches,
-     use the original game link.
+     If there is no matching
+     Files sheet entry, use
+     the original game link.
   */
 
   if (
+
     !files.length &&
+
     game.link
+
   ) {
 
     files = [
 
       {
+
         game:
           game.name,
 
@@ -2487,17 +3140,13 @@ function openDownloadPopup(gameName) {
   }
 
 
-  fileList.innerHTML = "";
+  fileList.innerHTML =
+    "";
 
 
   if (
     !files.length
   ) {
-
-    /*
-       Give a useful message instead
-       of an empty popup.
-    */
 
     fileList.innerHTML = `
 
@@ -2509,12 +3158,14 @@ function openDownloadPopup(gameName) {
         <br><br>
 
         Make sure the Files sheet
-        contains this exact game name:
+        contains this game:
 
         <br><br>
 
         <strong>
-          ${escapeHTML(game.name)}
+          ${escapeHTML(
+            game.name
+          )}
         </strong>
 
       </div>
@@ -2524,124 +3175,147 @@ function openDownloadPopup(gameName) {
   }
 
 
-  files.forEach(file => {
+  files.forEach(
+    file => {
 
-    if (
-      !file.link
-    ) {
+      if (!file.link) {
+        return;
+      }
 
-      return;
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "file-item";
+
+
+      const type =
+        escapeHTML(
+          file.type ||
+          "File"
+        );
+
+
+      const fileName =
+        escapeHTML(
+          file.name ||
+          "Download"
+        );
+
+
+      const size =
+        escapeHTML(
+          file.size
+        );
+
+
+      const description =
+        escapeHTML(
+          file.description
+        );
+
+
+      const link =
+        escapeHTML(
+          file.link
+        );
+
+
+      item.innerHTML = `
+
+        <div class="file-icon">
+
+          ${getFileIcon(
+            file.type
+          )}
+
+        </div>
+
+
+        <div class="file-details">
+
+          <div class="file-type">
+
+            ${type}
+
+          </div>
+
+
+          <div class="file-name">
+
+            ${fileName}
+
+          </div>
+
+
+          ${
+            size
+
+              ? `
+
+                <div class="file-size">
+
+                  ${size}
+
+                </div>
+
+              `
+
+              : ""
+
+          }
+
+
+          ${
+            description
+
+              ? `
+
+                <div class="file-description">
+
+                  ${description}
+
+                </div>
+
+              `
+
+              : ""
+
+          }
+
+        </div>
+
+
+        <a
+          class="file-download"
+          href="${link}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          ${getDownloadIcon()}
+
+          <span>
+
+            Download
+
+          </span>
+
+        </a>
+
+      `;
+
+
+      fileList.appendChild(
+        item
+      );
 
     }
-
-
-    const item =
-      document.createElement(
-        "div"
-      );
-
-
-    item.className =
-      "file-item";
-
-
-    const type =
-      escapeHTML(
-        file.type ||
-        "File"
-      );
-
-
-    const fileName =
-      escapeHTML(
-        file.name ||
-        "Download"
-      );
-
-
-    const size =
-      escapeHTML(
-        file.size
-      );
-
-
-    const description =
-      escapeHTML(
-        file.description
-      );
-
-
-    const link =
-      escapeHTML(
-        file.link
-      );
-
-
-    item.innerHTML = `
-
-      <div class="file-icon">
-
-        ${getFileIcon(file.type)}
-
-      </div>
-
-
-      <div class="file-details">
-
-        <div class="file-type">
-          ${type}
-        </div>
-
-        <div class="file-name">
-          ${fileName}
-        </div>
-
-        ${
-          size
-            ? `
-              <div class="file-size">
-                ${size}
-              </div>
-            `
-            : ""
-        }
-
-        ${
-          description
-            ? `
-              <div class="file-description">
-                ${description}
-              </div>
-            `
-            : ""
-        }
-
-      </div>
-
-
-      <a
-        class="file-download"
-        href="${link}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-
-        ${getDownloadIcon()}
-
-        <span>
-          Download
-        </span>
-
-      </a>
-
-    `;
-
-
-    fileList.appendChild(
-      item
-    );
-
-  });
+  );
 
 
   overlay.style.display =
@@ -2762,20 +3436,26 @@ document.addEventListener(
 
 
     const shareUrl =
+
       window.location.origin +
+
       window.location.pathname +
+
       "?game=" +
+
       encodeURIComponent(
         gameName
       );
 
 
     const shareTitle =
+
       gameName +
       " - Gaming Hood Store";
 
 
     const shareText =
+
       "Check out " +
       gameName +
       " on Gaming Hood Store";
@@ -2818,6 +3498,7 @@ document.addEventListener(
 
       }
 
+
       return;
 
     }
@@ -2836,6 +3517,7 @@ document.addEventListener(
       );
 
     }
+
 
     catch(error) {
 
@@ -2900,7 +3582,9 @@ document.addEventListener(
    SHARE MESSAGE
 ========================================================= */
 
-function showShareMessage(message) {
+function showShareMessage(
+  message
+) {
 
   const oldMessage =
     document.getElementById(
@@ -2909,7 +3593,9 @@ function showShareMessage(message) {
 
 
   if (oldMessage) {
+
     oldMessage.remove();
+
   }
 
 
@@ -2967,7 +3653,9 @@ function openSharedGame() {
 
 
   if (!sharedGame) {
+
     return;
+
   }
 
 
@@ -2980,13 +3668,30 @@ function openSharedGame() {
 
 
   if (!game) {
+
     return;
+
   }
 
+
+  /*
+     Display only the
+     shared game.
+  */
 
   displayGames([
     game
   ]);
+
+
+  /*
+     Show Back to Home.
+  */
+
+  document.getElementById(
+    "backHome"
+  ).style.display =
+    "block";
 
 
   setTimeout(
@@ -3098,6 +3803,38 @@ function searchGames() {
   displayGames(
     filtered
   );
+
+
+  /*
+     If there is text in the
+     search box, this is now
+     a search-results view.
+
+     Show Back to Home.
+  */
+
+  if (query !== "") {
+
+    document.getElementById(
+      "backHome"
+    ).style.display =
+      "block";
+
+  }
+
+  else {
+
+    /*
+       Empty search means
+       normal home.
+    */
+
+    document.getElementById(
+      "backHome"
+    ).style.display =
+      "none";
+
+  }
 
 }
 
@@ -3263,7 +4000,9 @@ document.addEventListener(
 
 
     if (!isDownload) {
+
       return;
+
     }
 
 
