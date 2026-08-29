@@ -1,406 +1,677 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Gaming Hood Store</title>
 
+
 <style>
-  * {
-    box-sizing: border-box;
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  font-family: Arial, sans-serif;
+
+  background: #f4f4f4;
+
+  margin: 0;
+
+  padding: 10px;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.heading {
+
+  text-align: center;
+
+  font-size: 26px;
+
+  font-weight: bold;
+
+  margin: 10px auto 5px;
+
+  color: #2196F3;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  border-right: 3px solid #2196F3;
+
+  width: fit-content;
+}
+
+
+.cursor {
+
+  display: inline-block;
+
+  margin-left: 2px;
+
+  animation: blink 0.7s infinite;
+}
+
+
+@keyframes blink {
+
+  50% {
+    opacity: 0;
   }
+
+}
+
+
+/* =========================================================
+   SEARCH BAR
+========================================================= */
+
+.search-bar {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 10;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 10px;
+
+  background: rgba(255, 255, 255, 0.25);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 20px;
+
+  margin-bottom: 10px;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.search-bar input {
+
+  width: 70%;
+
+  padding: 10px 14px;
+
+  font-size: 16px;
+
+  border: none;
+
+  border-radius: 25px 0 0 25px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.7);
+}
+
+
+.search-bar button {
+
+  background: #2196F3;
+
+  border: none;
+
+  color: white;
+
+  padding: 10px 15px;
+
+  border-radius: 0 25px 25px 0;
+
+  cursor: pointer;
+
+  font-size: 18px;
+}
+
+
+.search-bar button:hover {
+
+  background: #1976D2;
+}
+
+
+/* =========================================================
+   GAME GRID
+========================================================= */
+
+.grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fill, minmax(160px, 1fr));
+
+  gap: 15px;
+
+  margin-top: 10px;
+}
+
+
+/* =========================================================
+   GAME CARD
+========================================================= */
+
+.card {
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+
+.card:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 12px rgba(0, 0, 0, 0.18);
+}
+
+
+.card img {
+
+  width: 100%;
+
+  height: 140px;
+
+  object-fit: cover;
+
+  display: block;
+
+  background: #eee;
+}
+
+
+.card .info {
+
+  padding: 10px;
+
+  flex: 1;
+}
+
+
+.card h3 {
+
+  font-size: 16px;
+
+  margin: 0 0 8px;
+
+  line-height: 1.25;
+
+  word-wrap: break-word;
+}
+
+
+.card p {
+
+  font-size: 13px;
+
+  color: gray;
+
+  margin: 0 0 10px;
+
+  line-height: 1.4;
+
+  word-wrap: break-word;
+}
+
+
+/* =========================================================
+   CARD ACTIONS
+========================================================= */
+
+.card-actions {
+
+  display: flex;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.card-actions .btn {
+
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #2196F3;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 10px;
+
+  text-decoration: none;
+
+  border-radius: 0;
+
+  font-size: 16px;
+
+  transition: background 0.2s;
+}
+
+
+.card-actions .btn:hover {
+
+  background: #1976D2;
+}
+
+
+/* =========================================================
+   SHARE BUTTON
+========================================================= */
+
+.share-btn {
+
+  flex: 0 0 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  background: #1976D2;
+
+  color: white;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  border-radius: 0 0 10px 0;
+
+  transition:
+    background 0.2s,
+    transform 0.1s;
+}
+
+
+.share-btn:hover {
+
+  background: #1565C0;
+}
+
+
+.share-btn:active {
+
+  transform: scale(0.94);
+}
+
+
+/* REAL SVG SHARE ICON */
+
+.share-icon {
+
+  width: 22px;
+
+  height: 22px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+#backToTop {
+
+  position: fixed;
+
+  bottom: 20px;
+
+  right: 20px;
+
+  background: rgba(255, 255, 255, 0.25);
+
+  color: #2196F3;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  border-radius: 50%;
+
+  width: 48px;
+
+  height: 48px;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.2);
+
+  backdrop-filter: blur(8px);
+
+  display: none;
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+#loader {
+
+  text-align: center;
+
+  margin-top: 20px;
+}
+
+
+.spinner {
+
+  width: 30px;
+
+  height: 30px;
+
+  border: 4px solid #ddd;
+
+  border-top: 4px solid #2196F3;
+
+  border-radius: 50%;
+
+  margin: auto;
+
+  animation: spin 1s linear infinite;
+}
+
+
+@keyframes spin {
+
+  100% {
+
+    transform: rotate(360deg);
+
+  }
+
+}
+
+
+/* =========================================================
+   RETRY BUTTON
+========================================================= */
+
+#retryBtn {
+
+  display: none;
+
+  margin: 15px auto;
+
+  padding: 10px 20px;
+
+  background: #ff5252;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-results {
+
+  grid-column: 1 / -1;
+
+  text-align: center;
+
+  padding: 30px 10px;
+
+  color: #777;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   SKELETON
+========================================================= */
+
+.skeleton {
+
+  animation: shimmer 1.2s infinite;
+
+  background:
+    linear-gradient(
+      90deg,
+      #eee 25%,
+      #ddd 50%,
+      #eee 75%
+    );
+
+  background-size: 200% 100%;
+}
+
+
+.skeleton-img {
+
+  height: 140px;
+}
+
+
+.skeleton-text {
+
+  height: 12px;
+
+  margin: 8px;
+
+  border-radius: 4px;
+}
+
+
+@keyframes shimmer {
+
+  0% {
+
+    background-position: -200% 0;
+
+  }
+
+  100% {
+
+    background-position: 200% 0;
+
+  }
+
+}
+
+
+/* =========================================================
+   SHARE MESSAGE
+========================================================= */
+
+#shareMessage {
+
+  position: fixed;
+
+  bottom: 80px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: #222;
+
+  color: white;
+
+  padding: 10px 18px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  z-index: 9999;
+
+  box-shadow:
+    0 4px 15px rgba(0,0,0,0.25);
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
 
   body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 10px;
+
+    padding: 8px;
+
   }
 
-  /* =========================
-     HEADING
-  ========================= */
-
-  .heading {
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    margin: 10px auto 5px;
-    color: #2196F3;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 3px solid #2196F3;
-    width: fit-content;
-  }
-
-  .cursor {
-    display: inline-block;
-    margin-left: 2px;
-    animation: blink 0.7s infinite;
-  }
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
-  /* =========================
-     SEARCH BAR
-  ========================= */
-
-  .search-bar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 10px;
-
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-
-    border-radius: 20px;
-    margin-bottom: 10px;
-
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-
-  .search-bar input {
-    width: 70%;
-    padding: 10px 14px;
-
-    font-size: 16px;
-
-    border: none;
-    border-radius: 25px 0 0 25px;
-
-    outline: none;
-
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  .search-bar button {
-    background: #2196F3;
-    border: none;
-
-    color: white;
-
-    padding: 10px 15px;
-
-    border-radius: 0 25px 25px 0;
-
-    cursor: pointer;
-
-    font-size: 18px;
-  }
-
-  .search-bar button:hover {
-    background: #1976D2;
-  }
-
-  /* =========================
-     GAME GRID
-  ========================= */
 
   .grid {
-    display: grid;
 
     grid-template-columns:
-      repeat(auto-fill, minmax(160px, 1fr));
+      repeat(2, minmax(0, 1fr));
 
-    gap: 15px;
+    gap: 12px;
 
-    margin-top: 10px;
   }
 
-  /* =========================
-     GAME CARD
-  ========================= */
-
-  .card {
-    background: white;
-
-    border-radius: 10px;
-
-    box-shadow:
-      0 2px 5px rgba(0, 0, 0, 0.2);
-
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-  }
 
   .card img {
-    width: 100%;
+
     height: 140px;
 
-    object-fit: cover;
-
-    display: block;
-
-    background: #eee;
   }
 
-  .card .info {
-    padding: 10px;
-    flex: 1;
-  }
 
   .card h3 {
-    font-size: 16px;
-
-    margin: 0 0 8px;
-
-    line-height: 1.25;
-
-    word-wrap: break-word;
-  }
-
-  .card p {
-    font-size: 13px;
-
-    color: gray;
-
-    margin: 0 0 10px;
-
-    line-height: 1.4;
-
-    word-wrap: break-word;
-  }
-
-  /* =========================
-     DOWNLOAD BUTTON
-  ========================= */
-
-  .btn {
-    display: block;
-
-    background: #2196F3;
-
-    color: white;
-
-    text-align: center;
-
-    padding: 10px;
-
-    text-decoration: none;
-
-    border-radius: 0 0 10px 10px;
-
-    font-size: 16px;
-
-    transition: background 0.2s;
-  }
-
-  .btn:hover {
-    background: #1976D2;
-  }
-
-  /* =========================
-     BACK TO TOP
-  ========================= */
-
-  #backToTop {
-    position: fixed;
-
-    bottom: 20px;
-    right: 20px;
-
-    background: rgba(255, 255, 255, 0.25);
-
-    color: #2196F3;
-
-    border: 1px solid rgba(255, 255, 255, 0.4);
-
-    border-radius: 50%;
-
-    width: 48px;
-    height: 48px;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-    box-shadow:
-      0 4px 15px rgba(0, 0, 0, 0.2);
-
-    backdrop-filter: blur(8px);
-
-    display: none;
-
-    z-index: 20;
-  }
-
-  /* =========================
-     LOADER
-  ========================= */
-
-  #loader {
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  .spinner {
-    width: 30px;
-    height: 30px;
-
-    border: 4px solid #ddd;
-
-    border-top: 4px solid #2196F3;
-
-    border-radius: 50%;
-
-    margin: auto;
-
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* =========================
-     RETRY BUTTON
-  ========================= */
-
-  #retryBtn {
-    display: none;
-
-    margin: 15px auto;
-
-    padding: 10px 20px;
-
-    background: #ff5252;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
-    cursor: pointer;
 
     font-size: 15px;
+
   }
 
-  /* =========================
-     NO RESULTS
-  ========================= */
 
-  .no-results {
-    grid-column: 1 / -1;
+  .card p {
 
-    text-align: center;
+    font-size: 12px;
 
-    padding: 30px 10px;
-
-    color: #777;
-
-    font-size: 16px;
   }
 
-  /* =========================
-     SKELETON
-  ========================= */
 
-  .skeleton {
-    animation: shimmer 1.2s infinite;
+  .card-actions .btn {
 
-    background:
-      linear-gradient(
-        90deg,
-        #eee 25%,
-        #ddd 50%,
-        #eee 75%
-      );
+    font-size: 15px;
 
-    background-size: 200% 100%;
   }
 
-  .skeleton-img {
-    height: 140px;
+
+  .share-btn {
+
+    flex: 0 0 48px;
+
   }
 
-  .skeleton-text {
-    height: 12px;
 
-    margin: 8px;
+  .share-icon {
 
-    border-radius: 4px;
+    width: 20px;
+
+    height: 20px;
+
   }
 
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  /* =========================
-     MOBILE
-  ========================= */
-
-  @media (max-width: 400px) {
-
-    body {
-      padding: 8px;
-    }
-
-    .grid {
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-      gap: 12px;
-    }
-
-    .card img {
-      height: 140px;
-    }
-
-    .card h3 {
-      font-size: 15px;
-    }
-
-    .card p {
-      font-size: 12px;
-    }
-
-    .btn {
-      font-size: 15px;
-    }
-  }
+}
 
 </style>
+
 </head>
+
 
 <body>
 
-<!-- =========================
+
+<!-- =========================================================
      HEADING
-========================= -->
+========================================================= -->
 
 <div class="heading">
+
   <span id="typingText"></span>
+
   <span class="cursor">|</span>
+
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      SEARCH
-========================= -->
+========================================================= -->
 
 <div class="search-bar">
 
@@ -411,16 +682,16 @@
     autocomplete="off"
   >
 
-  <button id="searchBtn">
+  <button id="searchBtn" type="button">
     🔍
   </button>
 
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      LOADER
-========================= -->
+========================================================= -->
 
 <div id="loader">
 
@@ -431,32 +702,37 @@
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      RETRY
-========================= -->
+========================================================= -->
 
-<button id="retryBtn">
+<button id="retryBtn" type="button">
   Retry
 </button>
 
 
-<!-- =========================
+<!-- =========================================================
      GAME GRID
-========================= -->
+========================================================= -->
 
 <div id="grid" class="grid"></div>
 
 
-<!-- =========================
+<!-- =========================================================
      BACK TO TOP
-========================= -->
+========================================================= -->
 
-<button id="backToTop">
-  ⬆️
+<button
+  id="backToTop"
+  type="button"
+  aria-label="Back to top"
+>
+  ↑
 </button>
 
 
 <script>
+
 
 /* =========================================================
    TYPING HEADING
@@ -465,40 +741,73 @@
 const text = "Gaming Hood Store";
 
 let i = 0;
+
 let isDeleting = false;
+
 
 function typeLoop() {
 
-  const el = document.getElementById("typingText");
+  const el =
+    document.getElementById(
+      "typingText"
+    );
+
 
   if (!isDeleting) {
 
-    el.textContent = text.substring(0, i++);
+    el.textContent =
+      text.substring(
+        0,
+        i++
+      );
+
 
     if (i > text.length) {
 
       isDeleting = true;
 
-      setTimeout(typeLoop, 5000);
+
+      setTimeout(
+        typeLoop,
+        5000
+      );
+
 
       return;
     }
 
-  } else {
+  }
 
-    el.textContent = text.substring(0, i--);
+  else {
+
+    el.textContent =
+      text.substring(
+        0,
+        i--
+      );
+
 
     if (i < 0) {
 
       isDeleting = false;
+
     }
+
   }
 
+
   setTimeout(
+
     typeLoop,
-    isDeleting ? 50 : 100
+
+    isDeleting
+      ? 50
+      : 100
+
   );
+
 }
+
 
 typeLoop();
 
@@ -532,19 +841,29 @@ function parseCSV(csv) {
   let insideQuotes = false;
 
 
-  for (let i = 0; i < csv.length; i++) {
+  for (
+    let i = 0;
+    i < csv.length;
+    i++
+  ) {
 
-    const char = csv[i];
+    const char =
+      csv[i];
 
-    const next = csv[i + 1];
+    const next =
+      csv[i + 1];
 
 
     /* Double quote inside quoted value */
 
     if (
+
       char === '"' &&
+
       insideQuotes &&
+
       next === '"'
+
     ) {
 
       value += '"';
@@ -556,9 +875,12 @@ function parseCSV(csv) {
 
     /* Start/end quotes */
 
-    else if (char === '"') {
+    else if (
+      char === '"'
+    ) {
 
-      insideQuotes = !insideQuotes;
+      insideQuotes =
+        !insideQuotes;
 
     }
 
@@ -566,11 +888,16 @@ function parseCSV(csv) {
     /* Column separator */
 
     else if (
+
       char === "," &&
+
       !insideQuotes
+
     ) {
 
-      row.push(value.trim());
+      row.push(
+        value.trim()
+      );
 
       value = "";
 
@@ -580,20 +907,32 @@ function parseCSV(csv) {
     /* New row */
 
     else if (
-      (char === "\n" || char === "\r") &&
+
+      (
+        char === "\n" ||
+        char === "\r"
+      ) &&
+
       !insideQuotes
+
     ) {
 
       if (
+
         char === "\r" &&
+
         next === "\n"
+
       ) {
 
         i++;
+
       }
 
 
-      row.push(value.trim());
+      row.push(
+        value.trim()
+      );
 
       value = "";
 
@@ -601,12 +940,16 @@ function parseCSV(csv) {
       /* Ignore completely empty rows */
 
       if (
+
         row.some(
-          cell => cell !== ""
+          cell =>
+            cell !== ""
         )
+
       ) {
 
         rows.push(row);
+
       }
 
 
@@ -620,47 +963,81 @@ function parseCSV(csv) {
     else {
 
       value += char;
+
     }
+
   }
 
 
   /* Add final row */
 
   if (
+
     value !== "" ||
+
     row.length > 0
+
   ) {
 
-    row.push(value.trim());
+    row.push(
+      value.trim()
+    );
+
 
     if (
+
       row.some(
-        cell => cell !== ""
+        cell =>
+          cell !== ""
       )
+
     ) {
 
       rows.push(row);
+
     }
+
   }
 
 
   return rows;
+
 }
 
 
 /* =========================================================
    HTML ESCAPE
-   Prevents CSV text from breaking the card HTML
 ========================================================= */
 
 function escapeHTML(value) {
 
   return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
 }
 
 
@@ -671,22 +1048,35 @@ function escapeHTML(value) {
 function showSkeletons() {
 
   const grid =
-    document.getElementById("grid");
+    document.getElementById(
+      "grid"
+    );
+
 
   grid.innerHTML = "";
 
 
-  for (let i = 0; i < 6; i++) {
+  for (
+    let i = 0;
+    i < 6;
+    i++
+  ) {
 
     const card =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    card.className = "card";
+
+    card.className =
+      "card";
 
 
     card.innerHTML = `
 
-      <div class="skeleton skeleton-img"></div>
+      <div
+        class="skeleton skeleton-img"
+      ></div>
 
       <div class="info">
 
@@ -696,12 +1086,12 @@ function showSkeletons() {
 
         <div
           class="skeleton skeleton-text"
-          style="width: 60%;"
+          style="width:60%;"
         ></div>
 
         <div
           class="skeleton skeleton-text"
-          style="width: 80%;"
+          style="width:80%;"
         ></div>
 
       </div>
@@ -710,7 +1100,9 @@ function showSkeletons() {
 
 
     grid.appendChild(card);
+
   }
+
 }
 
 
@@ -720,12 +1112,16 @@ function showSkeletons() {
 
 function fetchData() {
 
-  document.getElementById("loader")
-    .style.display = "block";
+  document.getElementById(
+    "loader"
+  ).style.display =
+    "block";
 
 
-  document.getElementById("retryBtn")
-    .style.display = "none";
+  document.getElementById(
+    "retryBtn"
+  ).style.display =
+    "none";
 
 
   showSkeletons();
@@ -740,31 +1136,40 @@ function fetchData() {
         throw new Error(
           "Failed to load CSV"
         );
+
       }
 
+
       return res.text();
+
     })
 
 
     .then(csv => {
 
-      document.getElementById("loader")
-        .style.display = "none";
+      document.getElementById(
+        "loader"
+      ).style.display =
+        "none";
 
 
       retries = 0;
 
 
-      /* Parse CSV correctly */
+      /* Parse CSV */
 
-      const rows = parseCSV(csv);
+      const rows =
+        parseCSV(csv);
 
 
       /* Remove header */
 
-      if (rows.length > 0) {
+      if (
+        rows.length > 0
+      ) {
 
         rows.shift();
+
       }
 
 
@@ -780,7 +1185,10 @@ function fetchData() {
 
       allGames = rows
 
-        .filter(row => row.length >= 4)
+        .filter(
+          row =>
+            row.length >= 4
+        )
 
         .map(row => {
 
@@ -812,7 +1220,14 @@ function fetchData() {
       );
 
 
-      displayGames(allGames);
+      displayGames(
+        allGames
+      );
+
+
+      /* Check for a shared game */
+
+      openSharedGame();
 
     })
 
@@ -828,24 +1243,34 @@ function fetchData() {
       retries++;
 
 
-      if (retries < 3) {
+      if (
+        retries < 3
+      ) {
 
         setTimeout(
           fetchData,
           1500
         );
 
-      } else {
+      }
 
-        document.getElementById("loader")
-          .style.display = "none";
+      else {
+
+        document.getElementById(
+          "loader"
+        ).style.display =
+          "none";
 
 
-        document.getElementById("retryBtn")
-          .style.display = "block";
+        document.getElementById(
+          "retryBtn"
+        ).style.display =
+          "block";
+
       }
 
     });
+
 }
 
 
@@ -853,14 +1278,16 @@ function fetchData() {
    RETRY BUTTON
 ========================================================= */
 
-document.getElementById("retryBtn")
-  .onclick = () => {
+document.getElementById(
+  "retryBtn"
+)
+.onclick = () => {
 
-    retries = 0;
+  retries = 0;
 
-    fetchData();
+  fetchData();
 
-  };
+};
 
 
 /* =========================================================
@@ -870,7 +1297,9 @@ document.getElementById("retryBtn")
 function displayGames(games) {
 
   const grid =
-    document.getElementById("grid");
+    document.getElementById(
+      "grid"
+    );
 
 
   grid.innerHTML = "";
@@ -878,7 +1307,9 @@ function displayGames(games) {
 
   /* No games */
 
-  if (!games.length) {
+  if (
+    !games.length
+  ) {
 
     grid.innerHTML = `
 
@@ -889,38 +1320,52 @@ function displayGames(games) {
     `;
 
     return;
+
   }
 
 
   games.forEach(game => {
 
     const card =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
-    card.className = "card";
+    card.className =
+      "card";
 
 
     /* Safely escape text */
 
     const name =
-      escapeHTML(game.name);
+      escapeHTML(
+        game.name
+      );
 
 
     const platform =
-      escapeHTML(game.Platform);
+      escapeHTML(
+        game.Platform
+      );
 
 
     const info =
-      escapeHTML(game.info);
+      escapeHTML(
+        game.info
+      );
 
 
     const image =
-      escapeHTML(game.image);
+      escapeHTML(
+        game.image
+      );
 
 
     const link =
-      escapeHTML(game.link);
+      escapeHTML(
+        game.link
+      );
 
 
     card.innerHTML = `
@@ -946,29 +1391,414 @@ function displayGames(games) {
 
 
         <p>
-          Info: ${
-            info || "No information available"
+          Info:
+          ${
+            info ||
+            "No information available"
           }
         </p>
 
       </div>
 
 
-      <a
-        class="btn"
-        href="${link}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Download
-      </a>
+      <div class="card-actions">
+
+        <a
+          class="btn"
+          href="${link}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download
+        </a>
+
+
+        <button
+          class="share-btn"
+          type="button"
+          data-game="${name}"
+          aria-label="Share ${name}"
+          title="Share ${name}"
+        >
+
+          <!-- Real share icon -->
+
+          <svg
+            class="share-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+
+            <circle
+              cx="18"
+              cy="5"
+              r="3"
+            ></circle>
+
+            <circle
+              cx="6"
+              cy="12"
+              r="3"
+            ></circle>
+
+            <circle
+              cx="18"
+              cy="19"
+              r="3"
+            ></circle>
+
+            <line
+              x1="8.59"
+              y1="13.51"
+              x2="15.42"
+              y2="17.49"
+            ></line>
+
+            <line
+              x1="15.41"
+              y1="6.51"
+              x2="8.59"
+              y2="10.49"
+            ></line>
+
+          </svg>
+
+        </button>
+
+      </div>
 
     `;
 
 
-    grid.appendChild(card);
+    grid.appendChild(
+      card
+    );
 
   });
+
+}
+
+
+/* =========================================================
+   GAME SHARING
+========================================================= */
+
+document.addEventListener(
+  "click",
+  async function(e) {
+
+    const shareButton =
+      e.target.closest(
+        ".share-btn"
+      );
+
+
+    if (!shareButton) {
+
+      return;
+
+    }
+
+
+    const gameName =
+      shareButton.dataset.game ||
+      "Game";
+
+
+    /*
+       Create a direct link
+       to this specific game.
+    */
+
+    const shareUrl =
+
+      window.location.origin +
+
+      window.location.pathname +
+
+      "?game=" +
+
+      encodeURIComponent(
+        gameName
+      );
+
+
+    const shareTitle =
+      gameName +
+      " - Gaming Hood Store";
+
+
+    const shareText =
+      "Check out " +
+      gameName +
+      " on Gaming Hood Store";
+
+
+    /* =====================================================
+       NATIVE SHARE
+    ===================================================== */
+
+    if (
+      navigator.share
+    ) {
+
+      try {
+
+        await navigator.share({
+
+          title:
+            shareTitle,
+
+          text:
+            shareText,
+
+          url:
+            shareUrl
+
+        });
+
+      }
+
+      catch (error) {
+
+        /*
+           User cancelled the
+           share menu.
+        */
+
+        if (
+          error.name !==
+          "AbortError"
+        ) {
+
+          console.error(
+            "Share failed:",
+            error
+          );
+
+        }
+
+      }
+
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       CLIPBOARD FALLBACK
+    ===================================================== */
+
+    try {
+
+      await navigator.clipboard
+        .writeText(
+          shareUrl
+        );
+
+
+      showShareMessage(
+        "Game link copied!"
+      );
+
+    }
+
+    catch (error) {
+
+      /*
+         Older browser fallback.
+      */
+
+      const textarea =
+        document.createElement(
+          "textarea"
+        );
+
+
+      textarea.value =
+        shareUrl;
+
+
+      textarea.style.position =
+        "fixed";
+
+
+      textarea.style.opacity =
+        "0";
+
+
+      document.body.appendChild(
+        textarea
+      );
+
+
+      textarea.select();
+
+
+      document.execCommand(
+        "copy"
+      );
+
+
+      textarea.remove();
+
+
+      showShareMessage(
+        "Game link copied!"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SHARE MESSAGE
+========================================================= */
+
+function showShareMessage(
+  message
+) {
+
+  const oldMessage =
+    document.getElementById(
+      "shareMessage"
+    );
+
+
+  if (oldMessage) {
+
+    oldMessage.remove();
+
+  }
+
+
+  const messageBox =
+    document.createElement(
+      "div"
+    );
+
+
+  messageBox.id =
+    "shareMessage";
+
+
+  messageBox.textContent =
+    message;
+
+
+  document.body.appendChild(
+    messageBox
+  );
+
+
+  setTimeout(() => {
+
+    messageBox.remove();
+
+  }, 2000);
+
+}
+
+
+/* =========================================================
+   OPEN SHARED GAME
+========================================================= */
+
+function openSharedGame() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const sharedGame =
+    params.get("game");
+
+
+  if (!sharedGame) {
+
+    return;
+
+  }
+
+
+  const game =
+    allGames.find(
+      g =>
+        g.name
+          .toLowerCase()
+          .trim() ===
+        sharedGame
+          .toLowerCase()
+          .trim()
+    );
+
+
+  if (!game) {
+
+    return;
+
+  }
+
+
+  /*
+     Display only the
+     shared game.
+  */
+
+  displayGames([
+    game
+  ]);
+
+
+  /*
+     Scroll to the game.
+  */
+
+  setTimeout(() => {
+
+    const firstCard =
+      document.querySelector(
+        ".card"
+      );
+
+
+    if (firstCard) {
+
+      firstCard.scrollIntoView({
+
+        behavior:
+          "smooth",
+
+        block:
+          "center"
+
+      });
+
+
+      /*
+         Highlight shared game.
+      */
+
+      firstCard.style.boxShadow =
+        "0 0 0 3px #2196F3";
+
+
+      setTimeout(() => {
+
+        firstCard.style.boxShadow =
+          "";
+
+      }, 3000);
+
+    }
+
+  }, 200);
+
 }
 
 
@@ -976,56 +1806,67 @@ function displayGames(games) {
    SEARCH
 ========================================================= */
 
-document.getElementById("searchBtn")
-  .addEventListener(
-    "click",
-    searchGames
-  );
+document.getElementById(
+  "searchBtn"
+)
+.addEventListener(
+  "click",
+  searchGames
+);
 
 
-document.getElementById("searchInput")
-  .addEventListener(
-    "input",
-    searchGames
-  );
+document.getElementById(
+  "searchInput"
+)
+.addEventListener(
+  "input",
+  searchGames
+);
 
 
 function searchGames() {
 
   const query =
-    document.getElementById("searchInput")
-      .value
-      .toLowerCase()
-      .trim();
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
 
 
   const filtered =
-    allGames.filter(game => {
+    allGames.filter(
+      game => {
 
-      return (
+        return (
 
-        game.name
-          .toLowerCase()
-          .includes(query)
+          game.name
+            .toLowerCase()
+            .includes(query)
 
-        ||
+          ||
 
-        game.Platform
-          .toLowerCase()
-          .includes(query)
+          game.Platform
+            .toLowerCase()
+            .includes(query)
 
-        ||
+          ||
 
-        game.info
-          .toLowerCase()
-          .includes(query)
+          game.info
+            .toLowerCase()
+            .includes(query)
 
-      );
+        );
 
-    });
+      }
+    );
 
 
-  displayGames(filtered);
+  displayGames(
+    filtered
+  );
+
 }
 
 
@@ -1034,22 +1875,29 @@ function searchGames() {
 ========================================================= */
 
 const backToTop =
-  document.getElementById("backToTop");
+  document.getElementById(
+    "backToTop"
+  );
 
 
 window.addEventListener(
   "scroll",
   () => {
 
-    if (window.scrollY > 300) {
+    if (
+      window.scrollY > 300
+    ) {
 
       backToTop.style.display =
         "block";
 
-    } else {
+    }
+
+    else {
 
       backToTop.style.display =
         "none";
+
     }
 
   }
@@ -1135,7 +1983,9 @@ document.addEventListener(
   function(e) {
 
     const link =
-      e.target.closest("a");
+      e.target.closest(
+        "a"
+      );
 
 
     if (
@@ -1144,6 +1994,7 @@ document.addEventListener(
     ) {
 
       return;
+
     }
 
 
@@ -1156,6 +2007,7 @@ document.addEventListener(
     ) {
 
       return;
+
     }
 
 
@@ -1168,6 +2020,7 @@ document.addEventListener(
     ) {
 
       return;
+
     }
 
 
@@ -1176,13 +2029,16 @@ document.addEventListener(
     const isDownload =
       downloadDomains.some(
         domain =>
-          link.href.includes(domain)
+          link.href.includes(
+            domain
+          )
       );
 
 
     if (!isDownload) {
 
       return;
+
     }
 
 
@@ -1199,7 +2055,9 @@ document.addEventListener(
 
 
       const s =
-        document.createElement("script");
+        document.createElement(
+          "script"
+        );
 
 
       s.dataset.zone =
@@ -1210,18 +2068,24 @@ document.addEventListener(
         "https://al5sm.com/tag.min.js";
 
 
-      document.body.appendChild(s);
+      document.body.appendChild(
+        s
+      );
 
 
       return;
+
     }
 
 
     /* Second click opens download */
 
     window.open(
+
       link.href,
+
       "_blank"
+
     );
 
   }
