@@ -11,7 +11,6 @@
 
 <title>Gaming Hood Store</title>
 
-
 <style>
 
 /* =========================================================
@@ -22,15 +21,10 @@
   box-sizing: border-box;
 }
 
-
 body {
-
   font-family: Arial, sans-serif;
-
   background: #f4f4f4;
-
   margin: 0;
-
   padding: 10px;
 }
 
@@ -40,43 +34,27 @@ body {
 ========================================================= */
 
 .heading {
-
   text-align: center;
-
   font-size: 26px;
-
   font-weight: bold;
-
   margin: 10px auto 5px;
-
   color: #2196F3;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   border-right: 3px solid #2196F3;
-
   width: fit-content;
 }
 
-
 .cursor {
-
   display: inline-block;
-
   margin-left: 2px;
-
   animation: blink 0.7s infinite;
 }
 
-
 @keyframes blink {
-
   50% {
     opacity: 0;
   }
-
 }
 
 
@@ -85,36 +63,27 @@ body {
 ========================================================= */
 
 .search-bar {
-
   position: sticky;
-
   top: 0;
-
   z-index: 10;
 
   display: flex;
-
   justify-content: center;
-
   align-items: center;
 
   padding: 10px;
 
   background: rgba(255, 255, 255, 0.25);
-
   backdrop-filter: blur(10px);
 
   border-radius: 20px;
-
   margin-bottom: 10px;
 
   box-shadow:
     0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-
 .search-bar input {
-
   width: 70%;
 
   padding: 10px 14px;
@@ -130,9 +99,7 @@ body {
   background: rgba(255, 255, 255, 0.7);
 }
 
-
 .search-bar button {
-
   background: #2196F3;
 
   border: none;
@@ -148,9 +115,7 @@ body {
   font-size: 18px;
 }
 
-
 .search-bar button:hover {
-
   background: #1976D2;
 }
 
@@ -160,7 +125,6 @@ body {
 ========================================================= */
 
 .grid {
-
   display: grid;
 
   grid-template-columns:
@@ -177,7 +141,6 @@ body {
 ========================================================= */
 
 .card {
-
   background: white;
 
   border-radius: 10px;
@@ -198,18 +161,14 @@ body {
     box-shadow 0.2s;
 }
 
-
 .card:hover {
-
   transform: translateY(-2px);
 
   box-shadow:
     0 5px 12px rgba(0, 0, 0, 0.18);
 }
 
-
 .card img {
-
   width: 100%;
 
   height: 140px;
@@ -221,17 +180,13 @@ body {
   background: #eee;
 }
 
-
 .card .info {
-
   padding: 10px;
 
   flex: 1;
 }
 
-
 .card h3 {
-
   font-size: 16px;
 
   margin: 0 0 8px;
@@ -241,9 +196,7 @@ body {
   word-wrap: break-word;
 }
 
-
 .card p {
-
   font-size: 13px;
 
   color: gray;
@@ -261,7 +214,6 @@ body {
 ========================================================= */
 
 .card-actions {
-
   display: flex;
 
   width: 100%;
@@ -273,7 +225,6 @@ body {
 ========================================================= */
 
 .card-actions .btn {
-
   flex: 1;
 
   display: flex;
@@ -296,12 +247,15 @@ body {
 
   font-size: 16px;
 
-  transition: background 0.2s;
+  border: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s;
 }
 
-
 .card-actions .btn:hover {
-
   background: #1976D2;
 }
 
@@ -311,7 +265,6 @@ body {
 ========================================================= */
 
 .share-btn {
-
   flex: 0 0 52px;
 
   display: flex;
@@ -337,23 +290,15 @@ body {
     transform 0.1s;
 }
 
-
 .share-btn:hover {
-
   background: #1565C0;
 }
 
-
 .share-btn:active {
-
   transform: scale(0.94);
 }
 
-
-/* REAL SVG SHARE ICON */
-
 .share-icon {
-
   width: 22px;
 
   height: 22px;
@@ -367,6 +312,380 @@ body {
   stroke-linecap: round;
 
   stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   DOWNLOAD POPUP OVERLAY
+========================================================= */
+
+.download-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: blur(5px);
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 15px;
+
+  z-index: 1000;
+}
+
+
+/* =========================================================
+   DOWNLOAD MODAL
+========================================================= */
+
+.download-modal {
+
+  width: 100%;
+
+  max-width: 500px;
+
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 15px 50px rgba(0,0,0,0.3);
+
+  animation:
+    modalIn 0.2s ease-out;
+}
+
+@keyframes modalIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.modal-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 18px 18px 12px;
+
+  border-bottom:
+    1px solid #eee;
+}
+
+.modal-title-area {
+
+  min-width: 0;
+
+  padding-right: 10px;
+}
+
+.modal-title {
+
+  margin: 0;
+
+  font-size: 21px;
+
+  color: #111;
+
+  word-break: break-word;
+}
+
+.modal-subtitle {
+
+  margin: 5px 0 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+.close-modal {
+
+  width: 38px;
+
+  height: 38px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f1f1f1;
+
+  color: #444;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.close-modal:hover {
+
+  background: #e5e5e5;
+}
+
+.close-icon {
+
+  width: 20px;
+
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+}
+
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.modal-body {
+
+  padding: 14px 15px 18px;
+}
+
+
+/* =========================================================
+   FILE ITEM
+========================================================= */
+
+.file-item {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: #f7f9fb;
+
+  border: 1px solid #e7ebef;
+
+  border-radius: 12px;
+}
+
+.file-item:last-child {
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   FILE ICON
+========================================================= */
+
+.file-icon {
+
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 10px;
+
+  background: #e8f3ff;
+
+  color: #2196F3;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.file-icon svg {
+
+  width: 22px;
+
+  height: 22px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   FILE DETAILS
+========================================================= */
+
+.file-details {
+
+  flex: 1;
+
+  min-width: 0;
+}
+
+.file-type {
+
+  display: inline-block;
+
+  font-size: 10px;
+
+  font-weight: bold;
+
+  text-transform: uppercase;
+
+  color: #2196F3;
+
+  margin-bottom: 3px;
+}
+
+.file-name {
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  color: #222;
+
+  word-break: break-word;
+
+  line-height: 1.25;
+}
+
+.file-size {
+
+  font-size: 12px;
+
+  color: #777;
+
+  margin-top: 4px;
+}
+
+.file-description {
+
+  font-size: 12px;
+
+  color: #777;
+
+  margin-top: 3px;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   FILE DOWNLOAD BUTTON
+========================================================= */
+
+.file-download {
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  border: none;
+
+  background: #2196F3;
+
+  color: white;
+
+  padding: 9px 11px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+.file-download:hover {
+
+  background: #1976D2;
+}
+
+.download-icon {
+
+  width: 15px;
+
+  height: 15px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   NO FILES MESSAGE
+========================================================= */
+
+.no-files {
+
+  text-align: center;
+
+  padding: 25px 10px;
+
+  color: #777;
+
+  font-size: 14px;
 }
 
 
@@ -420,7 +739,6 @@ body {
   margin-top: 20px;
 }
 
-
 .spinner {
 
   width: 30px;
@@ -435,16 +753,14 @@ body {
 
   margin: auto;
 
-  animation: spin 1s linear infinite;
+  animation:
+    spin 1s linear infinite;
 }
-
 
 @keyframes spin {
 
   100% {
-
     transform: rotate(360deg);
-
   }
 
 }
@@ -500,7 +816,8 @@ body {
 
 .skeleton {
 
-  animation: shimmer 1.2s infinite;
+  animation:
+    shimmer 1.2s infinite;
 
   background:
     linear-gradient(
@@ -513,12 +830,10 @@ body {
   background-size: 200% 100%;
 }
 
-
 .skeleton-img {
 
   height: 140px;
 }
-
 
 .skeleton-text {
 
@@ -529,19 +844,14 @@ body {
   border-radius: 4px;
 }
 
-
 @keyframes shimmer {
 
   0% {
-
     background-position: -200% 0;
-
   }
 
   100% {
-
     background-position: 200% 0;
-
   }
 
 }
@@ -587,11 +897,8 @@ body {
 @media (max-width: 400px) {
 
   body {
-
     padding: 8px;
-
   }
-
 
   .grid {
 
@@ -599,53 +906,94 @@ body {
       repeat(2, minmax(0, 1fr));
 
     gap: 12px;
-
   }
-
 
   .card img {
 
     height: 140px;
-
   }
-
 
   .card h3 {
 
     font-size: 15px;
-
   }
-
 
   .card p {
 
     font-size: 12px;
-
   }
-
 
   .card-actions .btn {
 
     font-size: 15px;
-
   }
-
 
   .share-btn {
 
     flex: 0 0 48px;
-
   }
-
 
   .share-icon {
 
     width: 20px;
 
     height: 20px;
-
   }
 
+  .download-overlay {
+
+    padding: 10px;
+  }
+
+  .download-modal {
+
+    max-height: 88vh;
+
+    border-radius: 16px;
+  }
+
+  .file-item {
+
+    gap: 8px;
+
+    padding: 10px;
+  }
+
+  .file-icon {
+
+    width: 36px;
+
+    height: 36px;
+  }
+
+  .file-download {
+
+    padding: 8px;
+
+    font-size: 0;
+
+    width: 38px;
+
+    height: 38px;
+  }
+
+  .file-download .download-icon {
+
+    width: 18px;
+
+    height: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   BODY LOCK WHEN MODAL IS OPEN
+========================================================= */
+
+body.modal-open {
+
+  overflow: hidden;
 }
 
 </style>
@@ -682,7 +1030,10 @@ body {
     autocomplete="off"
   >
 
-  <button id="searchBtn" type="button">
+  <button
+    id="searchBtn"
+    type="button"
+  >
     🔍
   </button>
 
@@ -706,7 +1057,10 @@ body {
      RETRY
 ========================================================= -->
 
-<button id="retryBtn" type="button">
+<button
+  id="retryBtn"
+  type="button"
+>
   Retry
 </button>
 
@@ -715,7 +1069,10 @@ body {
      GAME GRID
 ========================================================= -->
 
-<div id="grid" class="grid"></div>
+<div
+  id="grid"
+  class="grid"
+></div>
 
 
 <!-- =========================================================
@@ -731,6 +1088,84 @@ body {
 </button>
 
 
+<!-- =========================================================
+     DOWNLOAD POPUP
+========================================================= -->
+
+<div
+  id="downloadOverlay"
+  class="download-overlay"
+>
+
+  <div
+    class="download-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalGameTitle"
+  >
+
+    <div class="modal-header">
+
+      <div class="modal-title-area">
+
+        <h2
+          id="modalGameTitle"
+          class="modal-title"
+        >
+          Files & Downloads
+        </h2>
+
+        <p
+          id="modalGameSubtitle"
+          class="modal-subtitle"
+        ></p>
+
+      </div>
+
+
+      <button
+        id="closeModal"
+        class="close-modal"
+        type="button"
+        aria-label="Close"
+      >
+
+        <svg
+          class="close-icon"
+          viewBox="0 0 24 24"
+        >
+
+          <line
+            x1="6"
+            y1="6"
+            x2="18"
+            y2="18"
+          ></line>
+
+          <line
+            x1="18"
+            y1="6"
+            x2="6"
+            y2="18"
+          ></line>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="fileList"
+      class="modal-body"
+    ></div>
+
+  </div>
+
+</div>
+
+
 <script>
 
 
@@ -738,7 +1173,8 @@ body {
    TYPING HEADING
 ========================================================= */
 
-const text = "Gaming Hood Store";
+const text =
+  "Gaming Hood Store";
 
 let i = 0;
 
@@ -766,12 +1202,10 @@ function typeLoop() {
 
       isDeleting = true;
 
-
       setTimeout(
         typeLoop,
         5000
       );
-
 
       return;
     }
@@ -813,11 +1247,346 @@ typeLoop();
 
 
 /* =========================================================
-   GOOGLE SHEETS CSV
+   GOOGLE SHEETS
 ========================================================= */
 
+const spreadsheetId =
+  "1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE";
+
+
+/* Main Games sheet */
+
 const sheetUrl =
-  "https://docs.google.com/spreadsheets/d/1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE/export?format=csv";
+  "https://docs.google.com/spreadsheets/d/" +
+  spreadsheetId +
+  "/export?format=csv";
+
+
+/* Files sheet */
+
+const filesSheetUrl =
+  "https://docs.google.com/spreadsheets/d/" +
+  spreadsheetId +
+  "/gviz/tq?tqx=out:csv&sheet=Files";
+
+
+let allGames = [];
+
+let allFiles = [];
+
+let retries = 0;
+
+
+/* =========================================================
+   CSV PARSER
+========================================================= */
+
+function parseCSV(csv) {
+
+  const rows = [];
+
+  let row = [];
+
+  let value = "";
+
+  let insideQuotes = false;
+
+
+  for (
+    let i = 0;
+    i < csv.length;
+    i++
+  ) {
+
+    const char =
+      csv[i];
+
+    const next =
+      csv[i + 1];
+
+
+    /* Double quote inside quoted value */
+
+    if (
+
+      char === '"' &&
+
+      insideQuotes &&
+
+      next === '"'
+
+    ) {
+
+      value += '"';
+
+      i++;
+
+    }
+
+
+    /* Start/end quotes */
+
+    else if (
+      char === '"'
+    ) {
+
+      insideQuotes =
+        !insideQuotes;
+
+    }
+
+
+    /* Column separator */
+
+    else if (
+
+      char === "," &&
+
+      !insideQuotes
+
+    ) {
+
+      row.push(
+        value.trim()
+      );
+
+      value = "";
+
+    }
+
+
+    /* New row */
+
+    else if (
+
+      (
+        char === "\n" ||
+        char === "\r"
+      ) &&
+
+      !insideQuotes
+
+    ) {
+
+      if (
+
+        char === "\r" &&
+
+        next === "\n"
+
+      ) {
+
+        i++;
+
+      }
+
+
+      row.push(
+        value.trim()
+      );
+
+      value = "";
+
+
+      if (
+
+        row.some(
+          cell =>
+            cell !== ""
+        )
+
+      ) {
+
+        rows.push(row);
+
+      }
+
+
+      row = [];
+
+    }
+
+
+    else {
+
+      value += char;
+
+    }
+
+  }
+
+
+  /* Final row */
+
+  if (
+
+    value !== "" ||
+
+    row.length > 0
+
+  ) {
+
+    row.push(
+      value.trim()
+    );
+
+
+    if (
+
+      row.some(
+        cell =>
+          cell !== ""
+      )
+
+    ) {
+
+      rows.push(row);
+
+    }
+
+  }
+
+
+  return rows;
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+  return String(value || "")
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   SHOW SKELETONS
+========================================================= */
+
+function showSkeletons() {
+
+  const grid =
+    document.getElementById(
+      "grid"
+    );
+
+
+  grid.innerHTML = "";
+
+
+  for (
+    let i = 0;
+    i < 6;
+    i++
+  ) {
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+
+    card.className =
+      "card";
+
+
+    card.innerHTML = `
+
+      <div
+        class="skeleton skeleton-img"
+      ></div>
+
+      <div class="info">
+
+        <div
+          class="skeleton skeleton-text"
+        ></div>
+
+        <div
+          class="skeleton skeleton-text"
+          style="width:60%;"
+        ></div>
+
+        <div
+          class="skeleton skeleton-text"
+          style="width:80%;"
+        ></div>
+
+      </div>
+
+    `;
+
+
+    grid.appendChild(card);
+
+  }
+
+}
+
+
+/* =========================================================
+   FETCH MAIN GAMES + FILES
+========================================================= */
+
+function fetchData() {
+
+  document.getElementById(
+    "loader"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "retryBtn"
+  ).style.display =
+    "none";
+
+
+  showSkeletons();
+
+
+  /*
+     Fetch Games and Files separately.
+
+     If Files sheet fails, the main
+     Games sheet can still work.
+  */
+
+  Promise.all([
+
+    fetch(sheetUrl)
+      .then(res => {
+
+     d55uE/export?format=csv";
 
 
 let allGames = [];
