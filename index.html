@@ -220,6 +220,45 @@ body {
 
 
 /* =========================================================
+   VIEW COUNT
+========================================================= */
+
+.view-count {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 13px;
+
+  color: #777;
+
+  margin-top: 2px;
+
+  margin-bottom: 0;
+}
+
+.view-icon {
+  width: 16px;
+
+  height: 16px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
    CARD ACTIONS
 ========================================================= */
 
@@ -383,11 +422,6 @@ body {
 .request-game-btn:active {
   transform: scale(0.97);
 }
-
-
-/* =========================================================
-   FIXED WHATSAPP ICON
-========================================================= */
 
 .request-game-icon {
   width: 24px;
@@ -1150,6 +1184,15 @@ body.modal-open {
     font-size: 12px;
   }
 
+  .view-count {
+    font-size: 11px;
+  }
+
+  .view-icon {
+    width: 14px;
+    height: 14px;
+  }
+
   .card-actions .btn {
     font-size: 15px;
   }
@@ -1212,11 +1255,6 @@ body.modal-open {
     font-size: 10px;
   }
 
-
-  /* =======================================================
-     MOBILE REQUEST GAME BUTTON
-  ======================================================= */
-
   .request-game-btn {
     width: 100%;
 
@@ -1278,10 +1316,6 @@ body.modal-open {
 <body>
 
 
-<!-- =========================================================
-     HEADING
-========================================================= -->
-
 <div
   class="heading"
   id="homeHeading"
@@ -1296,10 +1330,6 @@ body.modal-open {
 
 </div>
 
-
-<!-- =========================================================
-     SEARCH
-========================================================= -->
 
 <div class="search-bar">
 
@@ -1321,10 +1351,6 @@ body.modal-open {
 </div>
 
 
-<!-- =========================================================
-     LOADER
-========================================================= -->
-
 <div id="loader">
 
   <div class="spinner"></div>
@@ -1342,19 +1368,11 @@ body.modal-open {
 </button>
 
 
-<!-- =========================================================
-     GAME GRID
-========================================================= -->
-
 <div
   id="grid"
   class="grid"
 ></div>
 
-
-<!-- =========================================================
-     BACK HOME
-========================================================= -->
 
 <button
   id="backHome"
@@ -1364,10 +1382,6 @@ body.modal-open {
 </button>
 
 
-<!-- =========================================================
-     BACK TO TOP
-========================================================= -->
-
 <button
   id="backToTop"
   type="button"
@@ -1376,10 +1390,6 @@ body.modal-open {
   ↑
 </button>
 
-
-<!-- =========================================================
-     DOWNLOAD MODAL
-========================================================= -->
 
 <div
   id="downloadOverlay"
@@ -1543,35 +1553,11 @@ const spreadsheetId =
   "1ibhg4uYopbqS7n_wFgITtRVe8IJGJnQbRfQpCdd55uE";
 
 
-/*
-   MAIN SHEET
-
-   A = Name
-   B = Platform
-   C = Image
-   D = Link
-   E = info
-   F = Setup Tutorial
-*/
-
 const sheetUrl =
   "https://docs.google.com/spreadsheets/d/" +
   spreadsheetId +
   "/export?format=csv";
 
-
-/*
-   FILES SHEET
-
-   GID = 191236659
-
-   A = Name
-   B = type
-   C = name
-   D = size
-   E = description
-   F = Link
-*/
 
 const filesSheetUrl =
   "https://docs.google.com/spreadsheets/d/" +
@@ -1579,14 +1565,18 @@ const filesSheetUrl =
   "/export?format=csv&gid=191236659";
 
 
-/*
-   BACKUP FILES URL
-*/
-
 const filesBackupUrl =
   "https://docs.google.com/spreadsheets/d/" +
   spreadsheetId +
   "/gviz/tq?tqx=out:csv&gid=191236659";
+
+
+/* =========================================================
+   VIEW COUNTER API
+========================================================= */
+
+const viewsApiUrl =
+  "https://script.google.com/macros/s/AKfycbyo_HyX-SHZDHCROJuXk2FQk3koxki1NPzYsYf55AYjgnErKW0Qi96rhqfn41WQO2DoLQ/exec";
 
 
 let allGames = [];
@@ -2288,6 +2278,72 @@ async function fetchData() {
     }
 
 
+    /* =====================================================
+       READ HEADERS
+    ===================================================== */
+
+    const headers =
+      rows[0].map(
+        header =>
+          normalizeText(
+            header
+          )
+      );
+
+
+    const nameColumn =
+      headers.indexOf(
+        "name"
+      );
+
+
+    const platformColumn =
+      headers.indexOf(
+        "platform"
+      );
+
+
+    const imageColumn =
+      headers.indexOf(
+        "image"
+      );
+
+
+    const linkColumn =
+      headers.indexOf(
+        "link"
+      );
+
+
+    const infoColumn =
+      headers.indexOf(
+        "info"
+      );
+
+
+    const tutorialColumn =
+      headers.indexOf(
+        "setup tutorial"
+      );
+
+
+    const viewsColumn =
+      headers.indexOf(
+        "views"
+      );
+
+
+    if (
+      nameColumn === -1
+    ) {
+
+      throw new Error(
+        "Name column not found."
+      );
+
+    }
+
+
     rows.shift();
 
 
@@ -2296,43 +2352,81 @@ async function fetchData() {
 
       .filter(
         row =>
-          row.length >= 4
+          row.length > nameColumn
       )
 
       .map(
-        row => ({
+        row => {
 
-          name:
-            String(
-              row[0] || ""
-            ).trim(),
+          let views = 0;
 
-          Platform:
-            String(
-              row[1] || ""
-            ).trim(),
 
-          image:
-            String(
-              row[2] || ""
-            ).trim(),
+          if (
+            viewsColumn !== -1
+          ) {
 
-          link:
-            String(
-              row[3] || ""
-            ).trim(),
+            views =
+              Number(
+                String(
+                  row[viewsColumn] || ""
+                )
+                .replace(
+                  /,/g,
+                  ""
+                )
+              ) || 0;
 
-          info:
-            String(
-              row[4] || ""
-            ).trim(),
+          }
 
-          setupTutorial:
-            String(
-              row[5] || ""
-            ).trim()
 
-        })
+          return {
+
+            name:
+              String(
+                row[nameColumn] || ""
+              ).trim(),
+
+            Platform:
+              platformColumn !== -1
+                ? String(
+                    row[platformColumn] || ""
+                  ).trim()
+                : "",
+
+            image:
+              imageColumn !== -1
+                ? String(
+                    row[imageColumn] || ""
+                  ).trim()
+                : "",
+
+            link:
+              linkColumn !== -1
+                ? String(
+                    row[linkColumn] || ""
+                  ).trim()
+                : "",
+
+            info:
+              infoColumn !== -1
+                ? String(
+                    row[infoColumn] || ""
+                  ).trim()
+                : "",
+
+            setupTutorial:
+              tutorialColumn !== -1
+                ? String(
+                    row[tutorialColumn] || ""
+                  ).trim()
+                : "",
+
+            views:
+              views
+
+          };
+
+        }
       )
 
       .filter(
@@ -2354,6 +2448,14 @@ async function fetchData() {
       allGames.length
         ? allGames[0].name
         : "None"
+    );
+
+
+    console.log(
+      "VIEW COLUMN:",
+      viewsColumn !== -1
+        ? "Found"
+        : "Not found"
     );
 
 
@@ -2643,6 +2745,37 @@ function getDownloadIcon() {
 
 
 /* =========================================================
+   VIEW ICON
+========================================================= */
+
+function getViewIcon() {
+
+  return `
+
+    <svg
+      class="view-icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path
+        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+      ></path>
+
+      <circle
+        cx="12"
+        cy="12"
+        r="2.5"
+      ></circle>
+
+    </svg>
+
+  `;
+
+}
+
+
+/* =========================================================
    SETUP TUTORIAL ICON
 ========================================================= */
 
@@ -2660,25 +2793,34 @@ function getTutorialIcon() {
         d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"
       ></path>
 
-      <path
-        d="M8 7h8"
-      ></path>
+      <path d="M8 7h8"></path>
 
-      <path
-        d="M8 11h5"
-      ></path>
+      <path d="M8 11h5"></path>
 
-      <path
-        d="M8 15h8"
-      ></path>
+      <path d="M8 15h8"></path>
 
-      <path
-        d="M16 11l3 3-3 3"
-      ></path>
+      <path d="M16 11l3 3-3 3"></path>
 
     </svg>
 
   `;
+
+}
+
+
+/* =========================================================
+   FORMAT NUMBER
+========================================================= */
+
+function formatNumber(number) {
+
+  const value =
+    Number(number) || 0;
+
+
+  return value.toLocaleString(
+    "en-US"
+  );
 
 }
 
@@ -2743,6 +2885,12 @@ function displayGames(games) {
           );
 
 
+        const views =
+          formatNumber(
+            game.views
+          );
+
+
         card.innerHTML = `
 
           <img
@@ -2774,6 +2922,23 @@ function displayGames(games) {
                 password ||
                 "No password"
               }
+            </p>
+
+
+            <p
+              class="view-count"
+              title="Game views"
+            >
+
+              ${getViewIcon()}
+
+              <span>
+                <span class="view-number">
+                  ${views}
+                </span>
+                views
+              </span>
+
             </p>
 
           </div>
@@ -2906,24 +3071,15 @@ function displayGames(games) {
       aria-label="Request a game on WhatsApp"
     >
 
-      <!-- =================================================
-           CLEAN WHATSAPP ICON
-      ================================================= -->
-
       <svg
         class="request-game-icon"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
 
-        <!-- Outer WhatsApp bubble -->
-
         <path
           d="M20.2 11.6a8.2 8.2 0 0 1-12.4 7L3.5 20l1.2-4.1A8.2 8.2 0 1 1 20.2 11.6z"
         ></path>
-
-
-        <!-- Phone handset -->
 
         <path
           d="M8.7 8.2c.3-.3.7-.4 1-.1l1.3 1.8c.2.3.2.6-.1.9l-.7.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.7c.3-.3.6-.3.9-.1l1.8 1.3c.3.2.3.7.1 1-.4.5-1 .8-1.6.8-3.7 0-7-3.3-7-7 0-.6.3-1.2.8-1.6z"
@@ -2943,6 +3099,165 @@ function displayGames(games) {
 
   grid.appendChild(
     requestContainer
+  );
+
+}
+
+
+/* =========================================================
+   COUNT GAME VIEW
+========================================================= */
+
+function countGameView(
+  gameName
+) {
+
+  const name =
+    String(
+      gameName || ""
+    ).trim();
+
+
+  if (
+    !name
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+     Send request to Google Apps Script.
+
+     We intentionally don't need to read
+     the response. The request itself causes
+     doGet() to increment the Views cell.
+  */
+
+  try {
+
+    const img =
+      new Image();
+
+
+    img.src =
+      viewsApiUrl +
+      "?game=" +
+      encodeURIComponent(
+        name
+      ) +
+      "&cache=" +
+      Date.now();
+
+
+    console.log(
+      "VIEW COUNT REQUEST:",
+      name
+    );
+
+  }
+
+  catch(error) {
+
+    console.warn(
+      "View counter request failed:",
+      error
+    );
+
+  }
+
+
+  /*
+     Update the local value immediately.
+     The Google Sheet remains the source
+     of truth after the next reload.
+  */
+
+  const game =
+    allGames.find(
+      g =>
+        normalizeText(
+          g.name
+        ) ===
+        normalizeText(
+          name
+        )
+    );
+
+
+  if (
+    game
+  ) {
+
+    game.views =
+      (
+        Number(
+          game.views
+        ) || 0
+      ) + 1;
+
+
+    updateVisibleViewCount(
+      game.name,
+      game.views
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   UPDATE VISIBLE VIEW COUNT
+========================================================= */
+
+function updateVisibleViewCount(
+  gameName,
+  views
+) {
+
+  const cards =
+    document.querySelectorAll(
+      ".card"
+    );
+
+
+  cards.forEach(
+    card => {
+
+      if (
+        normalizeText(
+          card.dataset.game
+        ) !==
+        normalizeText(
+          gameName
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      const number =
+        card.querySelector(
+          ".view-number"
+        );
+
+
+      if (
+        number
+      ) {
+
+        number.textContent =
+          formatNumber(
+            views
+          );
+
+      }
+
+    }
   );
 
 }
@@ -3114,6 +3429,18 @@ function openDownloadPopup(
     return;
 
   }
+
+
+  /*
+     COUNT VIEW
+
+     Opening the download panel
+     counts as one game view.
+  */
+
+  countGameView(
+    game.name
+  );
 
 
   const overlay =
@@ -4192,11 +4519,6 @@ document.addEventListener(
   "click",
   function(e) {
 
-    /*
-       Setup Tutorial is NOT
-       a download link.
-    */
-
     if (
       e.target.closest(
         ".setup-tutorial-link"
@@ -4224,10 +4546,6 @@ document.addEventListener(
     }
 
 
-    /* =====================================================
-       IGNORE NAVIGATION
-    ===================================================== */
-
     if (
       link.closest(
         "nav, .menu, .navbar"
@@ -4239,10 +4557,6 @@ document.addEventListener(
     }
 
 
-    /* =====================================================
-       IGNORE POPULAR POSTS
-    ===================================================== */
-
     if (
       link.closest(
         ".PopularPosts, .popular-posts"
@@ -4253,10 +4567,6 @@ document.addEventListener(
 
     }
 
-
-    /* =====================================================
-       IGNORE INTERNAL WEBSITE LINKS
-    ===================================================== */
 
     try {
 
@@ -4284,10 +4594,6 @@ document.addEventListener(
     }
 
 
-    /* =====================================================
-       CHECK DOWNLOAD LINK
-    ===================================================== */
-
     if (
       !isDownloadLink(
         link
@@ -4303,11 +4609,6 @@ document.addEventListener(
 
     e.stopPropagation();
 
-
-    /* =====================================================
-       FIRST DOWNLOAD CLICK
-       → MONETAG
-    ===================================================== */
 
     if (
       firstClick
@@ -4335,11 +4636,6 @@ document.addEventListener(
 
     }
 
-
-    /* =====================================================
-       SECOND DOWNLOAD CLICK
-       → REAL DOWNLOAD
-    ===================================================== */
 
     console.log(
       "DOWNLOAD: Opening",
