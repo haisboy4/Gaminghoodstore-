@@ -131,7 +131,7 @@ body {
 
 
 /* =========================================================
-   GAME GRID
+   GRID
 ========================================================= */
 
 .grid {
@@ -147,7 +147,7 @@ body {
 
 
 /* =========================================================
-   GAME CARD
+   CARD
 ========================================================= */
 
 .card {
@@ -225,7 +225,6 @@ body {
 
 .card-actions {
   display: flex;
-
   width: 100%;
 }
 
@@ -300,7 +299,6 @@ body {
 
 .share-icon {
   width: 22px;
-
   height: 22px;
 
   fill: none;
@@ -348,18 +346,6 @@ body {
 
   box-shadow:
     0 3px 12px rgba(33,150,243,0.10);
-
-  transition:
-    background 0.2s,
-    transform 0.15s,
-    box-shadow 0.2s;
-}
-
-#backHome:hover {
-  background: #ffffff;
-
-  box-shadow:
-    0 5px 15px rgba(33,150,243,0.15);
 }
 
 #backHome:active {
@@ -643,11 +629,11 @@ body {
 .file-description {
   font-size: 12px;
 
-  color: #555;
+  color: #777;
 
-  margin-top: 5px;
+  margin-top: 4px;
 
-  line-height: 1.4;
+  line-height: 1.35;
 
   word-break: break-word;
 }
@@ -726,7 +712,7 @@ body {
 
 
 /* =========================================================
-   BACK TO TOP
+   BACK TOP
 ========================================================= */
 
 #backToTop {
@@ -791,11 +777,9 @@ body {
 }
 
 @keyframes spin {
-
   100% {
     transform: rotate(360deg);
   }
-
 }
 
 
@@ -973,7 +957,6 @@ body.modal-open {
 
   #backHome {
     max-width: 330px;
-    margin-top: 16px;
   }
 
   .download-overlay {
@@ -997,7 +980,9 @@ body.modal-open {
 
   .file-download {
     padding: 8px;
+
     font-size: 0;
+
     width: 38px;
     height: 38px;
   }
@@ -1068,16 +1053,10 @@ body.modal-open {
 
   <div class="spinner"></div>
 
-  <p id="loadingText">
-    Loading games...
-  </p>
+  <p>Loading games...</p>
 
 </div>
 
-
-<!-- =========================================================
-     RETRY
-========================================================= -->
 
 <button
   id="retryBtn"
@@ -1123,7 +1102,7 @@ body.modal-open {
 
 
 <!-- =========================================================
-     DOWNLOAD POPUP
+     DOWNLOAD MODAL
 ========================================================= -->
 
 <div
@@ -1202,6 +1181,7 @@ body.modal-open {
 
 <script>
 
+
 /* =========================================================
    TYPING HEADING
 ========================================================= */
@@ -1244,6 +1224,7 @@ function typeLoop() {
       );
 
       return;
+
     }
 
   }
@@ -1280,7 +1261,7 @@ typeLoop();
 
 
 /* =========================================================
-   GOOGLE SHEETS
+   GOOGLE SHEETS CONFIGURATION
 ========================================================= */
 
 const spreadsheetId =
@@ -1288,10 +1269,10 @@ const spreadsheetId =
 
 
 /*
-   MAIN GAMES SHEET
+   MAIN SHEET
 
-   This reads the first/default
-   sheet of the spreadsheet.
+   This uses the first sheet
+   (Sheet1).
 */
 
 const sheetUrl =
@@ -1304,17 +1285,29 @@ const sheetUrl =
    FILES SHEET
 
    IMPORTANT:
-   191236659 is the GID from your
-   Files tab URL.
-
-   We use GID directly instead of
-   relying on the sheet name.
+   We use the actual GID you
+   provided instead of relying
+   on the sheet name.
 */
 
 const filesSheetUrl =
   "https://docs.google.com/spreadsheets/d/" +
   spreadsheetId +
   "/export?format=csv&gid=191236659";
+
+
+/*
+   Backup Files URL.
+
+   If the normal CSV export
+   fails, we try Google
+   Visualization directly.
+*/
+
+const filesBackupUrl =
+  "https://docs.google.com/spreadsheets/d/" +
+  spreadsheetId +
+  "/gviz/tq?tqx=out:csv&gid=191236659";
 
 
 let allGames = [];
@@ -1352,11 +1345,6 @@ function parseCSV(csv) {
       csv[i + 1];
 
 
-    /*
-       Escaped quote:
-       ""
-    */
-
     if (
       char === '"' &&
       insideQuotes &&
@@ -1367,32 +1355,18 @@ function parseCSV(csv) {
 
       i++;
 
-      continue;
-
     }
 
-
-    /*
-       Opening / closing quote.
-    */
-
-    if (
+    else if (
       char === '"'
     ) {
 
       insideQuotes =
         !insideQuotes;
 
-      continue;
-
     }
 
-
-    /*
-       Comma outside quotes.
-    */
-
-    if (
+    else if (
       char === "," &&
       !insideQuotes
     ) {
@@ -1403,16 +1377,9 @@ function parseCSV(csv) {
 
       value = "";
 
-      continue;
-
     }
 
-
-    /*
-       New line outside quotes.
-    */
-
-    if (
+    else if (
       (
         char === "\n" ||
         char === "\r"
@@ -1453,19 +1420,16 @@ function parseCSV(csv) {
 
       row = [];
 
-      continue;
+    }
+
+    else {
+
+      value += char;
 
     }
 
-
-    value += char;
-
   }
 
-
-  /*
-     Last row.
-  */
 
   if (
     value !== "" ||
@@ -1499,7 +1463,7 @@ function parseCSV(csv) {
 
 
 /* =========================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(value) {
@@ -1508,30 +1472,30 @@ function escapeHTML(value) {
     value ?? ""
   )
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
+  .replace(
+    /</g,
+    "&lt;"
+  )
 
-    .replace(
-      />/g,
-      "&gt;"
-    )
+  .replace(
+    />/g,
+    "&gt;"
+  )
 
-    .replace(
-      /"/g,
-      "&quot;"
-    )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
 
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
@@ -1546,83 +1510,20 @@ function normalizeText(value) {
     value ?? ""
   )
 
-    /*
-       Remove UTF-8 BOM if present.
-    */
+  .trim()
 
-    .replace(
-      /^\uFEFF/,
-      ""
-    )
-
-    .trim()
-
-    .replace(
-      /\s+/g,
-      " "
-    )
-
-    .toLowerCase();
-
-}
-
-
-/* =========================================================
-   NORMALIZE HEADER
-========================================================= */
-
-function normalizeHeader(value) {
-
-  return normalizeText(
-    value
+  .replace(
+    /\s+/g,
+    " "
   )
 
-    .replace(
-      /[_-]+/g,
-      " "
-    )
-
-    .replace(
-      /\s+/g,
-      " "
-    )
-
-    .trim();
+  .toLowerCase();
 
 }
 
 
 /* =========================================================
-   FIND HEADER
-========================================================= */
-
-function findHeaderIndex(
-  headers,
-  possibleNames
-) {
-
-  return headers.findIndex(
-    header => {
-
-      const h =
-        normalizeHeader(
-          header
-        );
-
-      return possibleNames.some(
-        name =>
-          h ===
-          normalizeHeader(name)
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   SKELETONS
+   SKELETON
 ========================================================= */
 
 function showSkeletons() {
@@ -1695,20 +1596,28 @@ function showSkeletons() {
 async function loadFilesSheet() {
 
   console.log(
-    "======================================"
+    "================================"
   );
 
   console.log(
-    "STARTING FILES SHEET LOAD"
+    "LOADING FILES SHEET"
   );
 
   console.log(
-    "Files GID: 191236659"
+    "FILES GID: 191236659"
   );
 
   console.log(
-    "======================================"
+    "================================"
   );
+
+
+  /*
+     First attempt:
+     direct CSV export using GID.
+  */
+
+  let csv = null;
 
 
   try {
@@ -1720,16 +1629,9 @@ async function loadFilesSheet() {
     const timeout =
       setTimeout(
         () => controller.abort(),
-        12000
+        10000
       );
 
-
-    /*
-       IMPORTANT:
-
-       Direct CSV export using the
-       exact GID of your Files tab.
-    */
 
     const url =
       filesSheetUrl +
@@ -1738,7 +1640,7 @@ async function loadFilesSheet() {
 
 
     console.log(
-      "FILES CSV URL:",
+      "Files CSV URL:",
       url
     );
 
@@ -1761,235 +1663,121 @@ async function loadFilesSheet() {
     );
 
 
-    if (!response.ok) {
+    if (
+      response.ok
+    ) {
 
-      throw new Error(
-        "Files sheet HTTP error: " +
+      csv =
+        await response.text();
+
+
+      console.log(
+        "Files CSV export succeeded."
+      );
+
+    }
+
+    else {
+
+      console.warn(
+        "Files CSV export failed:",
         response.status
       );
 
     }
 
+  }
 
-    const csv =
-      await response.text();
+  catch(error) {
 
-
-    console.log(
-      "FILES CSV LENGTH:",
-      csv.length
+    console.warn(
+      "Primary Files request failed:",
+      error
     );
 
-
-    console.log(
-      "RAW FILES CSV:",
-      csv
-    );
+  }
 
 
-    if (
-      !csv.trim()
-    ) {
+  /*
+     Second attempt:
+     Google Visualization.
+  */
 
-      throw new Error(
-        "Files sheet returned EMPTY CSV."
+  if (
+    !csv ||
+    !csv.trim()
+  ) {
+
+    try {
+
+      const controller =
+        new AbortController();
+
+
+      const timeout =
+        setTimeout(
+          () => controller.abort(),
+          10000
+        );
+
+
+      const url =
+        filesBackupUrl +
+        "&cache=" +
+        Date.now();
+
+
+      console.log(
+        "Trying backup Files URL:",
+        url
+      );
+
+
+      const response =
+        await fetch(
+          url,
+          {
+            signal:
+              controller.signal,
+
+            cache:
+              "no-store"
+          }
+        );
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          "Backup Files HTTP " +
+          response.status
+        );
+
+      }
+
+
+      csv =
+        await response.text();
+
+
+      console.log(
+        "Files backup request succeeded."
       );
 
     }
 
-
-    const rows =
-      parseCSV(csv);
-
-
-    console.log(
-      "FILES PARSED ROWS:",
-      rows
-    );
-
-
-    if (
-      !rows.length
-    ) {
-
-      throw new Error(
-        "Files sheet contains no rows."
-      );
-
-    }
-
-
-    /* =====================================================
-       HEADERS
-    ===================================================== */
-
-    const headers =
-      rows[0].map(
-        header =>
-          normalizeHeader(
-            header
-          )
-      );
-
-
-    console.log(
-      "FILES HEADERS:",
-      headers
-    );
-
-
-    /* =====================================================
-       COLUMN DETECTION
-    ===================================================== */
-
-    const gameIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "game",
-          "game name",
-          "gamename",
-          "game title",
-          "title"
-        ]
-      );
-
-
-    const typeIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "type",
-          "file type",
-          "filetype",
-          "category"
-        ]
-      );
-
-
-    const nameIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "name",
-          "file name",
-          "filename",
-          "file"
-        ]
-      );
-
-
-    const sizeIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "size",
-          "file size"
-        ]
-      );
-
-
-    /*
-       DESCRIPTION DETECTION
-
-       Accepts:
-
-       Description
-       description
-       Description
-       Info
-       info
-       Details
-       File Description
-       File Info
-    */
-
-    const descriptionIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "description",
-          "desc",
-          "info",
-          "details",
-          "file description",
-          "file info",
-          "file details"
-        ]
-      );
-
-
-    const linkIndex =
-      findHeaderIndex(
-        headers,
-        [
-          "link",
-          "download",
-          "download link",
-          "download url",
-          "url"
-        ]
-      );
-
-
-    console.log(
-      "======================================"
-    );
-
-    console.log(
-      "FILES COLUMN DETECTION"
-    );
-
-    console.log(
-      "Game column:",
-      gameIndex
-    );
-
-    console.log(
-      "Type column:",
-      typeIndex
-    );
-
-    console.log(
-      "Name column:",
-      nameIndex
-    );
-
-    console.log(
-      "Size column:",
-      sizeIndex
-    );
-
-    console.log(
-      "Description column:",
-      descriptionIndex
-    );
-
-    console.log(
-      "Link column:",
-      linkIndex
-    );
-
-    console.log(
-      "======================================"
-    );
-
-
-    /*
-       GAME is required.
-    */
-
-    if (
-      gameIndex === -1
-    ) {
+    catch(error) {
 
       console.error(
-        "ERROR: GAME column was NOT FOUND."
-      );
-
-      console.error(
-        "Detected headers:",
-        headers
+        "BACKUP FILES REQUEST FAILED:",
+        error
       );
 
       allFiles = [];
@@ -1998,318 +1786,403 @@ async function loadFilesSheet() {
 
     }
 
-
-    /*
-       LINK is required.
-    */
-
-    if (
-      linkIndex === -1
-    ) {
-
-      console.error(
-        "ERROR: LINK column was NOT FOUND."
-      );
-
-      console.error(
-        "Detected headers:",
-        headers
-      );
-
-      allFiles = [];
-
-      return;
-
-    }
+  }
 
 
-    /*
-       Remove header row.
-    */
+  /*
+     Parse CSV.
+  */
 
-    rows.shift();
+  console.log(
+    "RAW FILES CSV:",
+    csv
+  );
 
 
-    /*
-       Clear previous files.
-    */
+  const rows =
+    parseCSV(csv);
+
+
+  if (
+    !rows.length
+  ) {
+
+    console.error(
+      "Files sheet returned no rows."
+    );
 
     allFiles = [];
 
+    return;
 
-    /*
-       Remember the most recent
-       game name.
-
-       This allows blank GAME
-       cells to inherit the game
-       above them.
-    */
-
-    let lastGameName = "";
+  }
 
 
-    /* =====================================================
-       PROCESS EVERY FILE ROW
-    ===================================================== */
-
-    rows.forEach(
-      (row, index) => {
-
-        if (
-          !row
-        ) {
-
-          return;
-
-        }
+  console.log(
+    "FILES ROWS:",
+    rows
+  );
 
 
-        /*
-           Ignore completely
-           empty rows.
-        */
+  /* =====================================================
+     HEADER DETECTION
+  ===================================================== */
 
-        const hasContent =
-          row.some(
-            cell =>
-              String(
-                cell ?? ""
-              ).trim() !== ""
-          );
+  const headers =
+    rows[0].map(
+      header =>
+        normalizeText(header)
+    );
 
 
-        if (
-          !hasContent
-        ) {
-
-          return;
-
-        }
+  console.log(
+    "FILES HEADERS:",
+    headers
+  );
 
 
-        /*
-           Get explicit game name.
-        */
+  /*
+     Your actual sheet is:
 
-        const explicitGameName =
+     Name
+     type
+     name
+     size
+     description
+     Link
+  */
+
+
+  const gameIndex =
+    headers.findIndex(
+      h =>
+        h === "name" ||
+        h === "game" ||
+        h === "game name" ||
+        h === "gamename" ||
+        h === "title"
+    );
+
+
+  const typeIndex =
+    headers.findIndex(
+      h =>
+        h === "type" ||
+        h === "file type" ||
+        h === "filetype"
+    );
+
+
+  const fileNameIndex =
+    headers.findIndex(
+      h =>
+        h === "name" ||
+        h === "file name" ||
+        h === "filename" ||
+        h === "file"
+    );
+
+
+  const sizeIndex =
+    headers.findIndex(
+      h =>
+        h === "size" ||
+        h === "file size"
+    );
+
+
+  const descriptionIndex =
+    headers.findIndex(
+      h =>
+        h === "description" ||
+        h === "desc" ||
+        h === "info" ||
+        h === "file description"
+    );
+
+
+  const linkIndex =
+    headers.findIndex(
+      h =>
+        h === "link" ||
+        h === "download" ||
+        h === "download link" ||
+        h === "download url" ||
+        h === "url"
+    );
+
+
+  /*
+     IMPORTANT:
+
+     Your Files sheet has TWO
+     columns called "Name":
+
+     Column A = game name
+     Column C = file name
+
+     Therefore the generic header
+     detection above could select
+     the wrong Name column.
+
+     We force the indexes to match
+     your actual sheet structure.
+  */
+
+  const actualGameIndex = 0;
+
+  const actualTypeIndex = 1;
+
+  const actualFileNameIndex = 2;
+
+  const actualSizeIndex = 3;
+
+  const actualDescriptionIndex = 4;
+
+  const actualLinkIndex = 5;
+
+
+  console.log(
+    "================================"
+  );
+
+  console.log(
+    "FILES COLUMN MAPPING"
+  );
+
+  console.log({
+    game: actualGameIndex,
+    type: actualTypeIndex,
+    fileName: actualFileNameIndex,
+    size: actualSizeIndex,
+    description: actualDescriptionIndex,
+    link: actualLinkIndex
+  });
+
+  console.log(
+    "================================"
+  );
+
+
+  /*
+     Make sure the sheet actually
+     contains the expected columns.
+  */
+
+  if (
+    rows[0].length < 6
+  ) {
+
+    console.error(
+      "Files sheet has fewer than 6 columns."
+    );
+
+    allFiles = [];
+
+    return;
+
+  }
+
+
+  /*
+     Remove header.
+  */
+
+  rows.shift();
+
+
+  let lastGameName = "";
+
+  allFiles = [];
+
+
+  /*
+     Process every Files row.
+  */
+
+  rows.forEach(
+    (row, index) => {
+
+      if (
+        !row
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+         Check if row contains
+         anything.
+      */
+
+      const hasContent =
+        row.some(
+          cell =>
+            String(
+              cell ?? ""
+            ).trim() !== ""
+        );
+
+
+      if (
+        !hasContent
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+         GAME NAME
+
+         Column A.
+      */
+
+      const currentGame =
+        String(
+          row[actualGameIndex] ?? ""
+        ).trim();
+
+
+      /*
+         Remember the latest
+         game name.
+
+         This also supports:
+
+         WWE 2K25 | game | ...
+                  | emulator | ...
+                  | driver | ...
+      */
+
+      if (
+        currentGame
+      ) {
+
+        lastGameName =
+          currentGame;
+
+      }
+
+
+      /*
+         If no game name has
+         appeared yet, skip.
+      */
+
+      if (
+        !lastGameName
+      ) {
+
+        return;
+
+      }
+
+
+      const file = {
+
+        game:
+          lastGameName,
+
+        type:
           String(
-            row[gameIndex] ?? ""
-          )
+            row[actualTypeIndex] ?? ""
+          ).trim(),
 
-            .replace(
-              /^\uFEFF/,
-              ""
-            )
+        name:
+          String(
+            row[actualFileNameIndex] ?? ""
+          ).trim(),
 
-            .trim();
+        size:
+          String(
+            row[actualSizeIndex] ?? ""
+          ).trim(),
 
+        description:
+          String(
+            row[actualDescriptionIndex] ?? ""
+          ).trim(),
 
-        /*
-           If this row contains
-           a game name, remember it.
-        */
+        link:
+          String(
+            row[actualLinkIndex] ?? ""
+          ).trim()
 
-        if (
-          explicitGameName !== ""
-        ) {
-
-          lastGameName =
-            explicitGameName;
-
-        }
-
-
-        /*
-           Ignore rows that appear
-           before the first game.
-        */
-
-        if (
-          !lastGameName
-        ) {
-
-          console.warn(
-            "Skipping row before first game:",
-            index + 2,
-            row
-          );
-
-          return;
-
-        }
+      };
 
 
-        /* =================================================
-           READ TYPE
-        ================================================= */
+      /*
+         Defaults.
+      */
 
-        const type =
-          typeIndex >= 0
-            ? String(
-                row[typeIndex] ?? ""
-              ).trim()
-            : "File";
+      if (
+        !file.type
+      ) {
 
+        file.type =
+          "File";
 
-        /* =================================================
-           READ FILE NAME
-        ================================================= */
-
-        const name =
-          nameIndex >= 0
-            ? String(
-                row[nameIndex] ?? ""
-              ).trim()
-            : "Download";
+      }
 
 
-        /* =================================================
-           READ SIZE
-        ================================================= */
+      if (
+        !file.name
+      ) {
 
-        const size =
-          sizeIndex >= 0
-            ? String(
-                row[sizeIndex] ?? ""
-              ).trim()
-            : "";
+        file.name =
+          "Download";
+
+      }
 
 
-        /* =================================================
-           READ DESCRIPTION
-        ================================================= */
+      /*
+         Add only rows with
+         a download link.
+      */
 
-        const description =
-          descriptionIndex >= 0
-            ? String(
-                row[descriptionIndex] ?? ""
-              ).trim()
-            : "";
+      if (
+        file.link
+      ) {
 
-
-        /* =================================================
-           READ LINK
-        ================================================= */
-
-        const link =
-          linkIndex >= 0
-            ? String(
-                row[linkIndex] ?? ""
-              ).trim()
-            : "";
-
-
-        /*
-           Build file object.
-        */
-
-        const file = {
-
-          game:
-            lastGameName,
-
-          type:
-            type ||
-            "File",
-
-          name:
-            name ||
-            "Download",
-
-          size:
-            size,
-
-          description:
-            description,
-
-          link:
-            link
-
-        };
-
-
-        /*
-           Only files containing
-           a download link are added.
-        */
-
-        if (
-          file.link
-        ) {
-
-          allFiles.push(
-            file
-          );
-
-        }
-
-
-        /*
-           Debug each row.
-        */
-
-        console.log(
-          "FILES ROW " +
-          (index + 2) +
-          ":",
+        allFiles.push(
           file
         );
 
       }
-    );
 
 
-    /* =====================================================
-       FINAL RESULT
-    ===================================================== */
+      console.log(
+        "FILES ROW " +
+        (index + 2) +
+        ":",
+        file
+      );
 
-    console.log(
-      "======================================"
-    );
-
-    console.log(
-      "FILES SHEET LOADED SUCCESSFULLY"
-    );
-
-    console.log(
-      "TOTAL FILES:",
-      allFiles.length
-    );
-
-    console.log(
-      "ALL FILE DATA:",
-      allFiles
-    );
-
-    console.log(
-      "======================================"
-    );
+    }
+  );
 
 
-  }
+  console.log(
+    "================================"
+  );
 
-  catch (error) {
+  console.log(
+    "TOTAL FILES LOADED:",
+    allFiles.length
+  );
 
-    console.error(
-      "======================================"
-    );
+  console.log(
+    "ALL FILE DATA:",
+    allFiles
+  );
 
-    console.error(
-      "FILES SHEET FAILED TO LOAD"
-    );
-
-    console.error(
-      error
-    );
-
-    console.error(
-      "======================================"
-    );
-
-    allFiles = [];
-
-  }
+  console.log(
+    "================================"
+  );
 
 }
 
@@ -2332,12 +2205,6 @@ async function fetchData() {
     );
 
 
-  const loadingText =
-    document.getElementById(
-      "loadingText"
-    );
-
-
   loader.style.display =
     "block";
 
@@ -2346,18 +2213,10 @@ async function fetchData() {
     "none";
 
 
-  loadingText.textContent =
-    "Loading games...";
-
-
   showSkeletons();
 
 
   try {
-
-    /* =====================================================
-       LOAD MAIN GAMES SHEET
-    ===================================================== */
 
     const controller =
       new AbortController();
@@ -2366,15 +2225,19 @@ async function fetchData() {
     const timeout =
       setTimeout(
         () => controller.abort(),
-        12000
+        10000
       );
+
+
+    const url =
+      sheetUrl +
+      "&cache=" +
+      Date.now();
 
 
     const response =
       await fetch(
-        sheetUrl +
-        "&cache=" +
-        Date.now(),
+        url,
         {
           signal:
             controller.signal,
@@ -2395,7 +2258,7 @@ async function fetchData() {
     ) {
 
       throw new Error(
-        "Games sheet HTTP error: " +
+        "Games HTTP error: " +
         response.status
       );
 
@@ -2404,17 +2267,6 @@ async function fetchData() {
 
     const csv =
       await response.text();
-
-
-    if (
-      !csv.trim()
-    ) {
-
-      throw new Error(
-        "Games sheet returned empty CSV."
-      );
-
-    }
 
 
     const rows =
@@ -2440,61 +2292,58 @@ async function fetchData() {
 
 
     /*
-       Build games.
+       Main Sheet structure:
+
+       Name
+       Platform
+       Image
+       Link
+       info
     */
 
     allGames =
       rows
 
-        .filter(
-          row =>
-            row.length >= 4
-        )
+      .filter(
+        row =>
+          row.length >= 4
+      )
 
-        .map(
-          row => {
+      .map(
+        row => ({
 
-            return {
+          name:
+            String(
+              row[0] || ""
+            ).trim(),
 
-              name:
-                String(
-                  row[0] || ""
-                ).trim(),
+          Platform:
+            String(
+              row[1] || ""
+            ).trim(),
 
-              Platform:
-                String(
-                  row[1] || ""
-                ).trim(),
+          image:
+            String(
+              row[2] || ""
+            ).trim(),
 
-              image:
-                String(
-                  row[2] || ""
-                ).trim(),
+          link:
+            String(
+              row[3] || ""
+            ).trim(),
 
-              link:
-                String(
-                  row[3] || ""
-                ).trim(),
+          info:
+            String(
+              row[4] || ""
+            ).trim()
 
-              /*
-                 Main sheet column 5
-                 is PASSWORD.
-              */
+        })
+      )
 
-              info:
-                String(
-                  row[4] || ""
-                ).trim()
-
-            };
-
-          }
-        )
-
-        .filter(
-          game =>
-            game.name !== ""
-        );
+      .filter(
+        game =>
+          game.name !== ""
+      );
 
 
     console.log(
@@ -2503,20 +2352,15 @@ async function fetchData() {
     );
 
 
-    /* =====================================================
-       LOAD FILES BEFORE DISPLAYING
-    ===================================================== */
+    /*
+       IMPORTANT:
 
-    loadingText.textContent =
-      "Loading download files...";
-
+       Load the Files sheet
+       BEFORE displaying games.
+    */
 
     await loadFilesSheet();
 
-
-    /* =====================================================
-       FINISHED
-    ===================================================== */
 
     retries = 0;
 
@@ -2530,19 +2374,15 @@ async function fetchData() {
     );
 
 
-    /*
-       Open shared game if present.
-    */
-
     openSharedGame();
-
 
   }
 
-  catch (error) {
+
+  catch(error) {
 
     console.error(
-      "Games loading error:",
+      "GAMES LOADING ERROR:",
       error
     );
 
@@ -2793,9 +2633,7 @@ function getDownloadIcon() {
 
       <path d="M12 3v12"></path>
 
-      <path
-        d="M7 10l5 5 5-5"
-      ></path>
+      <path d="M7 10l5 5 5-5"></path>
 
       <path d="M5 21h14"></path>
 
@@ -2853,11 +2691,6 @@ function displayGames(games) {
         "card";
 
 
-      /*
-         RAW game name is stored
-         for matching.
-      */
-
       card.dataset.game =
         game.name;
 
@@ -2873,11 +2706,6 @@ function displayGames(games) {
           game.Platform
         );
 
-
-      /*
-         Main Games sheet info
-         is the PASSWORD.
-      */
 
       const password =
         escapeHTML(
@@ -3007,14 +2835,9 @@ function displayGames(games) {
 
 function goHome() {
 
-  const searchInput =
-    document.getElementById(
-      "searchInput"
-    );
-
-
-  searchInput.value =
-    "";
+  document.getElementById(
+    "searchInput"
+  ).value = "";
 
 
   displayGames(
@@ -3052,7 +2875,7 @@ function goHome() {
 
 
 /* =========================================================
-   HEADING HOME
+   HOME BUTTON
 ========================================================= */
 
 document.getElementById(
@@ -3087,7 +2910,7 @@ document.getElementById(
 
 
 /* =========================================================
-   BACK HOME BUTTON
+   BACK HOME
 ========================================================= */
 
 document.getElementById(
@@ -3100,7 +2923,7 @@ document.getElementById(
 
 
 /* =========================================================
-   OPEN DOWNLOAD BUTTON
+   OPEN DOWNLOAD
 ========================================================= */
 
 document.addEventListener(
@@ -3209,9 +3032,11 @@ function openDownloadPopup(
       : "Files & Downloads";
 
 
-  /* =====================================================
-     FIND FILES
-  ===================================================== */
+  /*
+     Match Files sheet
+     game name with main
+     Games sheet name.
+  */
 
   const normalizedGame =
     normalizeText(
@@ -3221,55 +3046,50 @@ function openDownloadPopup(
 
   const matchingFiles =
     allFiles.filter(
-      file => {
-
-        const fileGame =
-          normalizeText(
-            file.game
-          );
-
-
-        return (
-          fileGame ===
-          normalizedGame
-        );
-
-      }
+      file =>
+        normalizeText(
+          file.game
+        ) ===
+        normalizedGame
     );
 
 
   console.log(
-    "======================================"
+    "================================"
   );
 
   console.log(
-    "OPENING DOWNLOAD POPUP"
+    "OPEN DOWNLOAD"
   );
 
   console.log(
-    "Game:",
+    "GAME:",
     game.name
   );
 
   console.log(
-    "Normalized game:",
+    "NORMALIZED:",
     normalizedGame
   );
 
   console.log(
-    "Total files loaded:",
+    "FILES LOADED:",
     allFiles.length
   );
 
   console.log(
-    "Matching files:",
+    "MATCHING FILES:",
     matchingFiles
   );
 
   console.log(
-    "======================================"
+    "================================"
   );
 
+
+  /*
+     Use Files-sheet data.
+  */
 
   let files =
     matchingFiles.filter(
@@ -3280,9 +3100,11 @@ function openDownloadPopup(
     );
 
 
-  /* =====================================================
-     FALLBACK
-  ===================================================== */
+  /*
+     Fallback only if
+     Files sheet has no
+     matching entry.
+  */
 
   if (
     !files.length &&
@@ -3292,7 +3114,7 @@ function openDownloadPopup(
   ) {
 
     console.warn(
-      "No Files-tab match found. Using main Games link."
+      "No Files-sheet match. Using Games-sheet fallback."
     );
 
 
@@ -3330,10 +3152,6 @@ function openDownloadPopup(
     "";
 
 
-  /* =====================================================
-     NO FILES
-  ===================================================== */
-
   if (
     !files.length
   ) {
@@ -3365,9 +3183,9 @@ function openDownloadPopup(
   }
 
 
-  /* =====================================================
-     RENDER FILES
-  ===================================================== */
+  /*
+     Render files.
+  */
 
   files.forEach(
     file => {
@@ -3424,30 +3242,11 @@ function openDownloadPopup(
 
 
       /*
-         DEBUG:
+         THIS IS THE IMPORTANT PART:
 
-         This lets you confirm that
-         description is actually
-         arriving from Google Sheets.
+         Description comes directly
+         from Files column E.
       */
-
-      console.log(
-        "RENDERING FILE:",
-        {
-          game:
-            file.game,
-
-          name:
-            file.name,
-
-          description:
-            file.description,
-
-          link:
-            file.link
-        }
-      );
-
 
       item.innerHTML = `
 
@@ -3463,44 +3262,46 @@ function openDownloadPopup(
         <div class="file-details">
 
           <div class="file-type">
+
             ${type}
+
           </div>
 
 
           <div class="file-name">
+
             ${fileName}
+
           </div>
 
 
           ${
             size
-
               ? `
 
                 <div class="file-size">
+
                   ${size}
+
                 </div>
 
               `
-
               : ""
-
           }
 
 
           ${
             description
-
               ? `
 
                 <div class="file-description">
+
                   ${description}
+
                 </div>
 
               `
-
               : ""
-
           }
 
         </div>
@@ -3544,7 +3345,7 @@ function openDownloadPopup(
 
 
 /* =========================================================
-   CLOSE POPUP
+   CLOSE MODAL
 ========================================================= */
 
 function closeDownloadPopup() {
@@ -3572,7 +3373,7 @@ document.getElementById(
 
 
 /* =========================================================
-   CLICK OUTSIDE MODAL
+   CLICK OUTSIDE
 ========================================================= */
 
 document.getElementById(
@@ -3734,7 +3535,6 @@ document.addEventListener(
 
     }
 
-
     catch(error) {
 
       const textarea =
@@ -3867,9 +3667,7 @@ function openSharedGame() {
 
 
   const sharedGame =
-    params.get(
-      "game"
-    );
+    params.get("game");
 
 
   if (
@@ -3997,35 +3795,23 @@ function searchGames() {
 
   const filtered =
     allGames.filter(
-      game => {
+      game =>
 
-        return (
+        normalizeText(
+          game.name
+        ).includes(query)
 
-          normalizeText(
-            game.name
-          ).includes(
-            query
-          )
+        ||
 
-          ||
+        normalizeText(
+          game.Platform
+        ).includes(query)
 
-          normalizeText(
-            game.Platform
-          ).includes(
-            query
-          )
+        ||
 
-          ||
-
-          normalizeText(
-            game.info
-          ).includes(
-            query
-          )
-
-        );
-
-      }
+        normalizeText(
+          game.info
+        ).includes(query)
     );
 
 
@@ -4034,25 +3820,12 @@ function searchGames() {
   );
 
 
-  if (
-    query !== ""
-  ) {
-
-    document.getElementById(
-      "backHome"
-    ).style.display =
-      "block";
-
-  }
-
-  else {
-
-    document.getElementById(
-      "backHome"
-    ).style.display =
-      "none";
-
-  }
+  document.getElementById(
+    "backHome"
+  ).style.display =
+    query
+      ? "block"
+      : "none";
 
 }
 
@@ -4071,21 +3844,10 @@ window.addEventListener(
   "scroll",
   () => {
 
-    if (
+    backToTop.style.display =
       window.scrollY > 300
-    ) {
-
-      backToTop.style.display =
-        "block";
-
-    }
-
-    else {
-
-      backToTop.style.display =
-        "none";
-
-    }
+        ? "block"
+        : "none";
 
   }
 );
@@ -4118,49 +3880,27 @@ let firstClick = true;
 const downloadDomains = [
 
   "drive.google.com",
-
   "drive.usercontent.google.com",
-
   "apkvision.org",
-
   "dl.apkvision.org",
-
   "mediafire.com",
-
   "modsfire.com",
-
   "mega.nz",
-
   "steamunlocked.org",
-
   "paste.fitgirl-repacks.site",
-
   "romsgames.net",
-
   "coolrom.com",
-
   "myrient.erista.me",
-
   "github.com",
-
   "githubusercontent.com",
-
   "dodi-repacks.site",
-
   "1fichier.com",
-
   "pixeldrain.com",
-
   "buzzheavier.com",
-
   "play.google.com",
-
   "gofile.io",
-
   "gamehub.xiaoji",
-
   "romspedia",
-
   "gplinks.co"
 
 ];
