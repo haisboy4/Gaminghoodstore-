@@ -779,6 +779,109 @@ body {
 
 
 /* =========================================================
+   SETUP TUTORIAL
+========================================================= */
+
+.setup-tutorial {
+  margin-top: 14px;
+
+  padding-top: 14px;
+
+  border-top: 1px solid #e9edf1;
+}
+
+.setup-tutorial-link {
+  width: 100%;
+
+  min-height: 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 12px 16px;
+
+  background: #f0f7ff;
+
+  border: 1px solid #d7eaff;
+
+  border-radius: 12px;
+
+  color: #2196F3;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
+}
+
+.setup-tutorial-link:hover {
+  background: #e5f2ff;
+
+  box-shadow:
+    0 4px 12px rgba(33,150,243,0.12);
+}
+
+.setup-tutorial-link:active {
+  transform: scale(0.98);
+}
+
+.setup-tutorial-icon {
+  width: 20px;
+
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  flex-shrink: 0;
+}
+
+.setup-tutorial-text {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  line-height: 1.2;
+}
+
+.setup-tutorial-title {
+  font-size: 14px;
+
+  font-weight: bold;
+}
+
+.setup-tutorial-subtitle {
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  font-weight: normal;
+
+  color: #6f7f8f;
+}
+
+
+/* =========================================================
    NO FILES
 ========================================================= */
 
@@ -1076,6 +1179,18 @@ body.modal-open {
     height: 18px;
   }
 
+  .setup-tutorial-link {
+    min-height: 46px;
+  }
+
+  .setup-tutorial-title {
+    font-size: 13px;
+  }
+
+  .setup-tutorial-subtitle {
+    font-size: 10px;
+  }
+
   .request-game-btn {
     max-width: 100%;
 
@@ -1367,6 +1482,7 @@ const spreadsheetId =
    C = Image
    D = Link
    E = info
+   F = Setup Tutorial
 */
 
 const sheetUrl =
@@ -1689,29 +1805,8 @@ function showSkeletons() {
 
 async function loadFilesSheet() {
 
-  console.log(
-    "================================"
-  );
-
-  console.log(
-    "LOADING FILES SHEET"
-  );
-
-  console.log(
-    "FILES GID: 191236659"
-  );
-
-  console.log(
-    "================================"
-  );
-
-
   let csv = "";
 
-
-  /* =======================================================
-     PRIMARY CSV REQUEST
-  ======================================================= */
 
   try {
 
@@ -1730,12 +1825,6 @@ async function loadFilesSheet() {
       filesSheetUrl +
       "&cache=" +
       Date.now();
-
-
-    console.log(
-      "Files URL:",
-      url
-    );
 
 
     const response =
@@ -1771,11 +1860,6 @@ async function loadFilesSheet() {
     csv =
       await response.text();
 
-
-    console.log(
-      "Files CSV export succeeded."
-    );
-
   }
 
   catch(error) {
@@ -1787,10 +1871,6 @@ async function loadFilesSheet() {
 
   }
 
-
-  /* =======================================================
-     BACKUP GVIZ REQUEST
-  ======================================================= */
 
   if (
     !csv.trim()
@@ -1813,12 +1893,6 @@ async function loadFilesSheet() {
         filesBackupUrl +
         "&cache=" +
         Date.now();
-
-
-      console.log(
-        "Trying backup Files URL:",
-        url
-      );
 
 
       const response =
@@ -1854,11 +1928,6 @@ async function loadFilesSheet() {
       csv =
         await response.text();
 
-
-      console.log(
-        "Backup Files request succeeded."
-      );
-
     }
 
     catch(error) {
@@ -1877,16 +1946,6 @@ async function loadFilesSheet() {
   }
 
 
-  /* =======================================================
-     PARSE FILES CSV
-  ======================================================= */
-
-  console.log(
-    "RAW FILES CSV:",
-    csv
-  );
-
-
   const rows =
     parseCSV(csv);
 
@@ -1895,10 +1954,6 @@ async function loadFilesSheet() {
     !rows.length
   ) {
 
-    console.error(
-      "Files sheet returned no rows."
-    );
-
     allFiles = [];
 
     return;
@@ -1906,38 +1961,16 @@ async function loadFilesSheet() {
   }
 
 
-  console.log(
-    "FILES ROWS:",
-    rows
-  );
-
-
-  /* =======================================================
-     FILES SHEET HEADER
-  ======================================================= */
-
-  const headers =
-    rows[0].map(
-      header =>
-        normalizeText(header)
-    );
-
-
-  console.log(
-    "FILES HEADERS:",
-    headers
-  );
-
-
   /*
-     IMPORTANT:
+     Files columns:
 
-     Two columns are named Name.
-
-     A = GAME NAME
-     C = FILE NAME
+     A = Game Name
+     B = Type
+     C = File Name
+     D = Size
+     E = Description
+     F = Link
   */
-
 
   const GAME_COLUMN = 0;
 
@@ -1975,10 +2008,6 @@ async function loadFilesSheet() {
 
   allFiles = [];
 
-
-  /* =======================================================
-     PROCESS EVERY FILE ROW
-========================================================= */
 
   rows.forEach(
     (row, index) => {
@@ -2029,11 +2058,6 @@ async function loadFilesSheet() {
       if (
         !lastGameName
       ) {
-
-        console.warn(
-          "Skipping Files row:",
-          index + 2
-        );
 
         return;
 
@@ -2103,33 +2127,9 @@ async function loadFilesSheet() {
 
       }
 
-
-      console.log(
-        "FILES ROW:",
-        file
-      );
-
     }
   );
 
-
-  console.log(
-    "================================"
-  );
-
-  console.log(
-    "TOTAL FILES LOADED:",
-    allFiles.length
-  );
-
-  console.log(
-    "ALL FILE DATA:",
-    allFiles
-  );
-
-  console.log(
-    "================================"
-  );
 
 }
 
@@ -2242,16 +2242,9 @@ async function fetchData() {
        C = Image
        D = Link
        E = info
-
-       IMPORTANT:
-
-       Google Sheets is read from
-       top to bottom.
-
-       .reverse() flips the order
-       so the LAST row becomes
-       the FIRST game displayed.
+       F = Setup Tutorial
     */
+
 
     allGames =
       rows
@@ -2287,6 +2280,11 @@ async function fetchData() {
           info:
             String(
               row[4] || ""
+            ).trim(),
+
+          setupTutorial:
+            String(
+              row[5] || ""
             ).trim()
 
         })
@@ -2298,30 +2296,11 @@ async function fetchData() {
       )
 
       /*
-         ==============================================
-         LATEST GAME FIRST
-         ==============================================
-
-         Example:
-
-         Sheet:
-         Game A
-         Game B
-         Game C
-         Game D
-
-         Website:
-         Game D
-         Game C
-         Game B
-         Game A
+         Latest game first.
       */
+
       .reverse();
 
-
-    console.log(
-      "================================"
-    );
 
     console.log(
       "GAMES LOADED:",
@@ -2333,14 +2312,6 @@ async function fetchData() {
       allGames.length
         ? allGames[0].name
         : "None"
-    );
-
-    console.log(
-      allGames
-    );
-
-    console.log(
-      "================================"
     );
 
 
@@ -2630,6 +2601,47 @@ function getDownloadIcon() {
 
 
 /* =========================================================
+   SETUP TUTORIAL ICON
+========================================================= */
+
+function getTutorialIcon() {
+
+  return `
+
+    <svg
+      class="setup-tutorial-icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path
+        d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"
+      ></path>
+
+      <path
+        d="M8 7h8"
+      ></path>
+
+      <path
+        d="M8 11h5"
+      ></path>
+
+      <path
+        d="M8 15h8"
+      ></path>
+
+      <path
+        d="M16 11l3 3-3 3"
+      ></path>
+
+    </svg>
+
+  `;
+
+}
+
+
+/* =========================================================
    DISPLAY GAMES
 ========================================================= */
 
@@ -2643,10 +2655,6 @@ function displayGames(games) {
 
   grid.innerHTML = "";
 
-
-  /* =======================================================
-     DISPLAY GAMES
-  ======================================================= */
 
   if (
     games.length
@@ -2664,11 +2672,6 @@ function displayGames(games) {
         card.className =
           "card";
 
-
-        /*
-           Store RAW game name
-           for matching.
-        */
 
         card.dataset.game =
           game.name;
@@ -2809,10 +2812,6 @@ function displayGames(games) {
 
   else {
 
-    /*
-       NO SEARCH RESULTS
-    */
-
     const noResults =
       document.createElement(
         "div"
@@ -2843,8 +2842,6 @@ function displayGames(games) {
 
   /* =======================================================
      REQUEST GAME BUTTON
-
-     Always remains at the bottom.
   ======================================================= */
 
   const requestContainer =
@@ -2874,7 +2871,7 @@ function displayGames(games) {
       >
 
         <path
-          d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4.1-1.1L3 20l1.3-5.1a8.4 8.4 0 0 1-1.1-4.1A8.5 8.5 0 1 1 21 11.5z"
+          d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4.1-1.1L3 20l1.3-5.1a8.4 8.4 0 1 1 17.6 0z"
         ></path>
 
         <path
@@ -3109,10 +3106,6 @@ function openDownloadPopup(
     );
 
 
-  /*
-     Match Files sheet rows.
-  */
-
   const matchingFiles =
     allFiles.filter(
       file =>
@@ -3123,43 +3116,6 @@ function openDownloadPopup(
     );
 
 
-  console.log(
-    "================================"
-  );
-
-  console.log(
-    "OPEN DOWNLOAD"
-  );
-
-  console.log(
-    "GAME:",
-    game.name
-  );
-
-  console.log(
-    "NORMALIZED GAME:",
-    normalizedGame
-  );
-
-  console.log(
-    "TOTAL FILES:",
-    allFiles.length
-  );
-
-  console.log(
-    "MATCHING FILES:",
-    matchingFiles
-  );
-
-  console.log(
-    "================================"
-  );
-
-
-  /*
-     Use Files sheet links.
-  */
-
   let files =
     matchingFiles.filter(
       file =>
@@ -3169,9 +3125,9 @@ function openDownloadPopup(
     );
 
 
-  /*
-     FALLBACK
-  */
+  /* =======================================================
+     FALLBACK TO MAIN SHEET LINK
+  ======================================================= */
 
   if (
     !files.length &&
@@ -3179,11 +3135,6 @@ function openDownloadPopup(
       game.link || ""
     ).trim() !== ""
   ) {
-
-    console.warn(
-      "No Files-sheet match. Using Games-sheet link."
-    );
-
 
     files = [
 
@@ -3219,9 +3170,155 @@ function openDownloadPopup(
     "";
 
 
+  /* =======================================================
+     RENDER FILES
+  ======================================================= */
+
   if (
-    !files.length
+    files.length
   ) {
+
+    files.forEach(
+      file => {
+
+        if (
+          !file.link
+        ) {
+
+          return;
+
+        }
+
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+
+        item.className =
+          "file-item";
+
+
+        const type =
+          escapeHTML(
+            file.type ||
+            "File"
+          );
+
+
+        const fileName =
+          escapeHTML(
+            file.name ||
+            "Download"
+          );
+
+
+        const size =
+          escapeHTML(
+            file.size
+          );
+
+
+        const description =
+          escapeHTML(
+            file.description
+          );
+
+
+        const link =
+          escapeHTML(
+            file.link
+          );
+
+
+        item.innerHTML = `
+
+          <div class="file-icon">
+
+            ${getFileIcon(
+              file.type
+            )}
+
+          </div>
+
+
+          <div class="file-details">
+
+            <div class="file-type">
+
+              ${type}
+
+            </div>
+
+
+            <div class="file-name">
+
+              ${fileName}
+
+            </div>
+
+
+            ${
+              size
+                ? `
+
+                  <div class="file-size">
+
+                    ${size}
+
+                  </div>
+
+                `
+                : ""
+            }
+
+
+            ${
+              description
+                ? `
+
+                  <div class="file-description">
+
+                    ${description}
+
+                  </div>
+
+                `
+                : ""
+            }
+
+          </div>
+
+
+          <a
+            class="file-download"
+            href="${link}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            ${getDownloadIcon()}
+
+            <span>
+              Download
+            </span>
+
+          </a>
+
+        `;
+
+
+        fileList.appendChild(
+          item
+        );
+
+      }
+    );
+
+  }
+
+  else {
 
     fileList.innerHTML = `
 
@@ -3250,147 +3347,76 @@ function openDownloadPopup(
   }
 
 
-  /*
-     Render every file.
-  */
+  /* =======================================================
+     SETUP TUTORIAL
+     
+     Reads column F from the
+     main Games sheet.
+     
+     If empty, nothing appears.
+  ======================================================= */
 
-  files.forEach(
-    file => {
-
-      if (
-        !file.link
-      ) {
-
-        return;
-
-      }
-
-
-      const item =
-        document.createElement(
-          "div"
-        );
+  const tutorialUrl =
+    String(
+      game.setupTutorial || ""
+    ).trim();
 
 
-      item.className =
-        "file-item";
+  if (
+    tutorialUrl
+  ) {
 
-
-      const type =
-        escapeHTML(
-          file.type ||
-          "File"
-        );
-
-
-      const fileName =
-        escapeHTML(
-          file.name ||
-          "Download"
-        );
-
-
-      const size =
-        escapeHTML(
-          file.size
-        );
-
-
-      const description =
-        escapeHTML(
-          file.description
-        );
-
-
-      const link =
-        escapeHTML(
-          file.link
-        );
-
-
-      item.innerHTML = `
-
-        <div class="file-icon">
-
-          ${getFileIcon(
-            file.type
-          )}
-
-        </div>
-
-
-        <div class="file-details">
-
-          <div class="file-type">
-
-            ${type}
-
-          </div>
-
-
-          <div class="file-name">
-
-            ${fileName}
-
-          </div>
-
-
-          ${
-            size
-              ? `
-
-                <div class="file-size">
-
-                  ${size}
-
-                </div>
-
-              `
-              : ""
-          }
-
-
-          ${
-            description
-              ? `
-
-                <div class="file-description">
-
-                  ${description}
-
-                </div>
-
-              `
-              : ""
-          }
-
-        </div>
-
-
-        <a
-          class="file-download"
-          href="${link}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-
-          ${getDownloadIcon()}
-
-          <span>
-            Download
-          </span>
-
-        </a>
-
-      `;
-
-
-      fileList.appendChild(
-        item
+    const tutorialContainer =
+      document.createElement(
+        "div"
       );
 
-    }
-  );
+
+    tutorialContainer.className =
+      "setup-tutorial";
+
+
+    const safeTutorialUrl =
+      escapeHTML(
+        tutorialUrl
+      );
+
+
+    tutorialContainer.innerHTML = `
+
+      <a
+        class="setup-tutorial-link"
+        href="${safeTutorialUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open setup tutorial for ${escapeHTML(game.name)}"
+      >
+
+        ${getTutorialIcon()}
+
+
+        <span class="setup-tutorial-text">
+
+          <span class="setup-tutorial-title">
+            Setup Tutorial
+          </span>
+
+          <span class="setup-tutorial-subtitle">
+            Learn how to install and set up this game
+          </span>
+
+        </span>
+
+      </a>
+
+    `;
+
+
+    fileList.appendChild(
+      tutorialContainer
+    );
+
+  }
 
 
   overlay.style.display =
@@ -3937,19 +3963,9 @@ backToTop.addEventListener(
 let firstClick = true;
 
 
-/*
-   Monetag zone.
-*/
-
 const monetagZone =
   "11672634";
 
-
-/*
-   Domains that should
-   trigger the Monetag
-   download ad.
-*/
 
 const downloadDomains = [
 
@@ -4080,11 +4096,6 @@ function isDownloadLink(link) {
 
 function loadMonetagAd() {
 
-  /*
-     Don't load the same
-     Monetag script twice.
-  */
-
   if (
     document.querySelector(
       'script[data-zone="' +
@@ -4136,11 +4147,24 @@ document.addEventListener(
   function(e) {
 
     /*
-       Find nearest anchor.
+       Setup Tutorial is NOT
+       a download link.
 
-       This works when clicking
-       the download SVG as well.
+       This makes sure the tutorial
+       never triggers the Monetag
+       download system.
     */
+
+    if (
+      e.target.closest(
+        ".setup-tutorial-link"
+      )
+    ) {
+
+      return;
+
+    }
+
 
     const link =
       e.target.closest(
@@ -4233,12 +4257,7 @@ document.addEventListener(
     }
 
 
-    /*
-       Stop normal navigation.
-    */
-
     e.preventDefault();
-
 
     e.stopPropagation();
 
@@ -4269,11 +4288,6 @@ document.addEventListener(
 
       loadMonetagAd();
 
-
-      /*
-         Actual download is NOT
-         opened on first click.
-      */
 
       return;
 
