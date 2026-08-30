@@ -314,6 +314,90 @@ body {
 
 
 /* =========================================================
+   REQUEST GAME BUTTON
+========================================================= */
+
+.request-game-container {
+  grid-column: 1 / -1;
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+  margin: 5px 0 20px;
+}
+
+.request-game-btn {
+  width: 100%;
+
+  max-width: 500px;
+
+  min-height: 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 13px 20px;
+
+  background: #2196F3;
+
+  color: white;
+
+  text-decoration: none;
+
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  box-shadow:
+    0 4px 12px rgba(33,150,243,0.20);
+
+  transition:
+    transform 0.15s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.request-game-btn:hover {
+  background: #1976D2;
+
+  box-shadow:
+    0 6px 16px rgba(33,150,243,0.25);
+}
+
+.request-game-btn:active {
+  transform: scale(0.97);
+}
+
+.request-game-icon {
+  width: 20px;
+
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
    BACK HOME
 ========================================================= */
 
@@ -992,6 +1076,14 @@ body.modal-open {
     height: 18px;
   }
 
+  .request-game-btn {
+    max-width: 100%;
+
+    font-size: 14px;
+
+    padding: 12px 15px;
+  }
+
 }
 
 </style>
@@ -1270,10 +1362,6 @@ const spreadsheetId =
 /*
    MAIN SHEET
 
-   This is Sheet1.
-
-   Expected columns:
-
    A = Name
    B = Platform
    C = Image
@@ -1290,11 +1378,7 @@ const sheetUrl =
 /*
    FILES SHEET
 
-   Actual Files tab GID:
-
-   191236659
-
-   Expected columns:
+   GID = 191236659
 
    A = Name
    B = type
@@ -1311,7 +1395,7 @@ const filesSheetUrl =
 
 
 /*
-   Backup Files URL.
+   BACKUP FILES URL
 */
 
 const filesBackupUrl =
@@ -1848,17 +1932,10 @@ async function loadFilesSheet() {
   /*
      IMPORTANT:
 
-     Your Files sheet contains
-     TWO columns named "Name".
+     Two columns are named Name.
 
      A = GAME NAME
      C = FILE NAME
-
-     Therefore we DO NOT use
-     automatic "Name" detection.
-
-     We use the exact columns
-     from your screenshot.
   */
 
 
@@ -1889,10 +1966,6 @@ async function loadFilesSheet() {
 
   }
 
-
-  /*
-     Remove header row.
-  */
 
   rows.shift();
 
@@ -1937,30 +2010,11 @@ async function loadFilesSheet() {
       }
 
 
-      /*
-         COLUMN A
-
-         Game name.
-      */
-
       const currentGame =
         String(
           row[GAME_COLUMN] ?? ""
         ).trim();
 
-
-      /*
-         Remember game name.
-
-         This supports blank
-         game-name cells.
-
-         Example:
-
-         WWE 2K25 | game      | game file | 1GB | ...
-                  | emulator  | PPSSPP    | ... | ...
-                  | patch     | update    | ... | ...
-      */
 
       if (
         currentGame
@@ -2019,10 +2073,6 @@ async function loadFilesSheet() {
       };
 
 
-      /*
-         Defaults.
-      */
-
       if (
         !file.type
       ) {
@@ -2042,12 +2092,6 @@ async function loadFilesSheet() {
 
       }
 
-
-      /*
-         Only rows containing
-         an actual download link
-         are stored.
-      */
 
       if (
         file.link
@@ -2187,10 +2231,6 @@ async function fetchData() {
     }
 
 
-    /*
-       Remove main sheet header.
-    */
-
     rows.shift();
 
 
@@ -2235,13 +2275,6 @@ async function fetchData() {
               row[3] || ""
             ).trim(),
 
-          /*
-             INFO COLUMN E.
-
-             This remains the password/info
-             from the first Sheet.
-          */
-
           info:
             String(
               row[4] || ""
@@ -2274,11 +2307,6 @@ async function fetchData() {
     );
 
 
-    /*
-       Load Files sheet BEFORE
-       showing the game cards.
-    */
-
     await loadFilesSheet();
 
 
@@ -2293,11 +2321,6 @@ async function fetchData() {
       allGames
     );
 
-
-    /*
-       Check whether this is
-       a shared game link.
-    */
 
     openSharedGame();
 
@@ -2584,181 +2607,266 @@ function displayGames(games) {
   grid.innerHTML = "";
 
 
+  /* =======================================================
+     DISPLAY GAMES
+  ======================================================= */
+
   if (
-    !games.length
+    games.length
   ) {
 
-    grid.innerHTML = `
+    games.forEach(
+      game => {
 
-      <div class="no-results">
+        const card =
+          document.createElement(
+            "div"
+          );
 
-        No games found.
 
-      </div>
+        card.className =
+          "card";
+
+
+        /*
+           Store RAW game name
+           for matching.
+        */
+
+        card.dataset.game =
+          game.name;
+
+
+        const name =
+          escapeHTML(
+            game.name
+          );
+
+
+        const platform =
+          escapeHTML(
+            game.Platform
+          );
+
+
+        const password =
+          escapeHTML(
+            game.info
+          );
+
+
+        const image =
+          escapeHTML(
+            game.image
+          );
+
+
+        card.innerHTML = `
+
+          <img
+            src="${image}"
+            alt="${name}"
+            loading="lazy"
+            onerror="
+              this.style.display='none'
+            "
+          >
+
+
+          <div class="info">
+
+            <h3>
+              ${name}
+            </h3>
+
+
+            <p>
+              Platform:
+              ${platform}
+            </p>
+
+
+            <p>
+              Password:
+              ${
+                password ||
+                "No password"
+              }
+            </p>
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="btn open-download"
+              type="button"
+            >
+              Download
+            </button>
+
+
+            <button
+              class="share-btn"
+              type="button"
+              aria-label="Share ${name}"
+              title="Share ${name}"
+            >
+
+              <svg
+                class="share-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+
+                <circle
+                  cx="18"
+                  cy="5"
+                  r="3"
+                ></circle>
+
+                <circle
+                  cx="6"
+                  cy="12"
+                  r="3"
+                ></circle>
+
+                <circle
+                  cx="18"
+                  cy="19"
+                  r="3"
+                ></circle>
+
+                <line
+                  x1="8.59"
+                  y1="13.51"
+                  x2="15.42"
+                  y2="17.49"
+                ></line>
+
+                <line
+                  x1="15.41"
+                  y1="6.51"
+                  x2="8.59"
+                  y2="10.49"
+                ></line>
+
+              </svg>
+
+            </button>
+
+          </div>
+
+        `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+  }
+
+  else {
+
+    /*
+       NO SEARCH RESULTS
+    */
+
+    const noResults =
+      document.createElement(
+        "div"
+      );
+
+
+    noResults.className =
+      "no-results";
+
+
+    noResults.innerHTML = `
+
+      No games found.
+
+      <br><br>
+
+      Try searching for another game.
 
     `;
 
-    return;
+
+    grid.appendChild(
+      noResults
+    );
 
   }
 
 
-  games.forEach(
-    game => {
+  /* =======================================================
+     REQUEST GAME BUTTON
+     
+     This is intentionally added
+     AFTER all games / no-results.
+     
+     Therefore it always appears
+     at the very bottom.
+  ======================================================= */
 
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "card";
-
-
-      /*
-         Store RAW game name
-         for matching.
-      */
-
-      card.dataset.game =
-        game.name;
+  const requestContainer =
+    document.createElement(
+      "div"
+    );
 
 
-      const name =
-        escapeHTML(
-          game.name
-        );
+  requestContainer.className =
+    "request-game-container";
 
 
-      const platform =
-        escapeHTML(
-          game.Platform
-        );
+  requestContainer.innerHTML = `
+
+    <a
+      class="request-game-btn"
+      href="https://chat.whatsapp.com/DT0M0LjGN8d67FzKWC9S7Q?s=cl&p=a&ilr=1"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Request a game on WhatsApp"
+    >
+
+      <svg
+        class="request-game-icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+
+        <path
+          d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4.1-1.1L3 20l1.3-5.1a8.4 8.4 0 0 1-1.1-4.1A8.5 8.5 0 1 1 21 11.5z"
+        ></path>
+
+        <path
+          d="M8.5 8.5c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c.5 1 1.3 1.8 2.3 2.3l.6-.5c.2-.2.4-.2.6-.1l1.7.7c.3.1.4.3.4.5v.5c0 .3 0 .5-.5.7-.5.2-1.1.2-1.6 0-2.1-.7-4.5-3.1-5.2-5.2-.2-.5-.2-1.1 0-1.6z"
+        ></path>
+
+      </svg>
 
 
-      /*
-         INFO/PASSWORD FROM
-         MAIN SHEET COLUMN E.
-      */
+      <span>
+        Request a Game
+      </span>
 
-      const password =
-        escapeHTML(
-          game.info
-        );
+    </a>
+
+  `;
 
 
-      const image =
-        escapeHTML(
-          game.image
-        );
+  /*
+     Add it as the FINAL
+     grid item.
+  */
 
-
-      card.innerHTML = `
-
-        <img
-          src="${image}"
-          alt="${name}"
-          loading="lazy"
-          onerror="
-            this.style.display='none'
-          "
-        >
-
-
-        <div class="info">
-
-          <h3>
-            ${name}
-          </h3>
-
-
-          <p>
-            Platform:
-            ${platform}
-          </p>
-
-
-          <p>
-            Password:
-            ${
-              password ||
-              "No password"
-            }
-          </p>
-
-        </div>
-
-
-        <div class="card-actions">
-
-          <button
-            class="btn open-download"
-            type="button"
-          >
-            Download
-          </button>
-
-
-          <button
-            class="share-btn"
-            type="button"
-            aria-label="Share ${name}"
-            title="Share ${name}"
-          >
-
-            <svg
-              class="share-icon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-
-              <circle
-                cx="18"
-                cy="5"
-                r="3"
-              ></circle>
-
-              <circle
-                cx="6"
-                cy="12"
-                r="3"
-              ></circle>
-
-              <circle
-                cx="18"
-                cy="19"
-                r="3"
-              ></circle>
-
-              <line
-                x1="8.59"
-                y1="13.51"
-                x2="15.42"
-                y2="17.49"
-              ></line>
-
-              <line
-                x1="15.41"
-                y1="6.51"
-                x2="8.59"
-                y2="10.49"
-              ></line>
-
-            </svg>
-
-          </button>
-
-        </div>
-
-      `;
-
-
-      grid.appendChild(
-        card
-      );
-
-    }
+  grid.appendChild(
+    requestContainer
   );
 
 }
@@ -3035,10 +3143,6 @@ function openDownloadPopup(
 
   /*
      FALLBACK
-
-     If no Files entry exists,
-     use the Link from the
-     main Games sheet.
   */
 
   if (
@@ -3163,11 +3267,6 @@ function openDownloadPopup(
           file.size
         );
 
-
-      /*
-         Description comes directly
-         from Files column E.
-      */
 
       const description =
         escapeHTML(
@@ -3748,6 +3847,12 @@ function searchGames() {
     );
 
 
+  /*
+     displayGames() now always
+     adds the Request a Game
+     button after the results.
+  */
+
   displayGames(
     filtered
   );
@@ -3921,18 +4026,6 @@ function isDownloadLink(link) {
           domain.toLowerCase();
 
 
-        /*
-           Match exact domain
-           or a subdomain.
-
-           Example:
-
-           mediafire.com
-           www.mediafire.com
-
-           both match.
-        */
-
         return (
 
           hostname === domain
@@ -4001,10 +4094,6 @@ function loadMonetagAd() {
     true;
 
 
-  /*
-     Append to BODY.
-  */
-
   (
     document.body ||
     document.documentElement
@@ -4025,12 +4114,10 @@ document.addEventListener(
   function(e) {
 
     /*
-       Find the nearest
-       anchor element.
+       Find nearest anchor.
 
-       This works even if
-       the user clicks the
-       download SVG icon.
+       This works when clicking
+       the download SVG as well.
     */
 
     const link =
@@ -4131,12 +4218,6 @@ document.addEventListener(
     e.preventDefault();
 
 
-    /*
-       Stop other click handlers
-       from interfering with this
-       download event.
-    */
-
     e.stopPropagation();
 
 
@@ -4168,11 +4249,8 @@ document.addEventListener(
 
 
       /*
-         IMPORTANT:
-
-         The actual download is
-         intentionally NOT opened
-         on the first click.
+         Actual download is NOT
+         opened on first click.
       */
 
       return;
