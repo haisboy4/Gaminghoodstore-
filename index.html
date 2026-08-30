@@ -310,6 +310,8 @@ body {
   stroke-linecap: round;
 
   stroke-linejoin: round;
+
+  pointer-events: none;
 }
 
 
@@ -334,7 +336,7 @@ body {
 
   max-width: 500px;
 
-  min-height: 48px;
+  min-height: 52px;
 
   display: flex;
 
@@ -344,7 +346,7 @@ body {
 
   gap: 10px;
 
-  padding: 13px 20px;
+  padding: 13px 18px;
 
   background: #2196F3;
 
@@ -357,6 +359,10 @@ body {
   font-size: 15px;
 
   font-weight: bold;
+
+  line-height: 1;
+
+  white-space: nowrap;
 
   box-shadow:
     0 4px 12px rgba(33,150,243,0.20);
@@ -378,22 +384,33 @@ body {
   transform: scale(0.97);
 }
 
-.request-game-icon {
-  width: 20px;
 
-  height: 20px;
+/* =========================================================
+   FIXED WHATSAPP ICON
+========================================================= */
+
+.request-game-icon {
+  width: 24px;
+
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  display: block;
 
   fill: none;
 
   stroke: currentColor;
 
-  stroke-width: 2;
+  stroke-width: 1.8;
 
   stroke-linecap: round;
 
   stroke-linejoin: round;
 
   flex-shrink: 0;
+
+  pointer-events: none;
 }
 
 
@@ -586,6 +603,8 @@ body {
   stroke-width: 2;
 
   stroke-linecap: round;
+
+  pointer-events: none;
 }
 
 
@@ -775,6 +794,8 @@ body {
   stroke-linecap: round;
 
   stroke-linejoin: round;
+
+  pointer-events: none;
 }
 
 
@@ -1191,12 +1212,60 @@ body.modal-open {
     font-size: 10px;
   }
 
+
+  /* =======================================================
+     MOBILE REQUEST GAME BUTTON
+  ======================================================= */
+
   .request-game-btn {
+    width: 100%;
+
     max-width: 100%;
+
+    min-height: 52px;
+
+    padding: 13px 15px;
+
+    gap: 9px;
 
     font-size: 14px;
 
-    padding: 12px 15px;
+    line-height: 1;
+  }
+
+  .request-game-icon {
+    width: 23px;
+
+    height: 23px;
+
+    flex: 0 0 23px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 340px) {
+
+  .request-game-btn {
+    font-size: 13px;
+
+    gap: 8px;
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+  }
+
+  .request-game-icon {
+    width: 22px;
+
+    height: 22px;
+
+    flex-basis: 22px;
   }
 
 }
@@ -1961,17 +2030,6 @@ async function loadFilesSheet() {
   }
 
 
-  /*
-     Files columns:
-
-     A = Game Name
-     B = Type
-     C = File Name
-     D = Size
-     E = Description
-     F = Link
-  */
-
   const GAME_COLUMN = 0;
 
   const TYPE_COLUMN = 1;
@@ -2010,7 +2068,7 @@ async function loadFilesSheet() {
 
 
   rows.forEach(
-    (row, index) => {
+    (row) => {
 
       if (
         !row
@@ -2130,7 +2188,6 @@ async function loadFilesSheet() {
     }
   );
 
-
 }
 
 
@@ -2234,18 +2291,6 @@ async function fetchData() {
     rows.shift();
 
 
-    /*
-       MAIN SHEET:
-
-       A = Name
-       B = Platform
-       C = Image
-       D = Link
-       E = info
-       F = Setup Tutorial
-    */
-
-
     allGames =
       rows
 
@@ -2295,10 +2340,6 @@ async function fetchData() {
           game.name !== ""
       )
 
-      /*
-         Latest game first.
-      */
-
       .reverse();
 
 
@@ -2306,6 +2347,7 @@ async function fetchData() {
       "GAMES LOADED:",
       allGames.length
     );
+
 
     console.log(
       "LATEST GAME:",
@@ -2864,18 +2906,27 @@ function displayGames(games) {
       aria-label="Request a game on WhatsApp"
     >
 
+      <!-- =================================================
+           CLEAN WHATSAPP ICON
+      ================================================= -->
+
       <svg
         class="request-game-icon"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
 
-        <path
-          d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4.1-1.1L3 20l1.3-5.1a8.4 8.4 0 1 1 17.6 0z"
-        ></path>
+        <!-- Outer WhatsApp bubble -->
 
         <path
-          d="M8.5 8.5c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c.5 1 1.3 1.8 2.3 2.3l.6-.5c.2-.2.4-.2.6-.1l1.7.7c.3.1.4.3.4.5v.5c0 .3 0 .5-.5.7-.5.2-1.1.2-1.6 0-2.1-.7-4.5-3.1-5.2-5.2-.2-.5-.2-1.1 0-1.6z"
+          d="M20.2 11.6a8.2 8.2 0 0 1-12.4 7L3.5 20l1.2-4.1A8.2 8.2 0 1 1 20.2 11.6z"
+        ></path>
+
+
+        <!-- Phone handset -->
+
+        <path
+          d="M8.7 8.2c.3-.3.7-.4 1-.1l1.3 1.8c.2.3.2.6-.1.9l-.7.7c.6 1.2 1.6 2.2 2.8 2.8l.7-.7c.3-.3.6-.3.9-.1l1.8 1.3c.3.2.3.7.1 1-.4.5-1 .8-1.6.8-3.7 0-7-3.3-7-7 0-.6.3-1.2.8-1.6z"
         ></path>
 
       </svg>
@@ -3349,11 +3400,6 @@ function openDownloadPopup(
 
   /* =======================================================
      SETUP TUTORIAL
-     
-     Reads column F from the
-     main Games sheet.
-     
-     If empty, nothing appears.
   ======================================================= */
 
   const tutorialUrl =
@@ -4149,10 +4195,6 @@ document.addEventListener(
     /*
        Setup Tutorial is NOT
        a download link.
-
-       This makes sure the tutorial
-       never triggers the Monetag
-       download system.
     */
 
     if (
