@@ -1978,7 +1978,7 @@ async function loadFilesSheet() {
 
   /* =======================================================
      PROCESS EVERY FILE ROW
-  ======================================================= */
+========================================================= */
 
   rows.forEach(
     (row, index) => {
@@ -2242,6 +2242,15 @@ async function fetchData() {
        C = Image
        D = Link
        E = info
+
+       IMPORTANT:
+
+       Google Sheets is read from
+       top to bottom.
+
+       .reverse() flips the order
+       so the LAST row becomes
+       the FIRST game displayed.
     */
 
     allGames =
@@ -2286,7 +2295,28 @@ async function fetchData() {
       .filter(
         game =>
           game.name !== ""
-      );
+      )
+
+      /*
+         ==============================================
+         LATEST GAME FIRST
+         ==============================================
+
+         Example:
+
+         Sheet:
+         Game A
+         Game B
+         Game C
+         Game D
+
+         Website:
+         Game D
+         Game C
+         Game B
+         Game A
+      */
+      .reverse();
 
 
     console.log(
@@ -2296,6 +2326,13 @@ async function fetchData() {
     console.log(
       "GAMES LOADED:",
       allGames.length
+    );
+
+    console.log(
+      "LATEST GAME:",
+      allGames.length
+        ? allGames[0].name
+        : "None"
     );
 
     console.log(
@@ -2806,12 +2843,8 @@ function displayGames(games) {
 
   /* =======================================================
      REQUEST GAME BUTTON
-     
-     This is intentionally added
-     AFTER all games / no-results.
-     
-     Therefore it always appears
-     at the very bottom.
+
+     Always remains at the bottom.
   ======================================================= */
 
   const requestContainer =
@@ -2859,11 +2892,6 @@ function displayGames(games) {
 
   `;
 
-
-  /*
-     Add it as the FINAL
-     grid item.
-  */
 
   grid.appendChild(
     requestContainer
@@ -3846,12 +3874,6 @@ function searchGames() {
         ).includes(query)
     );
 
-
-  /*
-     displayGames() now always
-     adds the Request a Game
-     button after the results.
-  */
 
   displayGames(
     filtered
