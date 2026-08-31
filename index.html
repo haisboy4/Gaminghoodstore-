@@ -2178,6 +2178,12 @@ async function loadFilesSheet() {
     }
   );
 
+
+  console.log(
+    "FILES LOADED:",
+    allFiles.length
+  );
+
 }
 
 
@@ -2291,46 +2297,143 @@ async function fetchData() {
       );
 
 
+    console.log(
+      "SHEET HEADERS:",
+      headers
+    );
+
+
     const nameColumn =
-      headers.indexOf(
-        "name"
+      headers.findIndex(
+        header =>
+          header === "name"
       );
 
 
     const platformColumn =
-      headers.indexOf(
-        "platform"
+      headers.findIndex(
+        header =>
+          header === "platform"
       );
 
 
     const imageColumn =
-      headers.indexOf(
-        "image"
+      headers.findIndex(
+        header =>
+          header === "image"
       );
 
 
     const linkColumn =
-      headers.indexOf(
-        "link"
+      headers.findIndex(
+        header =>
+          header === "link"
       );
 
 
     const infoColumn =
-      headers.indexOf(
-        "info"
+      headers.findIndex(
+        header =>
+          header === "info"
       );
 
 
+    /* =====================================================
+       SETUP TUTORIAL COLUMN
+       
+       Supports:
+       setup tutorial
+       setup tutorial url
+       tutorial
+       tutorial url
+    ===================================================== */
+
     const tutorialColumn =
-      headers.indexOf(
-        "setup tutorial"
+      headers.findIndex(
+        header => {
+
+          const h =
+            normalizeText(
+              header
+            );
+
+
+          return (
+
+            h ===
+            "setup tutorial"
+
+            ||
+
+            h ===
+            "setup tutorial url"
+
+            ||
+
+            h ===
+            "tutorial"
+
+            ||
+
+            h ===
+            "tutorial url"
+
+          );
+
+        }
       );
 
 
     const viewsColumn =
-      headers.indexOf(
-        "views"
+      headers.findIndex(
+        header =>
+          header === "views"
       );
+
+
+    /* =====================================================
+       COLUMN DEBUG
+    ===================================================== */
+
+    console.log(
+      "NAME COLUMN:",
+      nameColumn
+    );
+
+    console.log(
+      "PLATFORM COLUMN:",
+      platformColumn
+    );
+
+    console.log(
+      "IMAGE COLUMN:",
+      imageColumn
+    );
+
+    console.log(
+      "LINK COLUMN:",
+      linkColumn
+    );
+
+    console.log(
+      "INFO COLUMN:",
+      infoColumn
+    );
+
+    console.log(
+      "SETUP TUTORIAL COLUMN:",
+      tutorialColumn !== -1
+        ? "FOUND at column " +
+          tutorialColumn
+        : "NOT FOUND"
+    );
+
+    console.log(
+      "VIEWS COLUMN:",
+      viewsColumn !== -1
+        ? "FOUND"
+        : "NOT FOUND"
+    );
 
 
     if (
@@ -2379,6 +2482,14 @@ async function fetchData() {
           }
 
 
+          const setupTutorial =
+            tutorialColumn !== -1
+              ? String(
+                  row[tutorialColumn] || ""
+                ).trim()
+              : "";
+
+
           return {
 
             name:
@@ -2415,11 +2526,7 @@ async function fetchData() {
                 : "",
 
             setupTutorial:
-              tutorialColumn !== -1
-                ? String(
-                    row[tutorialColumn] || ""
-                  ).trim()
-                : "",
+              setupTutorial,
 
             views:
               views
@@ -2451,12 +2558,34 @@ async function fetchData() {
     );
 
 
+    /* =====================================================
+       SHOW TUTORIAL DATA IN CONSOLE
+    ===================================================== */
+
+    const gamesWithTutorial =
+      allGames.filter(
+        game =>
+          game.setupTutorial
+      );
+
+
     console.log(
-      "VIEW COLUMN:",
-      viewsColumn !== -1
-        ? "Found"
-        : "Not found"
+      "GAMES WITH SETUP TUTORIAL:",
+      gamesWithTutorial.length
     );
+
+
+    if (
+      gamesWithTutorial.length
+    ) {
+
+      console.log(
+        "TUTORIAL EXAMPLE:",
+        gamesWithTutorial[0].name,
+        gamesWithTutorial[0].setupTutorial
+      );
+
+    }
 
 
     await loadFilesSheet();
@@ -2933,10 +3062,13 @@ function displayGames(games) {
               ${getViewIcon()}
 
               <span>
+
                 <span class="view-number">
                   ${views}
                 </span>
+
                 views
+
               </span>
 
             </p>
@@ -3127,14 +3259,6 @@ function countGameView(
   }
 
 
-  /*
-     Send request to Google Apps Script.
-
-     We intentionally don't need to read
-     the response. The request itself causes
-     doGet() to increment the Views cell.
-  */
-
   try {
 
     const img =
@@ -3167,12 +3291,6 @@ function countGameView(
 
   }
 
-
-  /*
-     Update the local value immediately.
-     The Google Sheet remains the source
-     of truth after the next reload.
-  */
 
   const game =
     allGames.find(
@@ -3431,12 +3549,7 @@ function openDownloadPopup(
   }
 
 
-  /*
-     COUNT VIEW
-
-     Opening the download panel
-     counts as one game view.
-  */
+  /* COUNT GAME VIEW */
 
   countGameView(
     game.name
@@ -3674,6 +3787,7 @@ function openDownloadPopup(
             href="${link}"
             target="_blank"
             rel="noopener noreferrer"
+            data-download="true"
           >
 
             ${getDownloadIcon()}
@@ -3733,6 +3847,17 @@ function openDownloadPopup(
     String(
       game.setupTutorial || ""
     ).trim();
+
+
+  console.log(
+    "OPENING GAME:",
+    game.name
+  );
+
+  console.log(
+    "SETUP TUTORIAL:",
+    tutorialUrl || "None"
+  );
 
 
   if (
@@ -4340,6 +4465,11 @@ const monetagZone =
   "11672634";
 
 
+/*
+   These are the ONLY domains that are
+   considered downloadable destinations.
+*/
+
 const downloadDomains = [
 
   "drive.google.com",
@@ -4426,8 +4556,7 @@ function isDownloadLink(link) {
 
 
     const hostname =
-      url.hostname
-        .toLowerCase();
+      url.hostname.toLowerCase();
 
 
     return downloadDomains.some(
@@ -4439,7 +4568,8 @@ function isDownloadLink(link) {
 
         return (
 
-          hostname === domain
+          hostname ===
+          domain
 
           ||
 
@@ -4469,6 +4599,11 @@ function isDownloadLink(link) {
 
 function loadMonetagAd() {
 
+  /*
+     Prevent loading the Monetag script
+     more than once.
+  */
+
   if (
     document.querySelector(
       'script[data-zone="' +
@@ -4476,6 +4611,10 @@ function loadMonetagAd() {
       '"]'
     )
   ) {
+
+    console.log(
+      "MONETAG: Script already loaded."
+    );
 
     return;
 
@@ -4500,6 +4639,26 @@ function loadMonetagAd() {
     true;
 
 
+  script.onload =
+    function() {
+
+      console.log(
+        "MONETAG: Script loaded."
+      );
+
+    };
+
+
+  script.onerror =
+    function() {
+
+      console.warn(
+        "MONETAG: Script failed to load."
+      );
+
+    };
+
+
   (
     document.body ||
     document.documentElement
@@ -4512,33 +4671,44 @@ function loadMonetagAd() {
 
 
 /* =========================================================
-   DOWNLOAD CLICK HANDLER
+   MONETAG DOWNLOAD CLICK HANDLER
 ========================================================= */
+
+/*
+   IMPORTANT:
+
+   This handler ONLY accepts:
+
+       a.file-download
+
+   Therefore:
+
+   - Setup Tutorial = ignored
+   - WhatsApp = ignored
+   - Share = ignored
+   - Back Home = ignored
+   - Any other link = ignored
+   - Only actual file Download buttons = accepted
+*/
 
 document.addEventListener(
   "click",
   function(e) {
 
-    if (
+    const downloadButton =
       e.target.closest(
-        ".setup-tutorial-link"
-      )
-    ) {
-
-      return;
-
-    }
-
-
-    const link =
-      e.target.closest(
-        "a"
+        "a.file-download"
       );
 
 
+    /*
+       If the clicked element is NOT an
+       actual file download button,
+       completely ignore the click.
+    */
+
     if (
-      !link ||
-      !link.href
+      !downloadButton
     ) {
 
       return;
@@ -4546,10 +4716,16 @@ document.addEventListener(
     }
 
 
+    /*
+       Extra safety check.
+
+       The button must also have
+       data-download="true".
+    */
+
     if (
-      link.closest(
-        "nav, .menu, .navbar"
-      )
+      downloadButton.dataset.download !==
+      "true"
     ) {
 
       return;
@@ -4557,10 +4733,12 @@ document.addEventListener(
     }
 
 
+    /*
+       Make sure the URL really exists.
+    */
+
     if (
-      link.closest(
-        ".PopularPosts, .popular-posts"
-      )
+      !downloadButton.href
     ) {
 
       return;
@@ -4568,47 +4746,46 @@ document.addEventListener(
     }
 
 
-    try {
-
-      const linkUrl =
-        new URL(
-          link.href
-        );
-
-
-      if (
-        linkUrl.hostname ===
-        window.location.hostname
-      ) {
-
-        return;
-
-      }
-
-    }
-
-    catch(error) {
-
-      return;
-
-    }
-
+    /*
+       Make sure the destination belongs
+       to an approved download domain.
+    */
 
     if (
       !isDownloadLink(
-        link
+        downloadButton
       )
     ) {
+
+      console.log(
+        "MONETAG: Non-download domain ignored:",
+        downloadButton.href
+      );
 
       return;
 
     }
 
+
+    /*
+       Stop the browser from opening
+       the destination automatically.
+
+       We decide ourselves what happens.
+    */
 
     e.preventDefault();
 
     e.stopPropagation();
 
+
+    const downloadUrl =
+      downloadButton.href;
+
+
+    /*
+       FIRST DOWNLOAD CLICK
+    */
 
     if (
       firstClick
@@ -4619,15 +4796,28 @@ document.addEventListener(
 
 
       console.log(
-        "MONETAG: First download click."
+        "MONETAG: First real download click."
       );
 
 
       console.log(
-        "MONETAG: Loading zone",
+        "MONETAG: Loading zone:",
         monetagZone
       );
 
+
+      console.log(
+        "MONETAG: Download held:",
+        downloadUrl
+      );
+
+
+      /*
+         Load the ad script.
+
+         The actual download is NOT opened
+         on this first click.
+      */
 
       loadMonetagAd();
 
@@ -4637,14 +4827,22 @@ document.addEventListener(
     }
 
 
+    /*
+       SECOND AND LATER DOWNLOAD CLICKS
+    */
+
     console.log(
-      "DOWNLOAD: Opening",
-      link.href
+      "DOWNLOAD: Opening:",
+      downloadUrl
     );
 
 
+    /*
+       Open only the actual download URL.
+    */
+
     window.open(
-      link.href,
+      downloadUrl,
       "_blank",
       "noopener,noreferrer"
     );
